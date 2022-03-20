@@ -1,0 +1,60 @@
+
+AppBar {
+    background-color: #fff;
+    
+}
+.appBar {
+    transition: 0.5s ease;
+    padding: 10px 30px;
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+}
+.brand {
+    color: #000;
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: 0.5s ease;
+}
+.brand:hover {
+    color: #b71c1c;
+}
+.box-search {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    display: flex;
+    align-items: center;
+    border-radius: 3px;
+    height: 45px;
+    margin-left: 30px;
+}
+.input-search {
+    height: 30px;
+    border: none;
+}
+.box-search label{
+    font-size: 0.9rem !important;
+}
+.btn-search {
+    margin-right: 7px !important;
+    background-color: dimgrey !important;
+    border-color: dimgray !important;
+}
+.nav-right {
+    display: flex;
+    list-style: none;
+    text-align: center;
+}
+.nav-items a{
+    color: #000;
+    position: relative;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.5s ease;
+    margin-left: 30px;
+}
+.nav-items a:hover {
+    color: #b71c1c;
+}

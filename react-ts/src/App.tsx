@@ -5,7 +5,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Guide from './pages/Guide';
 import Host from './pages/Host';
-import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 const App = () => {
@@ -19,7 +19,7 @@ const App = () => {
         
         <Route path='/Guide' element={<Guide/>}/>
         <Route path='/Host' element={<Host/>}/>
-        <Route path='/SignIn' element={<SignIn/>}/>
+        <Route path='/SignIn' element={<SignUp/>}/>
         <Route path='/Login' element={<Login/>}/>
       
       </Routes>

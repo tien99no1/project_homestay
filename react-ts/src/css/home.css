@@ -85,3 +85,39 @@
     font-size: 0.8rem;
     font-weight: 500;
 }
+.container-sign {
+    background: url("https://i.imgur.com/HgflTDf.jpg") 50% fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #fff;
+}
+.br{
+    color:#fff;
+    padding-left: 50px;
+    font-size: 2rem;
+}
+.sign {
+    width: 50%;
+    margin: 0 auto;
+    justify-content: space-between;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 1rem;
+    background: linear-gradient(#141e30, #243b55)
+
+}
+.form-register{
+    padding-left: 30px;
+}
+.form-register h3{
+    font-size: 1.5rem;
+}
+.form-register label{
+    color: #b3b3b3 !important;
+}

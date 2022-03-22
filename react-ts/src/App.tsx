@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Guide from './pages/Guide';
 import Host from './pages/Host';
 import SignUp from './pages/SignUp';
+import Location from './components/Location'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 const App = () => {

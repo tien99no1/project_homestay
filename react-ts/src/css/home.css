@@ -85,8 +85,30 @@
     font-size: 0.8rem;
     font-weight: 500;
 }
+.About{
+    margin-top: 2rem;
+}
+.About h2, h5{
+    text-transform: uppercase;
+
+}
+.About p{
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+.About p:hover{
+    text-decoration: underline;
+    color: #b71c1c;
+}
+.phone {
+    display: flex !important;
+}
+.phone a{
+    text-decoration: none;
+    color: #000;
+}
 .container-sign {
-    background: url("https://i.imgur.com/HgflTDf.jpg") 50% fixed;
+    background: url("https://images.pexels.com/photos/235648/pexels-photo-235648.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260") 50% fixed;
     background-size: cover;
     height: 100vh;
     display: flex;
@@ -109,15 +131,66 @@
     justify-content: space-evenly;
     align-items: center;
     font-size: 1rem;
-    background: linear-gradient(#141e30, #243b55)
 
 }
 .form-register{
     padding-left: 30px;
+    width: 40%;
+    text-align: -webkit-center;
 }
 .form-register h3{
-    font-size: 1.5rem;
+    font-size: 1.6rem;
+    font-weight: 700;
 }
 .form-register label{
-    color: #b3b3b3 !important;
+    color: #fff !important;
+}
+.text-sign{
+    width: 90%;
+    margin: 1.5rem 0 1.5rem 0;
+}
+.text-sign > * {
+    width: 100%;
+}
+.input-sign input {
+    color: #fff !important;
+}
+.btn-submit-form {
+    width: 90%;
+    color: #fff !important;
+    background: #b71c1c !important;
+    margin-bottom: 1.3rem !important;
+}
+.btn-submit-form:hover {
+    background-color: #ed8282f7 !important;
+    transition: 0.5s ease;
+
+}
+small {
+    color: #b71c1c;
+    font-weight: 600;
+}
+.container-login {
+    background: url("https://images.pexels.com/photos/994477/pexels-photo-994477.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260") 50% fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #fff;
+}
+.login {
+    width: 50%;
+    margin: 0 auto;
+    justify-content: space-between;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 1rem;
+    background: transparent;
+}
+.login label{
+    color: #fff !important;
 }

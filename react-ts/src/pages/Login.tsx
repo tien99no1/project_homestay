@@ -45,13 +45,14 @@ function Login() {
   const navigate = useNavigate();
 
   const users = JSON.parse(localStorage.getItem('users')|| '{}')
-  console.log(users)
 
   const onSubmit = (data: IFormInputs) => {
-    alert('Đăng nhập thành công')
-    navigate('/')
-    
-
+    if(users.email === data.email && users.password === data.password){
+      alert('Đăng nhập thành công')
+      navigate('/')
+    }else{
+      alert('Sai tài khoản hoặc mật khẩu')
+    }
     
   };
 

@@ -1,6 +1,4 @@
-.box {
-    margin: 0 30px;
-}
+
 .box h2{
     font-size: 2rem;
     margin-block-end: 0.5rem;
@@ -191,6 +189,76 @@ small {
     font-size: 1rem;
     background: transparent;
 }
-.login label{
+.login label {
     color: #fff !important;
+}
+.location-top {
+    margin-top: 1rem;
+}
+.btn-filter button{
+    font-size: 0.9rem;
+    background: inherit;
+    height: 35px;
+    border: 1px solid #e6e6e6;
+    border-radius: 5px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+.btn-filter button:hover {
+    background: #b71c1c;
+    color: #fff;
+}
+.caption-local {
+    margin: 3rem 0 3rem 0;
+}
+.place {
+    display: flex;
+    justify-content: space-between;
+}
+.img-location{
+    width: 100%;
+    height: 190px;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    
+}
+.img-location img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.content-location span{
+    position: relative;
+    top: 5px;
+    font-size: 0.9rem;
+    color: rgb(118, 118, 118);
+}
+.content-location p {
+    position: relative;
+    top: -10px;
+    cursor: pointer;
+}
+.content-location b{
+    position: relative;
+    top: -15px;
+}
+.img-room{
+    width: 100%;
+    height: 450px;
+    background-color: #000;
+    cursor: pointer;
+}
+.img-room img{
+    width: 99%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(80%);
+    transition: transform .7s;
+}
+.img-room img:hover {
+    -ms-transform: scale(1.01); /* IE 9 */
+    -webkit-transform: scale(1.01); /* Safari 3-8 */
+    transform: scale(1.01);
+    filter: brightness(100%);
 }

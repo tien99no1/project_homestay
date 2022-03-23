@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
 import Slider from "react-slick";
+import { Link } from "react-router-dom";
 
 function SampleNextArrow(props:any) {
   const { className, style, onClick } = props;
@@ -74,6 +75,7 @@ export default class Highlight extends Component {
       <div>
         <Slider {...settings}>
         <div>
+            <Link to='/home/Location'>
             <div className="img-highlights">
               <img src="https://cdn.luxstay.com/home/location/location_1_1559734709.png" alt="" />
             </div>
@@ -81,6 +83,7 @@ export default class Highlight extends Component {
               <div className="title">Hà Nội</div>
               <span><b>20</b> chỗ ở</span>
             </div>
+            </Link>
         </div>
         <div>
             <div className="img-highlights">

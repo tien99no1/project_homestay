@@ -86,7 +86,7 @@
 .About{
     margin-top: 2rem;
 }
-.About h2, h5{
+.About > h2, .About >h5{
     text-transform: uppercase;
 
 }
@@ -248,17 +248,79 @@ small {
     height: 450px;
     background-color: #000;
     cursor: pointer;
+    overflow:hidden;
 }
 .img-room img{
     width: 99%;
     height: 100%;
     object-fit: cover;
     filter: brightness(80%);
-    transition: transform .7s;
+    -webkit-transition: all 0.7s ease; transition: all 0.7s ease;
 }
 .img-room img:hover {
-    -ms-transform: scale(1.01); /* IE 9 */
-    -webkit-transform: scale(1.01); /* Safari 3-8 */
-    transform: scale(1.01);
+    -webkit-transform:scale(1.3); transform:scale(1.3);
     filter: brightness(100%);
+
+}
+.mr {
+    margin-right: 2rem;
+    cursor: pointer;
+}
+.mr:hover {
+    color: #b71c1c;
+}
+.margin-icon >b{
+    margin-left: 10px;
+}
+.phone >span{
+    margin-left: 1rem;
+}
+.input-date{
+    display: flex;
+    justify-content: center;
+}
+.order {
+    border: 1px solid rgba(0, 0, 0, 0.23) !important;
+    padding-bottom: 1rem;
+    border-radius: 5px;
+}
+.person {
+    width: 88%;
+    border: 1px solid rgba(0, 0, 0, 0.23) !important;
+    color: #000 !important;
+}
+.order-now{
+    width: 88%;
+    border: 1px solid rgba(0, 0, 0, 0.23) !important;
+    color: #fff !important;
+    background: #b71c1c !important;
+}
+.advise {
+    border: 1px solid rgba(0, 0, 0, 0.23) !important;
+    padding-bottom: 1rem;
+    border-radius: 5px;
+    margin-top: 1rem;
+}
+.input-advise {
+    width: 92%;
+}
+.btn-advise {
+    width: 92%;
+    border: 1px solid rgba(0, 0, 0, 0.23) !important;
+    color: #fff !important;
+    background: #000 !important;
+    margin-top: 1rem !important;
+}
+.form-advise {
+    padding: 10px 0px 0px 20px;
+}
+
+.form-advise :first-child{
+    margin-bottom: 10px;
+}
+.phone-advise {
+    width: 92%;
+    background: #f6f6f6!important;
+    color: #000 !important;
+    margin-top: 1rem !important;
 }

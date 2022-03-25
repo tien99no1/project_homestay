@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import {Box, Button, Container, styled, TextField} from '@mui/material'
 import { Link } from 'react-router-dom'
-import LoginSocial from '../components/LoginSocialMedia'
+import LoginSocialUser from '../components/LoginSocialUser'
 
 
 
@@ -117,7 +117,7 @@ function SignUp() {
         <p>Bạn đã có tài khoản RikStay? <Link style={{textDecoration: 'none', color: '#b71c1c', fontSize: '1.1rem', fontWeight:'600'}} to='/Login'>Đăng nhập</Link></p>
         <p>Hoặc đăng nhập với</p>
         <Box>
-          <LoginSocial/>
+          <LoginSocialUser/>
         </Box>
 
 

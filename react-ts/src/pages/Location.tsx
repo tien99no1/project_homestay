@@ -56,7 +56,7 @@ function Location() {
     <Grid container  rowSpacing={3} columnSpacing={{ xs: 1, sm: 1, md: 1.5 }}>
       <Grid item xl={3} sm={6} md={4} xs={12}>
           <Box className='Location'>
-            <Link to='/home/Room'>
+            <Link to='/home/room'>
             <Box className="img-location">
               <img src="https://cdn.luxstay.com/rooms/66652/large/69ad8ebe05e3fdbda4f2.jpg" alt="" />
             </Box>

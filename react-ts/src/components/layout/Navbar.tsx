@@ -47,16 +47,16 @@ function Navbar() {
                 <Box>
                     <ul className='nav-right'>
                         <li className='nav-items'>
-                            <Link to='/Guide'>Guide</Link>
+                            <Link to='/guide'>Guide</Link>
                         </li>
                         <li className='nav-items'>
-                           <Link to='/Host'>Host</Link>
+                           <Link to='/host'>Host</Link>
                         </li>
                         <li className='nav-items'>
-                            <Link to= '/SignIn'>Đăng ký</Link>
+                            <Link to= '/signup'>Đăng ký</Link>
                         </li>
                         <li className='nav-items'>
-                          <Link to='/Login'>Đăng nhập</Link>
+                          <Link to='/login'>Đăng nhập</Link>
                         </li>
                     </ul>
                 </Box>

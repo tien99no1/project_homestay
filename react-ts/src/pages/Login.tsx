@@ -2,12 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import {Box, Button, Container, styled, TextField} from '@mui/material'
 import { Link } from 'react-router-dom'
-import LoginSocial from '../components/LoginSocialMedia'
+import LoginSocialUser from '../components/LoginSocialUser'
 import { useNavigate } from 'react-router-dom'
-import { Email } from '@mui/icons-material'
-
-
-
 
 interface IFormInputs {
   email: string;
@@ -87,10 +83,10 @@ function Login() {
       </form>
       </Box>
       <Box className='form-login'>
-        <p>Bạn chưa có tài khoản RikStay? <Link style={{textDecoration: 'none', color: '#b71c1c', fontSize: '1.1rem', fontWeight:'600'}} to='/SignIn'>Đăng ký</Link></p>
+        <p>Bạn chưa có tài khoản RikStay? <Link style={{textDecoration: 'none', color: '#b71c1c', fontSize: '1.1rem', fontWeight:'600'}} to='/signup'>Đăng ký</Link></p>
         <p>Hoặc đăng nhập với</p>
         <Box>
-          <LoginSocial/>
+          <LoginSocialUser/>
         </Box>
 
 

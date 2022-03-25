@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Box } from "@mui/material";
 import Banner from "../components/Banner";
 import "../css/home.css";
+import "../css/dashboard.css";
 import Highlight from "../components/Highlight";
 import Voucher from "../components/Voucher";
 import Recommend from "../components/Recommend";

@@ -8,11 +8,13 @@ import Host from "./pages/Host";
 import SignUp from "./pages/SignUp";
 import Location from "./pages/Location";
 import Room from "./pages/Room";
+import DashBoard from './pages/DashBoard'
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import NotFound from "./pages/NotFound";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
@@ -38,14 +40,16 @@ const App = () => {
 
         <Route path="/home/*" element={<Layout />}>
           <Route path="" element={<Home />} />
-          <Route path="Location" element={<Location />} />
-          <Route path="Room" element={<Room />} />
+          <Route path="location" element={<Location />} />
+          <Route path="room" element={<Room />} />
         </Route>
 
-        <Route path="/Guide" element={<Guide />} />
-        <Route path="/Host" element={<Host />} />
-        <Route path="/SignIn" element={<SignUp />} />
-        <Route path="/Login" element={<Login />} />
+        <Route path="/guide" element={<Guide />} />
+        <Route path="/host" element={<Host />} />
+        <Route path="/dashboard" element={<DashBoard />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="*" element={<NotFound/>}/>
       </Routes>
     </BrowserRouter>
   );

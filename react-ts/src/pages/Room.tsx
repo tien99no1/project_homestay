@@ -277,7 +277,7 @@ function Room() {
             </Box>
             <Box className="advise">
               <Box padding={'0 20px 0 20px'}>
-                <h4>Tư vấn từ Rikstay</h4>
+                <h3>Tư vấn từ Rikstay</h3>
                 <p style={{ fontSize: "0.8rem", marginTop: "-10px" }}>
                   Vui lòng cung cấp tên và số điện thoại để nhận được tư vấn từ
                   Luxstay cho chuyến đi của bạn.

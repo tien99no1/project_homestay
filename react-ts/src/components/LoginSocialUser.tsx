@@ -6,14 +6,14 @@ import { useNavigate } from 'react-router-dom'
 const clientId =
   "422653143846-21pcn0fknnquh0hs9881tbkhnn4f855d.apps.googleusercontent.com";
 
-function LoginSocial() {
+function LoginSocialUser() {
   const navigate = useNavigate();
   const [showloginButton, setShowloginButton] = useState<boolean>(true);
   const [showlogoutButton, setShowlogoutButton] = useState<boolean>(false);
-  const onLoginSuccess = (response: any) => {
-    console.log("Login Success:", response.profileObj);
-    localStorage.setItem('host', JSON.stringify(response.profileObj))
-    navigate('/dashboard')
+  const onLoginSuccess = (res: any) => {
+    console.log("Login Success:", res.profileObj);
+    localStorage.setItem('users', JSON.stringify(res.profileObj))
+    navigate('/')
     setShowloginButton(false);
     setShowlogoutButton(true);
   };
@@ -52,4 +52,4 @@ function LoginSocial() {
     </Box>
   );
 }
-export default LoginSocial;
+export default LoginSocialUser;

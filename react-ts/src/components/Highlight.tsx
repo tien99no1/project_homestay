@@ -75,7 +75,7 @@ export default class Highlight extends Component {
       <div>
         <Slider {...settings}>
         <div>
-            <Link to='/home/Location'>
+            <Link to='/home/location'>
             <div className="img-highlights">
               <img src="https://cdn.luxstay.com/home/location/location_1_1559734709.png" alt="" />
             </div>

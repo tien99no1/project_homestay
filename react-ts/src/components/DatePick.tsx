@@ -7,12 +7,16 @@ import Box from '@mui/material/Box';
 
 export default function BasicDateRangePicker() {
   const [value, setValue] = React.useState<DateRange<Date>>([null, null]);
+  const minValue: Date = new Date(new Date());
+  const maxValue: Date = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 90);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DateRangePicker
         startText="Check-in"
         endText="Check-out"
+        minDate={minValue}
+        maxDate={maxValue}
         value={value}
         onChange={(newValue) => {
           setValue(newValue);

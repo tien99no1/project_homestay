@@ -46,9 +46,19 @@ function SignUp() {
   const navigate = useNavigate();
 
   const onSubmit = (data: IFormInputs) => {
-    localStorage.setItem('users', JSON.stringify(data))
-    alert('Đăng ký thành công')
-    navigate('/Login')
+    fetch('http://localhost:4000/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('success', data);
+       navigate('/Login')
+    })
+    .catch(error => {
+      console.error('There was an error!', error);
+  });
 
   };
 

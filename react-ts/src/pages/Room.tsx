@@ -188,7 +188,7 @@ function Room() {
               </p>
             </Box>
           </Box>
-          <Box className="room-right" paddingTop={"4rem"} width={"65%"}>
+          <Box className="room-right" paddingTop={"4rem"} width={"75%"}>
             <Box>
               <Box className="order">
                 <Box>

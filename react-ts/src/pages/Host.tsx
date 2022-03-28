@@ -48,6 +48,7 @@ function Login() {
     if(users.email === data.email && users.password === data.password){
       alert('Đăng nhập thành công')
       navigate('/DashBoard')
+      localStorage.setItem('user', JSON.stringify(data))
     }else{
       alert('Sai tài khoản hoặc mật khẩu')
     }

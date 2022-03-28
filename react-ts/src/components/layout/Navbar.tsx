@@ -52,12 +52,18 @@ function Navbar() {
                         <li className='nav-items'>
                            <Link to='/host'>Host</Link>
                         </li>
-                        <li className='nav-items'>
+                        {
+                          localStorage.getItem('user') ? "đã đăng nhập" : (
+                            <>
+                              <li className='nav-items'>
                             <Link to= '/signup'>Đăng ký</Link>
                         </li>
                         <li className='nav-items'>
                           <Link to='/login'>Đăng nhập</Link>
                         </li>
+                            </>
+                          )
+                        }
                     </ul>
                 </Box>
             </Box>

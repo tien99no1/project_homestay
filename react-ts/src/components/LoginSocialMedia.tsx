@@ -10,8 +10,7 @@ function LoginSocial() {
   const navigate = useNavigate();
   
   const onLoginSuccess = (response: any) => {
-    console.log("Login Success:", response.profileObj);
-    localStorage.setItem('host', JSON.stringify(response.profileObj))
+    localStorage.setItem('host', JSON.stringify(response.profileObj.familyName))
     navigate('/dashboard')
    
   };
@@ -30,7 +29,7 @@ function LoginSocial() {
           onSuccess={onLoginSuccess}
           onFailure={onLoginFailure}
           cookiePolicy={"single_host_origin"}
-          isSignedIn={true}
+          autoLoad={false}
         />
     </Box>
   );

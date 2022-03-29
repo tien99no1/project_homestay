@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Box, Button, Container, styled, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -12,24 +12,9 @@ interface IFormInputs {
 }
 
 function Login() {
-  // const [user,setUser]=useState();
-  // const [email, setEmail] = useState<IFormInputs>()
+  const userName = useRef("")
   const handleUser = async (email: string, password: string) => {
-    // fetch(`http://localhost:4000/users?user.email=${email?.email}`
-    // ,{
-    //   headers : { 
-    //     'Content-Type': 'application/json',
-    //     'Accept': 'application/json'
-    //    }
-    // }
-    // )
-    // .then(function(response){
-    //   return response.json();
-    // })
-    // .then(function(myJson) {
-    //   console.log(myJson);
-    //   setUser(myJson)
-    // });
+    
     const settings = {
       headers : { 
             'Content-Type': 'application/json',
@@ -41,6 +26,7 @@ function Login() {
       
       const data = await response.json()
       if(data){
+        userName.current = data[0].lastName
         return true
       }else {
         return false
@@ -49,8 +35,6 @@ function Login() {
       return error
     }
   }
-
-
   const CustomTextField = styled(TextField)({
     "& label.Mui-focused": {
       color: "#959392",
@@ -82,7 +66,7 @@ function Login() {
     if (user) {
       alert("Đăng nhập thành công");
       navigate("/");
-      localStorage.setItem('user', JSON.stringify(data))
+      localStorage.setItem('user', JSON.stringify(userName.current))
 
     } else {
       alert("Sai tài khoản hoặc mật khẩu");

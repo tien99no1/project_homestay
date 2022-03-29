@@ -10,8 +10,7 @@ function LoginSocialUser() {
   const navigate = useNavigate();
   
   const onLoginSuccess = (res: any) => {
-    console.log("Login Success:", res.profileObj);
-    localStorage.setItem('users', JSON.stringify(res.profileObj))
+    localStorage.setItem('user', JSON.stringify(res.profileObj.familyName))
     navigate('/')
     
   };
@@ -22,7 +21,6 @@ function LoginSocialUser() {
 
   return (
     <Box>
-     
         <GoogleLogin
          className="login-google"
           clientId={clientId}
@@ -30,7 +28,7 @@ function LoginSocialUser() {
           onSuccess={onLoginSuccess}
           onFailure={onLoginFailure}
           cookiePolicy={"single_host_origin"}
-          isSignedIn={true}
+          autoLoad={false}
         />
      
     </Box>

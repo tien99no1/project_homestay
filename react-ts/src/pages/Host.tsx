@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import {Box, Button, Container, styled, TextField} from '@mui/material'
 import { Link } from 'react-router-dom'
@@ -32,7 +32,29 @@ function Login() {
         },
     },
   });
-
+  const userName = useRef("")
+  const handleUser = async (email: string, password: string) => {
+    
+    const settings = {
+      headers : { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+           }
+    };
+    try {
+      const response = await fetch(`http://localhost:4000/users?email=${email}&password=${password}`, settings) 
+      
+      const data = await response.json()
+      if(data){
+        userName.current = data[0].lastName
+        return true
+      }else {
+        return false
+      }
+    } catch (error) {
+      return error
+    }
+  }
  
   const {
     register,
@@ -42,18 +64,26 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const users = JSON.parse(localStorage.getItem('users')|| '{}')
+  // const user = JSON.parse(localStorage.getItem('user')|| '{}')
 
-  const onSubmit = (data: IFormInputs) => {
-    if(users.email === data.email && users.password === data.password){
-      alert('Đăng nhập thành công')
-      navigate('/DashBoard')
-      localStorage.setItem('user', JSON.stringify(data))
-    }else{
-      alert('Sai tài khoản hoặc mật khẩu')
+  const onSubmit = async (data: IFormInputs) => {
+    const user = await handleUser(data.email,data.password)
+    if (user) {
+      alert("Đăng nhập thành công");
+      navigate("/dashboard");
+      localStorage.setItem('host', JSON.stringify(userName.current))
+
+    } else {
+      alert("Sai tài khoản hoặc mật khẩu");
     }
     
   };
+  useEffect(() => {
+    if(localStorage.getItem('host')){
+      navigate("/dashboard")
+    }
+  }, [])
+  
 
   return (
     <Box className='host-login-container'>

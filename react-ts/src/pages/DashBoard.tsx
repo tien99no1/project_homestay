@@ -17,7 +17,6 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
-import Pagination from "@mui/material/Pagination";
 import { GoogleLogout } from "react-google-login";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -26,13 +25,15 @@ import { Link } from "react-router-dom";
 import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
 import { useNavigate } from 'react-router-dom';
 
-interface TabPanelProps {
+
+const clientId =
+  "422653143846-21pcn0fknnquh0hs9881tbkhnn4f855d.apps.googleusercontent.com";
+
+  interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
 }
-const clientId =
-  "422653143846-21pcn0fknnquh0hs9881tbkhnn4f855d.apps.googleusercontent.com";
 
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
@@ -61,9 +62,6 @@ function a11yProps(index: number) {
   };
 }
 
-// const handleClick = (event, cellValues: boolean) => {
-//   console.log(cellValues.row);
-// };
 
 export default function Host() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -113,12 +111,24 @@ export default function Host() {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+  //google logout
   const navigate = useNavigate();
   const onSignoutSuccess = () => {
-    alert("Bạn đã đăng xuất");
     console.clear();
     navigate('/host')
   };
+  const handleLogout = () => {
+    localStorage.removeItem('host')
+    navigate('/host')
+  }
+  const [user, setUser] = React.useState([]);
+
+  React.useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('host') || '{}' );
+    if (user) {
+    setUser(user);
+    }
+  }, []);
 
   return (
     <>
@@ -129,8 +139,10 @@ export default function Host() {
             RikStay
           </Link>
         </Box>
-        <Box display={"flex"} marginRight={"2rem"}>
+        <Box display={"flex"} justifyContent={' center'} alignItems={'center'} marginRight={"2rem"}>
+          <Link style={{textDecoration: 'none'}} to='/create'>
           <Button className="btn-create">Tạo chỗ nghỉ mới</Button>
+          </Link>
           <Box>
             <Button
               id="basic-button"
@@ -140,7 +152,7 @@ export default function Host() {
               onClick={handleClick}
             >
               <Avatar alt="" src="">
-                QT
+                {user[0]}
               </Avatar>
             </Button>
             <Menu
@@ -154,6 +166,9 @@ export default function Host() {
             >
               <MenuItem onClick={handleClose}>Tài khoản của tôi</MenuItem>
               <MenuItem onClick={handleClose}>
+              <button 
+                className="btn-logout" onClick={handleLogout}>
+                
                 <GoogleLogout
                   icon={false}
                   className="gg-logout"
@@ -161,6 +176,7 @@ export default function Host() {
                   buttonText="Đăng xuất"
                   onLogoutSuccess={onSignoutSuccess}
                 ></GoogleLogout>
+                </button>
               </MenuItem>
             </Menu>
           </Box>

@@ -1,8 +1,5 @@
 
-AppBar {
-    background-color: #fff;
-    
-}
+
 .appBar {
     transition: 0.5s ease;
     padding: 10px 40px;
@@ -45,6 +42,9 @@ AppBar {
     display: flex;
     list-style: none;
     text-align: center;
+    justify-content: center;
+    align-items: baseline;
+
 }
 .nav-items a{
     color: #000;
@@ -57,4 +57,11 @@ AppBar {
 }
 .nav-items a:hover {
     color: #b71c1c;
+}
+.btn-logout {
+    border: none;
+    background-color: inherit;
+    color: inherit;
+    font-size: 1rem;
+    padding: 0;
 }

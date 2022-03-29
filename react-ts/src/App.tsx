@@ -15,6 +15,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import NotFound from "./pages/NotFound";
+import CreateRoom from "./pages/CreateRoom";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
@@ -49,6 +50,7 @@ const App = () => {
         <Route path="/dashboard" element={<DashBoard />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/create" element={<CreateRoom />} />
         <Route path="*" element={<NotFound/>}/>
       </Routes>
     </BrowserRouter>

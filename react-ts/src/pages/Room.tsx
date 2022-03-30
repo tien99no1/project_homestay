@@ -64,7 +64,7 @@ function Room() {
   } = useForm<IFormInputs>();
 
   const onSubmit = (data: IFormInputs) => {
-    console.log(data)
+    console.log(data);
     return data;
   };
   return (
@@ -73,11 +73,8 @@ function Room() {
         <BannerRoom />
       </Box>
       <Container maxWidth="lg">
-        <Box
-          display="flex"
-          position={"relative"}
-        >
-          <Box className="room-left">
+        <Box display="flex" position={"relative"}>
+          <Box className="room-left" width={'65%'}>
             <Box display={"flex"}>
               <p className="mr">Rikstay</p>
               <p className="mr">Vietnam</p>
@@ -106,12 +103,11 @@ function Room() {
                 đúc của cộng đồng nước ngoài. Có rất nhiều nhà hàng, quán bar,
                 quán cà phê, phòng tập thể dục, tất cả đều được làm cho người
                 nước ngoài.
-              </p>
-              <p>
+
                 Khu vực xung quanh có nhiều cảnh quan đẹp như Hồ Kiếm, Hồ Trúc
                 Bạch, Chùa Quán Thành, Sông Hồng, Làng hoa Quang An, Làng hoa
                 Nhật Tân và đặc biệt là Hồ Tây rộng lớn, rộng lớn, nơi bạn có
-                thể đi xe đạp ( miễn phí) quanh Hồ và uống cà phê dọc đường.
+                thể đi xe đạp (miễn phí) quanh Hồ và uống cà phê dọc đường.
               </p>
             </Box>
             <Box>
@@ -188,7 +184,7 @@ function Room() {
               </p>
             </Box>
           </Box>
-          <Box className="room-right" paddingTop={"4rem"} width={"75%"}>
+          <Box className="room-right" paddingTop={"4rem"} width={"35%"}>
             <Box>
               <Box className="order">
                 <Box>
@@ -276,7 +272,7 @@ function Room() {
               </Box>
             </Box>
             <Box className="advise">
-              <Box padding={'0 20px 0 20px'}>
+              <Box padding={"0 20px 0 20px"}>
                 <h3>Tư vấn từ Rikstay</h3>
                 <p style={{ fontSize: "0.8rem", marginTop: "-10px" }}>
                   Vui lòng cung cấp tên và số điện thoại để nhận được tư vấn từ
@@ -296,7 +292,8 @@ function Room() {
                         pattern:
                           /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]{2,}$/g,
                       })}
-                    /> <br />
+                    />{" "}
+                    <br />
                     {errors?.name?.type === "required" && (
                       <small>Vui lòng nhập tên</small>
                     )}
@@ -314,7 +311,8 @@ function Room() {
                         required: true,
                         pattern: /(((\+|)84)|0)(3|5|7|8|9)+([0-9]{8})\b/i,
                       })}
-                    /> <br />
+                    />{" "}
+                    <br />
                     {errors?.phone?.type === "required" && (
                       <small>Vui lòng nhập số điện thoại</small>
                     )}
@@ -326,7 +324,9 @@ function Room() {
                     Nhận tư vấn miễn phí
                   </Button>
                   <Button className="phone-advise">
-                  <span style={{fontSize:'0.7rem'}}>Gọi 18006586 (miễn phí) để được hỗ trợ.</span> 
+                    <span style={{ fontSize: "0.7rem" }}>
+                      Gọi 18006586 (miễn phí) để được hỗ trợ.
+                    </span>
                   </Button>
                 </form>
               </Box>

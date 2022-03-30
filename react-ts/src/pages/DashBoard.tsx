@@ -23,13 +23,13 @@ import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import { Link } from "react-router-dom";
 import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate } from "react-router-dom";
+import '../css/dashboard.css'
 
 const clientId =
   "422653143846-21pcn0fknnquh0hs9881tbkhnn4f855d.apps.googleusercontent.com";
 
-  interface TabPanelProps {
+interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
@@ -61,7 +61,6 @@ function a11yProps(index: number) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-
 
 export default function Host() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -115,18 +114,18 @@ export default function Host() {
   const navigate = useNavigate();
   const onSignoutSuccess = () => {
     console.clear();
-    navigate('/host')
+    navigate("/host");
   };
   const handleLogout = () => {
-    localStorage.removeItem('host')
-    navigate('/host')
-  }
+    localStorage.removeItem("host");
+    navigate("/host");
+  };
   const [user, setUser] = React.useState([]);
 
   React.useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('host') || '{}' );
+    const user = JSON.parse(localStorage.getItem("host") || "{}");
     if (user) {
-    setUser(user);
+      setUser(user);
     }
   }, []);
 
@@ -134,14 +133,22 @@ export default function Host() {
     <>
       <Box display={"flex"} justifyContent={"end"} padding={"1rem"}>
         <Box style={{ position: "absolute" }} width={"100%"}>
-          <Link to="/" style={{paddingLeft: '50px',
-    fontSize: '2rem'}} className="brand ">
+          <Link
+            to="/"
+            style={{ paddingLeft: "50px", fontSize: "2rem" }}
+            className="brand "
+          >
             RikStay
           </Link>
         </Box>
-        <Box display={"flex"} justifyContent={' center'} alignItems={'center'} marginRight={"2rem"}>
-          <Link style={{textDecoration: 'none'}} to='/create'>
-          <Button className="btn-create">Tạo chỗ nghỉ mới</Button>
+        <Box
+          display={"flex"}
+          justifyContent={" center"}
+          alignItems={"center"}
+          marginRight={"2rem"}
+        >
+          <Link style={{ textDecoration: "none" }} to="/create">
+            <Button className="btn-create-room">Tạo chỗ nghỉ mới</Button>
           </Link>
           <Box>
             <Button
@@ -166,16 +173,14 @@ export default function Host() {
             >
               <MenuItem onClick={handleClose}>Tài khoản của tôi</MenuItem>
               <MenuItem onClick={handleClose}>
-              <button 
-                className="btn-logout" onClick={handleLogout}>
-                
-                <GoogleLogout
-                  icon={false}
-                  className="gg-logout"
-                  clientId={clientId}
-                  buttonText="Đăng xuất"
-                  onLogoutSuccess={onSignoutSuccess}
-                ></GoogleLogout>
+                <button className="btn-logout" onClick={handleLogout}>
+                  <GoogleLogout
+                    icon={false}
+                    className="gg-logout"
+                    clientId={clientId}
+                    buttonText="Đăng xuất"
+                    onLogoutSuccess={onSignoutSuccess}
+                  ></GoogleLogout>
                 </button>
               </MenuItem>
             </Menu>

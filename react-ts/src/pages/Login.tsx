@@ -4,7 +4,6 @@ import { Box, Button, Container, styled, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 import LoginSocialUser from "../components/LoginSocialUser";
 import { useNavigate } from "react-router-dom";
-import { async } from "@firebase/util";
 
 interface IFormInputs {
   email: string;
@@ -12,29 +11,31 @@ interface IFormInputs {
 }
 
 function Login() {
-  const userName = useRef("")
+  const userName = useRef("");
   const handleUser = async (email: string, password: string) => {
-    
     const settings = {
-      headers : { 
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-           }
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
     };
     try {
-      const response = await fetch(`http://localhost:4000/users?email=${email}&password=${password}`, settings) 
-      
-      const data = await response.json()
-      if(data){
-        userName.current = data[0].lastName
-        return true
-      }else {
-        return false
+      const response = await fetch(
+        `http://localhost:4000/users?email=${email}&password=${password}`,
+        settings
+      );
+
+      const data = await response.json();
+      if (data) {
+        userName.current = data[0].lastName;
+        return true;
+      } else {
+        return false;
       }
     } catch (error) {
-      return error
+      return error;
     }
-  }
+  };
   const CustomTextField = styled(TextField)({
     "& label.Mui-focused": {
       color: "#959392",
@@ -62,31 +63,27 @@ function Login() {
   const navigate = useNavigate();
 
   const onSubmit = async (data: IFormInputs) => {
-    const user = await handleUser(data.email,data.password)
+    const user = await handleUser(data.email, data.password);
     if (user) {
       alert("Đăng nhập thành công");
       navigate("/");
-      localStorage.setItem('user', JSON.stringify(userName.current))
-
+      localStorage.setItem("user", JSON.stringify(userName.current));
     } else {
       alert("Sai tài khoản hoặc mật khẩu");
     }
-    
-    
-    
+
     // if (user.email === data.email ) {
     //   alert("Đăng nhập thành công");
     //   navigate("/");
-    // } else {      
+    // } else {
     // }
   };
 
   useEffect(() => {
-    if(localStorage.getItem('user')){
-      navigate("/")
+    if (localStorage.getItem("user")) {
+      navigate("/");
     }
-  }, [])
-  
+  }, []);
 
   return (
     <Box className="container-login">

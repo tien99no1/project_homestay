@@ -373,3 +373,12 @@ small {
     width: 50%;
     font-size: 0.95rem;
 }
+.create {
+    margin: 4rem;
+}
+.text-create {
+    text-align: center;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    color: #b71c1c;
+}

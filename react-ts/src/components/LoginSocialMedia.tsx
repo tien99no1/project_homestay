@@ -1,10 +1,7 @@
 import { Box } from "@mui/material";
-import React, { useState } from "react";
 import { GoogleLogin } from "react-google-login";
 import { useNavigate } from 'react-router-dom'
-
-const clientId =
-  "422653143846-21pcn0fknnquh0hs9881tbkhnn4f855d.apps.googleusercontent.com";
+import { CONFIG } from "../config/index";
 
 function LoginSocial() {
   const navigate = useNavigate();
@@ -24,7 +21,7 @@ function LoginSocial() {
      
         <GoogleLogin
          className="login-google"
-          clientId={clientId}
+          clientId={CONFIG.GOOLGE_CLIENT_ID}
           buttonText="Đăng nhập bằng Google"
           onSuccess={onLoginSuccess}
           onFailure={onLoginFailure}

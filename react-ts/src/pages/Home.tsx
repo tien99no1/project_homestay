@@ -1,14 +1,12 @@
 import React from "react";
 import { Container, Box } from "@mui/material";
-import Banner from "../components/Banner";
 import "../css/home.css";
-import "../css/dashboard.css";
+import Banner from "../components/Banner";
 import Highlight from "../components/Highlight";
 import Voucher from "../components/Voucher";
 import Recommend from "../components/Recommend";
 import Conduct from "../components/Conduct";
 import About from "../components/About";
-import { Link } from "react-router-dom";
 
 function Home() {
   return (

@@ -68,7 +68,6 @@ function Login() {
   const onSubmit = async (data: IFormInputs) => {
     const user = await handleUser(data.email, data.password);
     if (user) {
-      alert("Đăng nhập thành công");
       navigate("/dashboard");
       localStorage.setItem("host", JSON.stringify(userName.current));
     } else {

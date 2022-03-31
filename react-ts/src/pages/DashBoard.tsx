@@ -25,6 +25,7 @@ import { Link } from "react-router-dom";
 import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 import '../css/dashboard.css'
+import ListRoom from "../components/ListRoom";
 
 const clientId =
   "422653143846-21pcn0fknnquh0hs9881tbkhnn4f855d.apps.googleusercontent.com";
@@ -71,40 +72,7 @@ export default function Host() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const rows: GridRowsProp = [
-    { id: 1, col1: "Hello", col2: "World" },
-    { id: 2, col1: "XGrid", col2: "is Awesome" },
-    { id: 3, col1: "Material-UI", col2: "is Amazing" },
-    { id: 4, col1: "Hello", col2: "World" },
-    { id: 5, col1: "XGrid", col2: "is Awesome" },
-    { id: 6, col1: "Material-UI", col2: "is Amazing" },
-  ];
-
-  const columns: GridColDef[] = [
-    { field: "col1", headerName: "ID", width: 80 },
-    { field: "col2", headerName: "Tên chỗ nghỉ", width: 300 },
-    { field: "col3", headerName: "Đặt phòng nhanh", width: 150 },
-    { field: "col4", headerName: "Địa điểm", width: 450 },
-    { field: "col5", headerName: "Trang thái", width: 150 },
-    { field: "col6", headerName: "Hiển thị/Ẩn", width: 150 },
-    {
-      field: "Hành động",
-      renderCell: (cellValues) => {
-        return (
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={(event) => {
-              // handleClick(event, cellValue);
-            }}
-          >
-            Thiết lập
-          </Button>
-        );
-      },
-      width: 150,
-    },
-  ];
+  
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -356,39 +324,9 @@ export default function Host() {
             </Box>
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <Typography
-              variant="h5"
-              component="h2"
-              sx={{ display: "flex", fontWeight: "500", m: "2rem 0 2rem 0" }}
-            >
-              2 Chỗ nghỉ
-            </Typography>
-            <Box
-              component="form"
-              sx={{
-                "& .MuiTextField-root": { m: 1, width: "25ch" },
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <div>
-                <TextField
-                  id="outlined-number"
-                  label="Tìm kiếm theo mã phòng"
-                  type="number"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </div>
-            </Box>
+            
             <div style={{ height: 400, width: "100%", textAlign: "center" }}>
-              <DataGrid
-                rows={rows}
-                columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-              />
+              <ListRoom/>
             </div>
           </TabPanel>
         </Box>

@@ -65,18 +65,11 @@ function Login() {
   const onSubmit = async (data: IFormInputs) => {
     const user = await handleUser(data.email, data.password);
     if (user) {
-      alert("Đăng nhập thành công");
       navigate("/");
       localStorage.setItem("user", JSON.stringify(userName.current));
     } else {
       alert("Sai tài khoản hoặc mật khẩu");
     }
-
-    // if (user.email === data.email ) {
-    //   alert("Đăng nhập thành công");
-    //   navigate("/");
-    // } else {
-    // }
   };
 
   useEffect(() => {

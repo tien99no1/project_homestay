@@ -10,3 +10,47 @@
     background: inherit !important;
     margin: -10px !important;
 }
+.create {
+    margin: 5rem;
+}
+.form-create-room {
+    margin: 4rem;
+}
+.text-create {
+    text-align: center;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    color: #b71c1c;
+}
+.br-m {
+    margin: 4rem;
+}
+.input-create-form {
+    margin: 1rem 0
+}
+.Box-btn-create {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem 0;
+}
+.btn-create-form {
+    width: 10%;
+    color: #fff !important;
+    background: #b71c1c !important;
+}
+.img-list-room {
+    width: 100%;
+    height: 100%;
+}
+.row {
+    text-align: left;
+}
+.btn-delete-room {
+    border: none;
+    background-color: inherit;
+    color: inherit;
+    font-size: 1rem;
+    padding: 0;
+}

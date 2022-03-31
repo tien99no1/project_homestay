@@ -13,16 +13,17 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import "../css/dashboard.css";
+import { CONFIG } from "../config";
 
 interface IFormInputs {
   roomType: string;
   roomName: string;
   roomCate: string;
-  title: string;
   address: string;
   addressDetail: string;
+  title: string;
   roomAcreage: string;
-  roomPrice: string;
+  roomPrice: number;
   info: string;
   bathRoom: number;
   bed: number;
@@ -30,7 +31,7 @@ interface IFormInputs {
   kitchen: number;
   bedRoom: number;
   roomImg: string;
-  status: true;
+  status: number;
 }
 
 const optionsType = [
@@ -68,20 +69,32 @@ function CreateRoom() {
   const navigate = useNavigate();
 
   const onSubmit = (data: IFormInputs) => {
-    alert(JSON.stringify(data));
+    fetch(`${CONFIG.ApiRoom}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({...data, status: 0}),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("success", data);
+        navigate("/dashboard");
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
+      });
   };
 
   return (
     <Box className="container-create">
       <Box style={{ position: "absolute", top: "20px" }} width={"100%"}>
-        <Link to="/" className="brand ">
+        <Link to="/" className="brand br-m ">
           RikStay
         </Link>
       </Box>
       <Box className="create">
         <Box className="form-create">
           <h3 className="text-create">Tạo chỗ nghỉ mới</h3>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form  className="form-create-room" onSubmit={handleSubmit(onSubmit)}>
             <Grid
               container
               rowSpacing={0.1}
@@ -90,8 +103,8 @@ function CreateRoom() {
               <Grid item md={3} sm={6}>
                 <Box>
                   <h3>Phân loại chỗ</h3>
-                  <Box>
-                    <FormControl variant="standard" sx={{ minWidth: 250 }}>
+                  <Box className="input-create-form">
+                    <FormControl variant="standard" sx={{ minWidth: 300 }}>
                       <InputLabel id="demo-simple-select-standard-label">
                         Chọn chỗ nghỉ
                       </InputLabel>
@@ -109,28 +122,25 @@ function CreateRoom() {
                       )}
                     </FormControl>
                   </Box>
-                  <Box>
+                  <Box className="input-create-form">
                     <TextField
-                      sx={{ minWidth: 250 }}
+                      sx={{ minWidth: 300 }}
                       label="Tên chỗ nghỉ"
                       variant="standard"
                       {...register("roomName", {
                         required: true,
-                        pattern:
-                          /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]{2,}$/g,
+                        minLength: 2,
                       })}
                     />
                     {errors?.roomName?.type === "required" && (
                       <small>Vui lòng nhập trường này</small>
                     )}
-                    {errors?.roomName?.type === "pattern" && (
-                      <small>
-                        Tên chỗ nghỉ phải là chữ cái và dài hơn 2 ký tự
-                      </small>
+                    {errors?.roomName?.type === "minLength" && (
+                      <small>Tên chỗ nghỉ phải dài hơn 2 ký tự</small>
                     )}
                   </Box>
-                  <Box>
-                    <FormControl variant="standard" sx={{ minWidth: 250 }}>
+                  <Box className="input-create-form">
+                    <FormControl variant="standard" sx={{ minWidth: 300 }}>
                       <InputLabel id="demo-simple-select-standard-label">
                         Loại đặt chỗ
                       </InputLabel>
@@ -152,18 +162,18 @@ function CreateRoom() {
               </Grid>
               <Grid item md={3} sm={6}>
                 <Box>
-                  <h3>Vị trí chỗ nghỉ</h3>
-                  <Box>
-                    <FormControl variant="standard" sx={{ minWidth: 250 }}>
+                  <h3>Vị trí chỗ nghỉ, số khách</h3>
+                  <Box className="input-create-form">
+                    <FormControl variant="standard" sx={{ minWidth: 300 }}>
                       <InputLabel id="demo-simple-select-standard-label">
-                        Thành phố
+                        Chọn thành phố
                       </InputLabel>
                       <Select {...register("address", { required: true })}>
                         {optionsCity.map((optionCity, index) => {
                           return (
-                            <option key={index} value={optionCity.value}>
+                            <MenuItem key={index} value={optionCity.value}>
                               {optionCity.label}
-                            </option>
+                            </MenuItem>
                           );
                         })}
                       </Select>
@@ -172,221 +182,222 @@ function CreateRoom() {
                       )}
                     </FormControl>
                   </Box>
-                  <Box>
+                  <Box className="input-create-form">
                     <TextField
-                      sx={{ minWidth: 250 }}
-                      label="Tên chỗ nghỉ"
+                      sx={{ minWidth: 300 }}
+                      label="Địa điểm cụ thể"
                       variant="standard"
-                      {...register("roomName", {
+                      {...register("addressDetail", {
                         required: true,
                         pattern:
                           /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]{2,}$/g,
                       })}
                     />
-                    {errors?.roomName?.type === "required" && (
+                    {errors?.addressDetail?.type === "required" && (
                       <small>Vui lòng nhập trường này</small>
                     )}
-                    {errors?.roomName?.type === "pattern" && (
+                    {errors?.addressDetail?.type === "pattern" && (
                       <small>
-                        Tên chỗ nghỉ phải là chữ cái và dài hơn 2 ký tự
+                        Địa điểm cụ thể phải là chữ cái và dài hơn 2 ký tự
                       </small>
                     )}
                   </Box>
-                  <Box>
-                    <FormControl variant="standard" sx={{ minWidth: 250 }}>
-                      <InputLabel id="demo-simple-select-standard-label">
-                        Loại đặt chỗ
-                      </InputLabel>
-                      <Select {...register("roomCate", { required: true })}>
-                        {optionsCate.map((optionCate, index) => {
-                          return (
-                            <MenuItem key={index} value={optionCate.value}>
-                              {optionCate.label}
-                            </MenuItem>
-                          );
-                        })}
-                      </Select>
-                      {errors?.roomCate?.type === "required" && (
-                        <small>Vui lòng chọn</small>
-                      )}
-                    </FormControl>
+                  <Box className="input-create-form">
+                    <TextField
+                      sx={{ minWidth: 300 }}
+                      label="Số khách"
+                      type="number"
+                      variant="standard"
+                      {...register("customer", {
+                        required: true,
+                        min: 1,
+                      })}
+                    />
+                    {errors?.customer?.type === "required" && (
+                      <small>Vui lòng nhập trường này</small>
+                    )}
+                    {errors?.customer?.type === "min" && (
+                      <small>Số khách hàng phải hơn hoặc bằng 1</small>
+                    )}
                   </Box>
                 </Box>
               </Grid>
               <Grid item md={3} sm={6}>
                 <Box>
                   <h3>Không gian</h3>
-                  <Box>
-                    <FormControl variant="standard" sx={{ minWidth: 250 }}>
-                      <InputLabel id="demo-simple-select-standard-label">
-                        Chọn chỗ nghỉ
-                      </InputLabel>
-                      <Select {...register("roomType", { required: true })}>
-                        {optionsType.map((optionType, index) => {
-                          return (
-                            <MenuItem key={index} value={optionType.value}>
-                              {optionType.label}
-                            </MenuItem>
-                          );
-                        })}
-                      </Select>
-                      {errors?.roomType?.type === "required" && (
-                        <small>Vui lòng chọn</small>
-                      )}
-                    </FormControl>
-                  </Box>
-                  <Box>
+                  <Box className="input-create-form" >
                     <TextField
-                      sx={{ minWidth: 250 }}
-                      label="Tên chỗ nghỉ"
+                      sx={{ minWidth: 300 }}
+                      label="Diện tích chỗ nghỉ"
+                      type="number"
                       variant="standard"
-                      {...register("roomName", {
+                      {...register("roomAcreage", {
                         required: true,
-                        pattern:
-                          /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]{2,}$/g,
+                        min: 30,
                       })}
                     />
-                    {errors?.roomName?.type === "required" && (
+                    {errors?.roomAcreage?.type === "required" && (
                       <small>Vui lòng nhập trường này</small>
                     )}
-                    {errors?.roomName?.type === "pattern" && (
+                    {errors?.roomAcreage?.type === "min" && (
+                      <small>Diện tích phải lớn hơn 30 m2</small>
+                    )}
+                  </Box>
+                  <Box className="input-create-form">
+                    <TextField
+                      sx={{ minWidth: 300 }}
+                      label="Phòng ngủ"
+                      type="number"
+                      variant="standard"
+                      {...register("bedRoom", {
+                        required: true,
+                        min: 1,
+                      })}
+                    />
+                    {errors?.bedRoom?.type === "required" && (
+                      <small>Vui lòng nhập trường này</small>
+                    )}
+                    {errors?.bedRoom?.type === "min" && (
+                      <small>Số phòng ngủ phải lớn hơn hoặc bằng 1</small>
+                    )}
+                  </Box>
+                  <Box className="input-create-form">
+                    <TextField
+                      sx={{ minWidth: 300 }}
+                      label="Giường ngủ"
+                      type="number"
+                      variant="standard"
+                      {...register("bed", {
+                        required: true,
+                        min: 1,
+                      })}
+                    />
+                    {errors?.bed?.type === "required" && (
+                      <small>Vui lòng nhập trường này</small>
+                    )}
+                    {errors?.bed?.type === "min" && (
                       <small>
-                        Tên chỗ nghỉ phải là chữ cái và dài hơn 2 ký tự
+                        Giường ngủ phải có số lượng lớn hơn hoặc bằng 1
                       </small>
                     )}
                   </Box>
-                  <Box>
-                    <FormControl variant="standard" sx={{ minWidth: 250 }}>
-                      <InputLabel id="demo-simple-select-standard-label">
-                        Loại đặt chỗ
-                      </InputLabel>
-                      <Select {...register("roomCate", { required: true })}>
-                        {optionsCate.map((optionCate, index) => {
-                          return (
-                            <MenuItem key={index} value={optionCate.value}>
-                              {optionCate.label}
-                            </MenuItem>
-                          );
-                        })}
-                      </Select>
-                      {errors?.roomCate?.type === "required" && (
-                        <small>Vui lòng chọn</small>
-                      )}
-                    </FormControl>
+                  <Box className="input-create-form">
+                    <TextField
+                      sx={{ minWidth: 300 }}
+                      label="Phòng tắm"
+                      type="number"
+                      variant="standard"
+                      {...register("bathRoom", {
+                        required: true,
+                        min: 1,
+                      })}
+                    />
+                    {errors?.bathRoom?.type === "required" && (
+                      <small>Vui lòng nhập trường này</small>
+                    )}
+                    {errors?.bathRoom?.type === "min" && (
+                      <small>
+                        Phòng tắm phải có số lượng lớn hơn hoặc bằng 1
+                      </small>
+                    )}
+                  </Box>
+                  <Box className="input-create-form">
+                    <TextField
+                      sx={{ minWidth: 300 }}
+                      label="Phòng bếp"
+                      type="number"
+                      variant="standard"
+                      {...register("kitchen", {
+                        required: true,
+                        min: 1,
+                      })}
+                    />{" "}
+                    <br />
+                    {errors?.kitchen?.type === "required" && (
+                      <small>Vui lòng nhập trường này</small>
+                    )}
+                    {errors?.kitchen?.type === "min" && (
+                      <small>Phòng phải có số lượng lớn hơn hoặc bằng 1</small>
+                    )}
                   </Box>
                 </Box>
               </Grid>
               <Grid item md={3} sm={6}>
                 <Box>
-                  <h3>Giới thiệu</h3>
-                  <Box>
-                    <FormControl variant="standard" sx={{ minWidth: 250 }}>
-                      <InputLabel id="demo-simple-select-standard-label">
-                        Chọn chỗ nghỉ
-                      </InputLabel>
-                      <Select {...register("roomType", { required: true })}>
-                        {optionsType.map((optionType, index) => {
-                          return (
-                            <MenuItem key={index} value={optionType.value}>
-                              {optionType.label}
-                            </MenuItem>
-                          );
-                        })}
-                      </Select>
-                      {errors?.roomType?.type === "required" && (
-                        <small>Vui lòng chọn</small>
-                      )}
-                    </FormControl>
-                  </Box>
-                  <Box>
+                  <h3>Giới thiệu, giá phòng</h3>
+                  <Box className="input-create-form">
                     <TextField
-                      sx={{ minWidth: 250 }}
-                      label="Tên chỗ nghỉ"
+                      sx={{ minWidth: 300 }}
+                      label="Tiêu đề"
                       variant="standard"
-                      {...register("roomName", {
+                      {...register("title", {
                         required: true,
-                        pattern:
-                          /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]{2,}$/g,
+                        minLength: 2,
                       })}
                     />
-                    {errors?.roomName?.type === "required" && (
+                    {errors?.title?.type === "required" && (
                       <small>Vui lòng nhập trường này</small>
                     )}
-                    {errors?.roomName?.type === "pattern" && (
-                      <small>
-                        Tên chỗ nghỉ phải là chữ cái và dài hơn 2 ký tự
-                      </small>
+                    {errors?.title?.type === "minLength" && (
+                      <small>Tiêu đề phải dài hơn 2 ký tự</small>
                     )}
                   </Box>
-                  <Box>
-                    <FormControl variant="standard" sx={{ minWidth: 250 }}>
-                      <InputLabel id="demo-simple-select-standard-label">
-                        Loại đặt chỗ
-                      </InputLabel>
-                      <Select {...register("roomCate", { required: true })}>
-                        {optionsCate.map((optionCate, index) => {
-                          return (
-                            <MenuItem key={index} value={optionCate.value}>
-                              {optionCate.label}
-                            </MenuItem>
-                          );
-                        })}
-                      </Select>
-                      {errors?.roomCate?.type === "required" && (
-                        <small>Vui lòng chọn</small>
-                      )}
-                    </FormControl>
+                  <Box className="input-create-form">
+                    <TextField
+                      sx={{ minWidth: 300 }}
+                      label="Thông tin chỗ nghỉ"
+                      variant="standard"
+                      {...register("info", {
+                        required: true,
+                        minLength: 2,
+                      })}
+                    />
+                    {errors?.info?.type === "required" && (
+                      <small>Vui lòng nhập trường này</small>
+                    )}
+                    {errors?.info?.type === "minLength" && (
+                      <small>Tên chỗ nghỉ phải dài hơn 2 ký tự</small>
+                    )}
+                  </Box>
+                  <Box className="input-create-form">
+                    <TextField
+                      sx={{ minWidth: 300 }}
+                      label="link ảnh"
+                      variant="standard"
+                      {...register("roomImg", {
+                        required: true,
+                      })}
+                    />
+                    {errors?.roomImg?.type === "required" && (
+                      <small>Vui lòng nhập trường này</small>
+                    )}
+                  </Box>
+                  <Box className="input-create-form">
+                    <TextField
+                      sx={{ minWidth: 300 }}
+                      type="number"
+                      label="Giá phòng"
+                      variant="standard"
+                      {...register("roomPrice", {
+                        required: true,
+                        min: 0,
+                      })}
+                    />
+                    {errors?.roomPrice?.type === "required" && (
+                      <small>Vui lòng nhập trường này</small>
+                    )}
+                    {errors?.roomPrice?.type === "min" && (
+                      <small>Giá phòng lớn hơn hoặc bằng 0</small>
+                    )}
                   </Box>
                 </Box>
               </Grid>
             </Grid>
-
-            <Box></Box>
-            <Box>
-              <input
-                className="input-sign"
-                {...register("addressDetail", {
-                  required: true,
-                  maxLength: 300,
-                  pattern:
-                    /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]{2,}$/g,
-                })}
-              />
-              {errors?.addressDetail?.type === "required" && (
-                <small>Vui lòng nhập trường này</small>
-              )}
-              {errors?.addressDetail?.type === "maxLength" && (
-                <small>Địa chỉ cụ thể không được vượt quá 300 ký tự</small>
-              )}
-              {errors?.addressDetail?.type === "pattern" && (
-                <small>Địa chỉ cụ thể phải là chữ cái và dài hơn 2 ký tự</small>
-              )}
+            <Box className="Box-btn-create">
+              <Button className="btn-create-form" type="submit">
+                Tạo phòng
+              </Button>
             </Box>
-            <Box>
-              <input
-                className="input-sign"
-                {...register("title", {
-                  required: true,
-                  maxLength: 300,
-                  pattern:
-                    /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]{2,}$/g,
-                })}
-              />
-              {errors?.title?.type === "required" && (
-                <small>Vui lòng nhập trường này</small>
-              )}
-              {errors?.title?.type === "maxLength" && (
-                <small>Title không được vượt quá 300 ký tự</small>
-              )}
-              {errors?.title?.type === "pattern" && (
-                <small>Tiêu đề phải là chữ cái và dài hơn 2 ký tự</small>
-              )}
-            </Box>
-
-            <Button className="btn-create-form" type="submit">
-              Tạo phòng
-            </Button>
-            <br />
           </form>
         </Box>
       </Box>

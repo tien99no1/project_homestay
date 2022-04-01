@@ -1,8 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { CONFIG } from "../config";
 
 function SampleNextArrow(props: any) {
   const { className, style, onClick } = props;
@@ -38,6 +40,17 @@ function SamplePrevArrow(props: any) {
 }
 
 export default function Highlight() {
+  const [location, setLocation] = useState<any>([]);
+
+  const getLocation = async () => {
+    try {
+      const data = await axios.get(`${CONFIG.ApiAddress}`);
+      setLocation(data.data);
+    } catch (e) {}
+  };
+  useEffect(() => {
+    getLocation();
+  }, []);
   const settings = {
     infinite: false,
     speed: 500,
@@ -74,87 +87,23 @@ export default function Highlight() {
   };
   return (
     <div>
-      <Slider {...settings}>
-        <div>
-          <Link to="/home/location">
-            <div className="img-highlights">
-              <img
-                src="https://cdn.luxstay.com/home/location/location_1_1559734709.png"
-                alt=""
-              />
+          <Slider {...settings}>
+            {location.map((local: any) => (
+              <div key={local.id}>
+              <Link to={`/home/location/${local.nameAddress}`}>
+                <div className="img-highlights">
+                  <img
+                    src={local.img}
+                    alt=""
+                  />
+                </div>
+                <div className="content">
+                  <div className="title">{local.nameAddress}</div>
+                </div>
+              </Link>
             </div>
-            <div className="content">
-              <div className="title">Hà Nội</div>
-            </div>
-          </Link>
-        </div>
-        <div>
-          <div className="img-highlights">
-            <img
-              src="https://cdn.luxstay.com/home/location/location_5_1559735011.png"
-              alt=""
-            />
-          </div>
-          <div className="content">
-            <div className="title">TP. Hồ Chí Minh</div>
-          </div>
-        </div>
-        <div>
-          <div className="img-highlights">
-            <img
-              src="https://cdn.luxstay.com/home/location/location_10_1559303118.png"
-              alt=""
-            />
-          </div>
-          <div className="content">
-            <div className="title">Vũng Tàu</div>
-          </div>
-        </div>
-        <div>
-          <div className="img-highlights">
-            <img
-              src="https://cdn.luxstay.com/home/location/location_16_1559303173.png"
-              alt=""
-            />
-          </div>
-          <div className="content">
-            <div className="title">Đà Nẵng</div>
-          </div>
-        </div>
-        <div>
-          <div className="img-highlights">
-            <img
-              src="https://cdn.luxstay.com/home/location/location_1_1559373089.png"
-              alt=""
-            />
-          </div>
-          <div className="content">
-            <div className="title">Nha Trang</div>
-          </div>
-        </div>
-        <div>
-          <div className="img-highlights">
-            <img
-              src="https://cdn.luxstay.com/home/location/location_5_1559786196.png"
-              alt=""
-            />
-          </div>
-          <div className="content">
-            <div className="title">Hạ Long</div>
-          </div>
-        </div>
-        <div>
-          <div className="img-highlights">
-            <img
-              src="https://cdn.luxstay.com/home/location/location_6_1559786202.png"
-              alt=""
-            />
-          </div>
-          <div className="content">
-            <div className="title">Hội An</div>
-          </div>
-        </div>
-      </Slider>
+            ))}  
+          </Slider>
     </div>
   );
 }

@@ -31,7 +31,9 @@ function Login() {
       },
     },
   });
-  const userName = useRef("");
+  const hostName = useRef("");
+  const hostId = useRef('');
+
   const handleUser = async (email: string, password: string) => {
     const settings = {
       headers: {
@@ -45,9 +47,10 @@ function Login() {
         settings
       );
 
-      const data = await response.json();
-      if (data) {
-        userName.current = data[0].lastName;
+      const dataHost = await response.json();
+      if (dataHost) {
+        hostName.current = dataHost[0].lastName;
+        hostId.current = dataHost[0].id;
         return true;
       } else {
         return false;
@@ -69,7 +72,8 @@ function Login() {
     const user = await handleUser(data.email, data.password);
     if (user) {
       navigate("/dashboard");
-      localStorage.setItem("host", JSON.stringify(userName.current));
+      localStorage.setItem("hostName", JSON.stringify(hostName.current));
+      localStorage.setItem("hostId", JSON.stringify(hostId.current));
     } else {
       alert("Sai tài khoản hoặc mật khẩu");
     }

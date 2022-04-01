@@ -22,7 +22,7 @@ import React from "react";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.info.dark,
+    backgroundColor: theme.palette.error.dark,
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {},
@@ -47,41 +47,34 @@ function ListRoom() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const userId = localStorage.getItem("userId");
+  const hostId = localStorage.getItem("hostId");
 
-  const [room, setRoom] = useState<any[]>([]);
   const [listAllRoom, setListAllRoom] = useState<any[]>([]);
   const [searchRoomName, setSearchRoomName] = useState("");
 
   const getListroom = async () => {
     try {
-      const data = await axios.get(`${CONFIG.ApiRoom}`);
-      console.log(data.data);
+      const data = await axios.get(`${CONFIG.ApiRoom}?hostId=${hostId}`);
       setListAllRoom(data.data);
     } catch (e) {}
   };
-
+  
   useEffect(() => {
     getListroom();
   }, []);
 
-  useEffect(() => {
-    listAllRoom.forEach((room) => {
-      setRoom((prev) => [...prev, room]);
-    });
-  }, [listAllRoom]);
   const handleClickDelete = async (id: number) => {
       try {const data = await axios.delete(`${CONFIG.ApiRoom}/${id}`);
+      data ? alert("Xoá thành công") : alert("Xóa thất bại")
       getListroom()
-      data ? alert("Delete successful") : alert("Delete unsucessfull")
     } catch (error) {
         console.log(error);
-        
     }
-  };
+  }
+  console.log(listAllRoom)
   return (
     <div>
-      {room.length > 0 ? (
+      {listAllRoom.length > 0 ? (
         <div className="row">
           <Typography variant="h5" sx={{ fontWeight: "600", m: "1rem 0" }}>
             Danh sách chỗ nghỉ
@@ -126,7 +119,7 @@ function ListRoom() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {room
+                {listAllRoom
                   .filter((value) => {
                     if (searchRoomName == "") {
                       return value;

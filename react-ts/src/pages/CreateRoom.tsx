@@ -68,11 +68,13 @@ function CreateRoom() {
   } = useForm<IFormInputs>();
   const navigate = useNavigate();
 
+  const hostId = localStorage.getItem('hostId')
+
   const onSubmit = (data: IFormInputs) => {
     fetch(`${CONFIG.ApiRoom}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({...data, status: 0}),
+      body: JSON.stringify({...data, status: 0, hostId}),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -104,7 +106,7 @@ function CreateRoom() {
                 <Box>
                   <h3>Phân loại chỗ</h3>
                   <Box className="input-create-form">
-                    <FormControl variant="standard" sx={{ minWidth: 300 }}>
+                    <FormControl variant="standard" sx={{ minWidth: 300}}>
                       <InputLabel id="demo-simple-select-standard-label">
                         Chọn chỗ nghỉ
                       </InputLabel>

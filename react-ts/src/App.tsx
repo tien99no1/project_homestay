@@ -40,8 +40,8 @@ const App = () => {
         <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="/home/*" element={<Layout />}>
           <Route path="" element={<Home />} />
-          <Route path="location" element={<Location />} />
-          <Route path="room" element={<Room />} />
+          <Route path="location/:address" element={<Location />} />
+          <Route path="room/:id" element={<Room />} />
         </Route>
         <Route path="/guide" element={<Guide />} />
         <Route path="/host" element={<Host />} />

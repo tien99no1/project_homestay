@@ -11,7 +11,7 @@ import {
   styled,
   TextField,
 } from "@mui/material";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import BannerRoom from "../components/BannerRoom";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ApartmentOutlinedIcon from "@mui/icons-material/ApartmentOutlined";
@@ -23,13 +23,44 @@ import GarageIcon from "@mui/icons-material/Garage";
 import SignalWifi0BarIcon from "@mui/icons-material/SignalWifi0Bar";
 import BasicDateRangePicker from "../components/DatePick";
 import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
+import { CONFIG } from "../config";
+import axios from "axios";
 
 interface IFormInputs {
   name: string;
   phone: string;
 }
-
+interface IPost {
+  id: number;
+  roomType: string;
+  roomName: string;
+  roomPrice: number;
+  roomCate: string;
+  address: string;
+  addressDetail: string;
+  roomAcreage: number;
+  info: string;
+  title: string;
+  bed: number;
+  bedRoom: number;
+  bathRoom: number;
+}
+const defaultProps: IPost[] = [];
 function Room() {
+  const [roomInfo, setRoomInfo] = useState<any>({})
+  const params = useParams();
+  const { id } = params;
+  
+  const getRoom = async () => {
+    try {
+      const data = await axios.get(`${CONFIG.ApiRoom}/${id}`);
+      setRoomInfo(data.data);
+    } catch (e) {}
+  };
+  useEffect(() => {
+    getRoom();
+  }, []);
   //dialog
   const [open, setOpen] = React.useState(false);
   const [children, setChildren] = React.useState<number | string>("");
@@ -78,28 +109,29 @@ function Room() {
             <Box display={"flex"}>
               <p className="mr">Rikstay</p>
               <p className="mr">Vietnam</p>
-              <p className="mr">Ha Noi</p>
-              <p className="mr">Tay Ho</p>
+              <p className="mr">{roomInfo.address}</p>
+              <p className="mr">{roomInfo.addressDetail}</p>
             </Box>
             <Box>
-              <h2>Hanoi Home 3 - Beautiful apartment</h2>
+              <h2>{roomInfo.title}</h2>
               <p className="phone margin-icon">
-                <LocationOnIcon /> <b>Tây Hồ, Hà Nội, Việt Nam</b>{" "}
+                <LocationOnIcon /> <b>{roomInfo.addressDetail}, {roomInfo.address}, Việt Nam</b>{" "}
                 <a style={{ marginLeft: "1rem", color: "#b71c1c" }} href="#map">
                   Xem bản đồ
                 </a>
               </p>
               <p className="phone margin-icon">
                 <ApartmentOutlinedIcon />
-                <b>Căn hộ dịch vụ · </b>45 m<sup>2</sup>
+                <b>{roomInfo.roomType}· </b>{roomInfo.roomAcreage} m<sup>2</sup>
               </p>
               <p>
-                Phòng riêng · 1 Phòng tắm · 1 giường · 1 phòng ngủ · 2 khách
-                (tối đa 2 khách)
+                Phòng riêng · {roomInfo.bathRoom} Phòng tắm · {roomInfo.bed} giường · {roomInfo.bedRoom} phòng ngủ · {roomInfo.customer} khách
+                (tối đa {roomInfo.customer + 1} khách)
               </p>
               <br />
               <p>
-                Căn hộ nằm ở một vị trí lý tưởng, nơi này là một con phố đông
+                {roomInfo.info}
+                {/* Căn hộ nằm ở một vị trí lý tưởng, nơi này là một con phố đông
                 đúc của cộng đồng nước ngoài. Có rất nhiều nhà hàng, quán bar,
                 quán cà phê, phòng tập thể dục, tất cả đều được làm cho người
                 nước ngoài.
@@ -107,7 +139,7 @@ function Room() {
                 Khu vực xung quanh có nhiều cảnh quan đẹp như Hồ Kiếm, Hồ Trúc
                 Bạch, Chùa Quán Thành, Sông Hồng, Làng hoa Quang An, Làng hoa
                 Nhật Tân và đặc biệt là Hồ Tây rộng lớn, rộng lớn, nơi bạn có
-                thể đi xe đạp (miễn phí) quanh Hồ và uống cà phê dọc đường.
+                thể đi xe đạp (miễn phí) quanh Hồ và uống cà phê dọc đường. */}
               </p>
             </Box>
             <Box>
@@ -190,7 +222,7 @@ function Room() {
                 <Box>
                   <p style={{ marginLeft: "1rem" }}>
                     <span style={{ fontSize: "1.7rem", fontWeight: "600" }}>
-                      690,000đ
+                      {roomInfo.roomPrice}đ
                     </span>
                     /đêm
                   </p>

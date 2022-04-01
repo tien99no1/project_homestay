@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Box,
@@ -10,15 +10,38 @@ import {
   SelectChangeEvent,
   Grid,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
+import { CONFIG } from "../config";
 
+interface IPost {
+  id: number,
+  roomImg: string,
+  roomCate: string,
+  title: string,
+  roomPrice: number,
+  address: string
+}
+const defaultProps:IPost[] = [];
 function Location() {
   const [select, setSelect] = React.useState("");
-
+  const [rooms, setRooms] = useState(defaultProps);
+  const params = useParams();
+  const { address } = params;
   const handleChange = (event: SelectChangeEvent) => {
     setSelect(event.target.value as string);
   };
-
+  const getListRoom = async () => {
+    try {
+      const data = await axios.get(`${CONFIG.ApiRoom}`);
+      setRooms(data.data);
+    } catch (e) {}
+  };
+  console.log("address", address);
+  
+  useEffect(() => {
+    getListRoom();
+  }, []);
   return (
     <Container maxWidth="xl">
       <Box className="location-top">
@@ -33,7 +56,7 @@ function Location() {
           <p>
             <b>
               Trước khi đặt phòng, hãy kiểm tra những địa điểm bị hạn chế du
-              lịch trong thời gian này. {""}
+              lịch trong thời gian này.
             </b>
             Sức khỏe và sự an toàn của cộng đồng luôn được đặt hàng đầu. Vì vậy,
             vui lòng làm theo chỉ thị của chính phủ bởi điều đó thực sự cần
@@ -42,7 +65,7 @@ function Location() {
         </Box>
         <Box className="place">
           <Box>
-            <h2>20 homestay tại Hà Nội</h2>
+            <h2>Chỗ ở tại {address}</h2>
           </Box>
           <Box sx={{ minWidth: 120 }}>
             <FormControl>
@@ -67,190 +90,31 @@ function Location() {
           container
           rowSpacing={3}
           columnSpacing={{ xs: 1, sm: 1, md: 1.5 }}
-        >
-          <Grid item xl={3} sm={6} md={4} xs={12}>
+        >{rooms
+          .filter((room:any) => room.address === address)
+          .map((room: any) => {
+          return (
+            <Grid item xl={3} sm={6} md={4} xs={12}>
             <Box className="Location">
-              <Link to="/home/room">
+              <Link to={`/home/room/${room.id}`}>
                 <Box className="img-location">
                   <img
-                    src="https://cdn.luxstay.com/rooms/66652/large/69ad8ebe05e3fdbda4f2.jpg"
+                    src={room.roomImg}
                     alt=""
                   />
                 </Box>
               </Link>
               <Box className="content-location">
-                <span>Căn hộ dịch vụ - 1 phòng ngủ</span>
-                <p>The Galaxy Home </p>
-                <b>850,000đ/đêm</b>
+                <span>{room.title}</span>
+                <p>{room.roomName}</p>
+                <b>{room.roomPrice}đ/đêm</b>
               </Box>
             </Box>
           </Grid>
-          <Grid item xl={3} sm={6} md={4} xs={12}>
-            <Box className="Location">
-              <Box className="img-location">
-                <img
-                  src="https://cdn.luxstay.com/rooms/37700/large/IMG_2698.jpg"
-                  alt=""
-                />
-              </Box>
-              <Box className="content-location">
-                <span>Căn hộ dịch vụ - 1 phòng ngủ</span>
-                <p>The Galaxy Home </p>
-                <b>850,000đ/đêm</b>
-              </Box>
-            </Box>
-          </Grid>
-
-          <Grid item xl={3} sm={6} md={4} xs={12}>
-            <Box className="Location">
-              <Box className="img-location">
-                <img
-                  src="https://cdn.luxstay.com/users/407757/BXSWxc8JJfPItWkkKpNpwqMf.jpg"
-                  alt=""
-                />
-              </Box>
-              <Box className="content-location">
-                <span>Căn hộ dịch vụ - 1 phòng ngủ</span>
-                <p>The Galaxy Home </p>
-                <b>850,000đ/đêm</b>
-              </Box>
-            </Box>
-          </Grid>
-          <Grid item xl={3} sm={6} md={4} xs={12}>
-            <Box className="Location">
-              <Box className="img-location">
-                <img
-                  src="https://cdn.luxstay.com/users/354826/kV0JTJvfJaj8wTRMvSP9sIfD.jpg"
-                  alt=""
-                />
-              </Box>
-              <Box className="content-location">
-                <span>Căn hộ dịch vụ - 1 phòng ngủ</span>
-                <p>The Galaxy Home </p>
-                <b>850,000đ/đêm</b>
-              </Box>
-            </Box>
-          </Grid>
-          <Grid item xl={3} sm={6} md={4} xs={12}>
-            <Box className="Location">
-              <Box className="img-location">
-                <img
-                  src="https://cdn.luxstay.com/admins/12/2TR6G7u6ua140zR2NI4yUJdG.png"
-                  alt=""
-                />
-              </Box>
-              <Box className="content-location">
-                <span>Căn hộ dịch vụ - 1 phòng ngủ</span>
-                <p>The Galaxy Home </p>
-                <b>850,000đ/đêm</b>
-              </Box>
-            </Box>
-          </Grid>
-          <Grid item xl={3} sm={6} md={4} xs={12}>
-            <Box className="Location">
-              <Box className="img-location">
-                <img
-                  src="https://cdn.luxstay.com/users/37752/AQ6iIGB9J_kOuNEpqQuGV6Uk.jpg"
-                  alt=""
-                />
-              </Box>
-              <Box className="content-location">
-                <span>Căn hộ dịch vụ - 1 phòng ngủ</span>
-                <p>The Galaxy Home </p>
-                <b>850,000đ/đêm</b>
-              </Box>
-            </Box>
-          </Grid>
-          <Grid item xl={3} sm={6} md={4} xs={12}>
-            <Box className="Location">
-              <Box className="img-location">
-                <img
-                  src="https://cdn.luxstay.com/users/351762/L571EGkJEWJBUqYaVNtZUTuF.JPG"
-                  alt=""
-                />
-              </Box>
-              <Box className="content-location">
-                <span>Căn hộ dịch vụ - 1 phòng ngủ</span>
-                <p>The Galaxy Home </p>
-                <b>850,000đ/đêm</b>
-              </Box>
-            </Box>
-          </Grid>
-          <Grid item xl={3} sm={6} md={4} xs={12}>
-            <Box className="Location">
-              <Box className="img-location">
-                <img
-                  src="https://cdn.luxstay.com/users/181012/cAR4-3BFtYrAMAyoiYz-fkeI.jpg"
-                  alt=""
-                />
-              </Box>
-              <Box className="content-location">
-                <span>Căn hộ dịch vụ - 1 phòng ngủ</span>
-                <p>The Galaxy Home </p>
-                <b>850,000đ/đêm</b>
-              </Box>
-            </Box>
-          </Grid>
-          <Grid item xl={3} sm={6} md={4} xs={12}>
-            <Box className="Location">
-              <Box className="img-location">
-                <img
-                  src="https://cdn.luxstay.com/admins/12/2TR6G7u6ua140zR2NI4yUJdG.png"
-                  alt=""
-                />
-              </Box>
-              <Box className="content-location">
-                <span>Căn hộ dịch vụ - 1 phòng ngủ</span>
-                <p>The Galaxy Home </p>
-                <b>850,000đ/đêm</b>
-              </Box>
-            </Box>
-          </Grid>
-          <Grid item xl={3} sm={6} md={4} xs={12}>
-            <Box className="Location">
-              <Box className="img-location">
-                <img
-                  src="https://cdn.luxstay.com/users/37752/AQ6iIGB9J_kOuNEpqQuGV6Uk.jpg"
-                  alt=""
-                />
-              </Box>
-              <Box className="content-location">
-                <span>Căn hộ dịch vụ - 1 phòng ngủ</span>
-                <p>The Galaxy Home </p>
-                <b>850,000đ/đêm</b>
-              </Box>
-            </Box>
-          </Grid>
-          <Grid item xl={3} sm={6} md={4} xs={12}>
-            <Box className="Location">
-              <Box className="img-location">
-                <img
-                  src="https://cdn.luxstay.com/users/351762/L571EGkJEWJBUqYaVNtZUTuF.JPG"
-                  alt=""
-                />
-              </Box>
-              <Box className="content-location">
-                <span>Căn hộ dịch vụ - 1 phòng ngủ</span>
-                <p>The Galaxy Home </p>
-                <b>850,000đ/đêm</b>
-              </Box>
-            </Box>
-          </Grid>
-          <Grid item xl={3} sm={6} md={4} xs={12}>
-            <Box className="Location">
-              <Box className="img-location">
-                <img
-                  src="https://cdn.luxstay.com/users/181012/cAR4-3BFtYrAMAyoiYz-fkeI.jpg"
-                  alt=""
-                />
-              </Box>
-              <Box className="content-location">
-                <span>Căn hộ dịch vụ - 1 phòng ngủ</span>
-                <p>The Galaxy Home </p>
-                <b>850,000đ/đêm</b>
-              </Box>
-            </Box>
-          </Grid>
+          )
+        })}
+          
+          
         </Grid>
       </Box>
     </Container>

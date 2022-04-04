@@ -322,6 +322,12 @@ small {
 .form-advise :first-child{
     margin-bottom: 10px;
 }
+.text-advise input {
+    height: 0.6rem !important;
+}
+.text-advise label {
+    font-size: 0.9rem;
+}
 .phone-advise {
     width: 92%;
     background: #f6f6f6!important;

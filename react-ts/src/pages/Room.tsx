@@ -31,22 +31,21 @@ interface IFormInputs {
   name: string;
   phone: string;
 }
-interface IPost {
-  id: number;
-  roomType: string;
-  roomName: string;
-  roomPrice: number;
-  roomCate: string;
-  address: string;
-  addressDetail: string;
-  roomAcreage: number;
-  info: string;
-  title: string;
-  bed: number;
-  bedRoom: number;
-  bathRoom: number;
-}
-const defaultProps: IPost[] = [];
+// interface IPost {
+//   id: number;
+//   roomType: string;
+//   roomName: string;
+//   roomPrice: number;
+//   roomCate: string;
+//   address: string;
+//   addressDetail: string;
+//   roomAcreage: number;
+//   info: string;
+//   title: string;
+//   bed: number;
+//   bedRoom: number;
+//   bathRoom: number;
+// }
 function Room() {
   const [roomInfo, setRoomInfo] = useState<any>({})
   const params = useParams();
@@ -190,6 +189,7 @@ function Room() {
                   </p>
                 </Grid>
               </Grid>
+              <p>Và còn nhiều tiện ích khác, đặt phòng ngay để trải nghiệm</p>
             </Box>
             <Box>
               <h3>Nội quy và chính sách về chỗ ở</h3>

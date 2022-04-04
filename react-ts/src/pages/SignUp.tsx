@@ -5,7 +5,6 @@ import { Box, Button, styled, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 import LoginSocialUser from "../components/LoginSocialUser";
 import { CONFIG } from "../config";
-import { number } from "yup";
 
 interface IFormInputs {
   firstName: string;
@@ -49,7 +48,7 @@ function SignUp() {
     fetch(`${CONFIG.ApiUser}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({data}),
+      body: JSON.stringify(data),
     })
       .then((response) => response.json())
       .then((data) => {

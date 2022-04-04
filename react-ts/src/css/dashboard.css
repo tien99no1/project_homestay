@@ -20,7 +20,7 @@
     color: #b71c1c;
 }
 .form-create-room {
-    margin: 2rem 0;
+    margin: 2rem ;
 }
 .br-m {
     margin: 4rem;
@@ -39,6 +39,8 @@
     width: 10%;
     color: #fff !important;
     background: #b71c1c !important;
+    position: absolute;
+    bottom: 1rem;
 }
 .img-list-room {
     width: 100%;
@@ -68,5 +70,16 @@
     border-radius: 5px;
     align-items: center;
     font-size: 1rem;
-    
+    position: relative;
+}
+.media-img {
+    width: 30% !important;
+    height: 150px;
+}
+.content-dashboard {
+    width: 50%;
+}
+.link-edit {
+    text-decoration: none;
+    color: inherit;
 }

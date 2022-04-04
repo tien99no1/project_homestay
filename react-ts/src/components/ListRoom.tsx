@@ -17,8 +17,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { string } from "yup";
+import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import React from "react";
+import { Link, useRoutes } from "react-router-dom";
+import { removeRoom } from "../services/userService";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -40,15 +43,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function ListRoom() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
   const hostId = localStorage.getItem("hostId");
-
   const [listAllRoom, setListAllRoom] = useState<any[]>([]);
   const [searchRoomName, setSearchRoomName] = useState("");
 
@@ -58,20 +53,23 @@ function ListRoom() {
       setListAllRoom(data.data);
     } catch (e) {}
   };
-  
+
   useEffect(() => {
     getListroom();
   }, []);
 
-  const handleClickDelete = async (id: number) => {
-      try {const data = await axios.delete(`${CONFIG.ApiRoom}/${id}`);
-      data ? alert("Xoá thành công") : alert("Xóa thất bại")
-      getListroom()
-    } catch (error) {
-        console.log(error);
+  const handleClickDelete = (id: number) => {
+    if (window.confirm("Bạn chắc chắn muốn xóa?")) {
+      removeRoom(id)
+        .then((res) => {
+          getListroom();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-  }
-  console.log(listAllRoom)
+  };
+  console.log("listAllRoom", listAllRoom);
   return (
     <div>
       {listAllRoom.length > 0 ? (
@@ -181,36 +179,16 @@ function ListRoom() {
                         </TableCell>
                         <TableCell className="tbody" align="center">
                           <Box>
-                            <Button
-                              id="basic-button"
-                              aria-controls={open ? "basic-menu" : undefined}
-                              aria-haspopup="true"
-                              aria-expanded={open ? "true" : undefined}
-                              onClick={handleClick}
+                            <Link
+                              className="link-edit"
+                              to={`/editroom/${item.id}`}
                             >
-                              Thiết lập
-                            </Button>
-                            <Menu
-                              id="basic-menu"
-                              anchorEl={anchorEl}
-                              open={open}
-                              onClose={handleClose}
-                              MenuListProps={{
-                                "aria-labelledby": "basic-button",
-                              }}
-                            >
-                              <MenuItem onClick={handleClose}>
-                                Chỉnh sửa
-                              </MenuItem>
-                              <MenuItem onClick={handleClose}>
-                                <button
-                                  onClick={() => handleClickDelete(item.id)}
-                                  className="btn-delete-room"
-                                >
-                                  Xóa chỗ ở
-                                </button>
-                              </MenuItem>
-                            </Menu>
+                              <Button title="Chỉnh sửa"><ModeEditOutlineOutlinedIcon color='info'/></Button>
+                            </Link>
+                            <Button 
+                            onClick={() => handleClickDelete(item.id)}
+                            title='Xóa'> 
+                            <DeleteOutlineOutlinedIcon color='error'/></Button>
                           </Box>
                         </TableCell>
                       </StyledTableRow>

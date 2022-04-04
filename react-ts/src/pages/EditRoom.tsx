@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import {
@@ -12,8 +12,11 @@ import {
   TextField,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "../css/dashboard.css";
 import { CONFIG } from "../config";
+import {updateRoom, getRoomName} from '../services/userService'
+import axios from "axios";
 
 interface IFormInputs {
   roomType: string;
@@ -59,43 +62,48 @@ const optionsCity = [
   { value: "Vũng Tàu", label: "Vũng Tàu" },
   { value: "Nha Trang", label: "Hạ Long" },
 ];
-
-function CreateRoom() {
+function EditRoom() {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<IFormInputs>();
   const navigate = useNavigate();
-
-  const hostId = localStorage.getItem('hostId')
-
-  const onSubmit = (data: IFormInputs) => {
-    fetch(`${CONFIG.ApiRoom}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({...data, status: 0, hostId}),
+  const [roomInfo, setRoomInfo] = React.useState<any>({})
+  const params = useParams();
+  const { id } = params;
+  
+  const loadRooms = () => {
+    axios.get(`${CONFIG.ApiRoom}/${id}`).then((res) => {
+      setRoomInfo(res.data.roomName)
     })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("success", data);
-        navigate("/dashboard");
-      })
-      .catch((error) => {
-        console.error("There was an error!", error);
-      });
-  };
+  }
+  useEffect(() => {
+    loadRooms()
+  }, [])
+  const hostId = localStorage.getItem('hostId')
+  const onSubmit = (data: IFormInputs) => {
+    axios.put(`${CONFIG.ApiRoom}/${id}`, data)
+    .then((data) => {
+      console.log("success", data);
+      // navigate("/dashboard");
+    }
+     
+    ).catch((error) => {
+      console.error("There was an error!", error);
+    });
+  }
 
   return (
     <Box className="container-create">
       <Box style={{ position: "absolute", top: "20px" }} width={"100%"}>
         <Link to="/" className="brand br-m ">
-          RikStay
+          RikStay 
         </Link>
       </Box>
       <Box className="create">
         <Box className="form-create">
-          <h3 className="text-create">Tạo chỗ nghỉ mới</h3>
+          <h3 className="text-create">Chỉnh sửa chỗ nghỉ của bạn</h3>
           <form  className="form-create-room" onSubmit={handleSubmit(onSubmit)}>
             <Grid
               container
@@ -191,13 +199,14 @@ function CreateRoom() {
                       variant="standard"
                       {...register("addressDetail", {
                         required: true,
-                        minLength: 2,
+                        pattern:
+                          /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]{2,}$/g,
                       })}
                     />
                     {errors?.addressDetail?.type === "required" && (
                       <small>Vui lòng nhập trường này</small>
                     )}
-                    {errors?.addressDetail?.type === "minLength" && (
+                    {errors?.addressDetail?.type === "pattern" && (
                       <small>
                         Địa điểm cụ thể phải là chữ cái và dài hơn 2 ký tự
                       </small>
@@ -396,7 +405,7 @@ function CreateRoom() {
             </Grid>
             <Box className="Box-btn-create">
               <Button className="btn-create-form" type="submit">
-                Tạo phòng
+                Chỉnh sửa
               </Button>
             </Box>
           </form>
@@ -405,4 +414,4 @@ function CreateRoom() {
     </Box>
   );
 }
-export default CreateRoom;
+export default EditRoom;

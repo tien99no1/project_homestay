@@ -4,6 +4,7 @@ import { Box, Button, Container, styled, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 import LoginSocialUser from "../components/LoginSocialUser";
 import { useNavigate } from "react-router-dom";
+import { CONFIG } from "../config";
 
 interface IFormInputs {
   email: string;
@@ -11,31 +12,7 @@ interface IFormInputs {
 }
 
 function Login() {
-  const userName = useRef("");
-  const handleUser = async (email: string, password: string) => {
-    const settings = {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    };
-    try {
-      const response = await fetch(
-        `http://localhost:4000/users?email=${email}&password=${password}`,
-        settings
-      );
-
-      const data = await response.json();
-      if (data) {
-        userName.current = data[0].lastName;
-        return true;
-      } else {
-        return false;
-      }
-    } catch (error) {
-      return error;
-    }
-  };
+  
   const CustomTextField = styled(TextField)({
     "& label.Mui-focused": {
       color: "#959392",
@@ -61,6 +38,30 @@ function Login() {
   } = useForm<IFormInputs>();
 
   const navigate = useNavigate();
+  const userName = useRef("");
+  const handleUser = async (email: string, password: string) => {
+    const settings = {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    };
+    try {
+      const response = await fetch(
+        `${CONFIG.ApiUser}?email=${email}&password=${password}`,
+        settings
+      );
+      const data = await response.json();
+      if (data.length > 0) {
+        userName.current = data[0].lastName;
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      return error;
+    }
+  };
 
   const onSubmit = async (data: IFormInputs) => {
     const user = await handleUser(data.email, data.password);

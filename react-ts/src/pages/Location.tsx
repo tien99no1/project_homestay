@@ -37,8 +37,6 @@ function Location() {
       setRooms(data.data);
     } catch (e) {}
   };
-  console.log("address", address);
-  
   useEffect(() => {
     getListRoom();
   }, []);

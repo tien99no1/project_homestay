@@ -16,6 +16,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import NotFound from "./pages/NotFound";
 import CreateRoom from "./pages/CreateRoom";
+import EditRoom from "./pages/EditRoom";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
@@ -49,6 +50,7 @@ const App = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/create" element={<CreateRoom />} />
+        <Route path="/editroom/:id" element={<EditRoom />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

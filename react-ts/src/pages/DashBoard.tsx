@@ -85,13 +85,13 @@ export default function Host() {
     navigate("/host");
   };
   const handleLogout = () => {
-    localStorage.removeItem("host");
+    localStorage.removeItem("hostId");
     navigate("/host");
   };
   const [user, setUser] = React.useState([]);
 
   React.useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("host") || "{}");
+    const user = JSON.parse(localStorage.getItem("hostId") || "{}");
     if (user) {
       setUser(user);
     }
@@ -245,68 +245,19 @@ export default function Host() {
             <Box
               maxWidth="lg"
               sx={{
-                height: "30rem",
                 border: "1px solid #dae3dc",
-                borderRadius: "5px",
                 padding: "10px",
               }}
             >
-              <Card sx={{ width: "100%", display: "flex", mb: "10px" }}>
+             
+              <Card sx={{ width: "100%", display: "flex"}}>
                 <CardMedia
                   component="img"
-                  height="140"
-                  width="200"
-                  image="https://nghekhachsan.com/upload/NKS-Hong/homestay-la-gi-1.jpg"
-                  alt="green iguana"
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Lizard
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Lizards are a widespread group of squamate reptiles, with
-                    over 6,000 species, ranging across all continents except
-                    Antarctica
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button size="small">Share</Button>
-                  <Button size="small">Learn More</Button>
-                </CardActions>
-              </Card>
-              <Card sx={{ width: "100%", display: "flex", mb: "10px" }}>
-                <CardMedia
-                  component="img"
-                  height="140"
-                  width="200"
-                  image="https://vnn-imgs-a1.vgcloud.vn/image2.tienphong.vn/w645/Uploaded/2021/svjsplu/2021_09_01/198754915-2803.jpg"
-                  alt="green iguana"
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Lizard
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Lizards are a widespread group of squamate reptiles, with
-                    over 6,000 species, ranging across all continents except
-                    Antarctica
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button size="small">Share</Button>
-                  <Button size="small">Learn More</Button>
-                </CardActions>
-              </Card>
-
-              <Card sx={{ width: "100%", display: "flex", mb: "10px" }}>
-                <CardMedia
-                  component="img"
-                  height="140"
-                  width="200"
+                  className="media-img"
                   image="https://tapchidiaoc.com/wp-content/uploads/2022/01/homestay-la-gi-40-760x367-1.jpg"
                   alt="green iguana"
                 />
-                <CardContent>
+                <CardContent className="content-dashboard">
                   <Typography gutterBottom variant="h5" component="div">
                     Lizard
                   </Typography>
@@ -317,8 +268,8 @@ export default function Host() {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small">Share</Button>
-                  <Button size="small">Learn More</Button>
+                  <Button size="small">Cho thuê</Button>
+                  <Button size="small">Từ chối</Button>
                 </CardActions>
               </Card>
             </Box>

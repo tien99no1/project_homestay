@@ -31,7 +31,7 @@ function Login() {
       },
     },
   });
-  const hostName = useRef("");
+  const hostName = useRef('');
   const hostId = useRef('');
 
   const handleUser = async (email: string, password: string) => {
@@ -48,11 +48,13 @@ function Login() {
       );
 
       const dataHost = await response.json();
-      if (dataHost) {
+      if (dataHost.length > 0) {
         hostName.current = dataHost[0].lastName;
         hostId.current = dataHost[0].id;
+        console.log("true");
         return true;
       } else {
+        console.log("false");
         return false;
       }
     } catch (error) {
@@ -80,7 +82,7 @@ function Login() {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("host")) {
+    if (localStorage.getItem("hostId")) {
       navigate("/dashboard");
     }
   }, []);

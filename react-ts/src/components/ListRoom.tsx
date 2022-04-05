@@ -17,11 +17,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import React from "react";
 import { Link, useRoutes } from "react-router-dom";
-import { removeRoom } from "../services/userService";
+import { removeRoom } from "../services/roomService";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -42,7 +42,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function ListRoom() {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const hostId = localStorage.getItem("hostId");
   const [listAllRoom, setListAllRoom] = useState<any[]>([]);
   const [searchRoomName, setSearchRoomName] = useState("");
@@ -69,7 +68,6 @@ function ListRoom() {
         });
     }
   };
-  console.log("listAllRoom", listAllRoom);
   return (
     <div>
       {listAllRoom.length > 0 ? (
@@ -183,12 +181,16 @@ function ListRoom() {
                               className="link-edit"
                               to={`/editroom/${item.id}`}
                             >
-                              <Button title="Chỉnh sửa"><ModeEditOutlineOutlinedIcon color='info'/></Button>
+                              <Button title="Chỉnh sửa">
+                                <ModeEditOutlineOutlinedIcon color="info" />
+                              </Button>
                             </Link>
-                            <Button 
-                            onClick={() => handleClickDelete(item.id)}
-                            title='Xóa'> 
-                            <DeleteOutlineOutlinedIcon color='error'/></Button>
+                            <Button
+                              onClick={() => handleClickDelete(item.id)}
+                              title="Xóa"
+                            >
+                              <DeleteOutlineOutlinedIcon color="error" />
+                            </Button>
                           </Box>
                         </TableCell>
                       </StyledTableRow>

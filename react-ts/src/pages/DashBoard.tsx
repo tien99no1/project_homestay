@@ -24,7 +24,7 @@ import TextField from "@mui/material/TextField";
 import { Link } from "react-router-dom";
 import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
-import '../css/dashboard.css'
+import "../css/dashboard.css";
 import ListRoom from "../components/ListRoom";
 
 const clientId =
@@ -72,7 +72,7 @@ export default function Host() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  
+
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -249,8 +249,7 @@ export default function Host() {
                 padding: "10px",
               }}
             >
-             
-              <Card sx={{ width: "100%", display: "flex"}}>
+              <Card sx={{ width: "100%", display: "flex" }}>
                 <CardMedia
                   component="img"
                   className="media-img"
@@ -275,9 +274,8 @@ export default function Host() {
             </Box>
           </TabPanel>
           <TabPanel value={value} index={1}>
-            
             <div style={{ height: 400, width: "100%", textAlign: "center" }}>
-              <ListRoom/>
+              <ListRoom />
             </div>
           </TabPanel>
         </Box>

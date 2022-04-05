@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import LoginSocial from "../components/LoginSocialMedia";
 import { useNavigate } from "react-router-dom";
 import { Email } from "@mui/icons-material";
+import { CONFIG } from "../config";
 
 interface IFormInputs {
   email: string;
@@ -43,7 +44,7 @@ function Login() {
     };
     try {
       const response = await fetch(
-        `http://localhost:4000/users?email=${email}&password=${password}`,
+        `${CONFIG.ApiUser}?email=${email}&password=${password}`,
         settings
       );
 

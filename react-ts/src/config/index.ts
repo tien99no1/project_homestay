@@ -4,6 +4,7 @@ export const CONFIG = {
     GOOLGE_CLIENT_ID : '422653143846-21pcn0fknnquh0hs9881tbkhnn4f855d.apps.googleusercontent.com',
     ApiUser: API_URL + 'users',
     ApiRoom: API_URL + 'rooms',
-    ApiAddress: API_URL + 'address'
+    ApiAddress: API_URL + 'address',
+    ApiBookRoom: API_URL +'booking'
 }
 

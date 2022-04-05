@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   Container,
   Box,
-  Button,
   FormControl,
   InputLabel,
   MenuItem,
@@ -33,7 +32,7 @@ function Location() {
   };
   const getListRoom = async () => {
     try {
-      const data = await axios.get(`${CONFIG.ApiRoom}`);
+      const data = await axios.get(`${CONFIG.ApiRoom}?status=1`);
       setRooms(data.data);
     } catch (e) {}
   };

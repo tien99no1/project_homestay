@@ -15,27 +15,8 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import "../css/dashboard.css";
 import { CONFIG } from "../config";
-import {updateRoom, getRoomName} from '../services/userService'
 import axios from "axios";
-
-interface IFormInputs {
-  roomType: string;
-  roomName: string;
-  roomCate: string;
-  address: string;
-  addressDetail: string;
-  title: string;
-  roomAcreage: string;
-  roomPrice: number;
-  info: string;
-  bathRoom: number;
-  bed: number;
-  customer: string;
-  kitchen: number;
-  bedRoom: number;
-  roomImg: string;
-  status: number;
-}
+import { room } from "../type";
 
 const optionsType = [
   { value: "", label: "Chọn chỗ nghỉ" },
@@ -67,44 +48,46 @@ function EditRoom() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormInputs>();
+  } = useForm<room>();
   const navigate = useNavigate();
-  const [roomInfo, setRoomInfo] = React.useState<any>({})
+  const [roomInfo, setRoomInfo] = React.useState<any>({});
   const params = useParams();
   const { id } = params;
-  
-  const loadRooms = () => {
-    axios.get(`${CONFIG.ApiRoom}/${id}`).then((res) => {
-      setRoomInfo(res.data.roomName)
-    })
-  }
-  useEffect(() => {
-    loadRooms()
-  }, [])
-  const hostId = localStorage.getItem('hostId')
-  const onSubmit = (data: IFormInputs) => {
-    axios.put(`${CONFIG.ApiRoom}/${id}`, data)
-    .then((data) => {
-      console.log("success", data);
-      // navigate("/dashboard");
-    }
-     
-    ).catch((error) => {
-      console.error("There was an error!", error);
-    });
-  }
+
+  // const loadRooms = () => {
+  //   axios.get(`${CONFIG.ApiRoom}/${id}`).then((res) => {
+  //     setRoomInfo(res.data);
+  //   });
+  // };
+
+  // useEffect(() => {
+  //   loadRooms();
+  // }, []);
+
+  const hostId = localStorage.getItem("hostId");
+  const onSubmit = (data: room) => {
+    axios
+      .put(`${CONFIG.ApiRoom}/${id}`, { ...data, status: 0, hostId })
+      .then((data) => {
+        console.log("success", data);
+        navigate("/dashboard");
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
+      });
+  };
 
   return (
     <Box className="container-create">
       <Box style={{ position: "absolute", top: "20px" }} width={"100%"}>
         <Link to="/" className="brand br-m ">
-          RikStay 
+          RikStay
         </Link>
       </Box>
       <Box className="create">
         <Box className="form-create">
           <h3 className="text-create">Chỉnh sửa chỗ nghỉ của bạn</h3>
-          <form  className="form-create-room" onSubmit={handleSubmit(onSubmit)}>
+          <form className="form-create-room" onSubmit={handleSubmit(onSubmit)}>
             <Grid
               container
               rowSpacing={0.1}
@@ -114,7 +97,7 @@ function EditRoom() {
                 <Box>
                   <h3>Phân loại chỗ</h3>
                   <Box className="input-create-form">
-                    <FormControl variant="standard" sx={{ minWidth: 300}}>
+                    <FormControl variant="standard" sx={{ minWidth: 300 }}>
                       <InputLabel id="demo-simple-select-standard-label">
                         Chọn chỗ nghỉ
                       </InputLabel>
@@ -176,7 +159,7 @@ function EditRoom() {
                   <Box className="input-create-form">
                     <FormControl variant="standard" sx={{ minWidth: 300 }}>
                       <InputLabel id="demo-simple-select-standard-label">
-                        Chọn thành phố 
+                        Chọn thành phố
                       </InputLabel>
                       <Select {...register("address", { required: true })}>
                         {optionsCity.map((optionCity, index) => {
@@ -235,7 +218,7 @@ function EditRoom() {
               <Grid item md={3} sm={6}>
                 <Box>
                   <h3>Không gian</h3>
-                  <Box className="input-create-form" >
+                  <Box className="input-create-form">
                     <TextField
                       sx={{ minWidth: 300 }}
                       label="Diện tích chỗ nghỉ"

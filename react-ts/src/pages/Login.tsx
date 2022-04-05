@@ -4,6 +4,8 @@ import { Box, Button, Container, styled, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 import LoginSocialUser from "../components/LoginSocialUser";
 import { useNavigate } from "react-router-dom";
+import { signUpSuccess } from "../store/userSlice";
+import { useDispatch } from "react-redux";
 import { CONFIG } from "../config";
 
 interface IFormInputs {
@@ -38,7 +40,9 @@ function Login() {
   } = useForm<IFormInputs>();
 
   const navigate = useNavigate();
-  const userName = useRef("");
+  const userName = useRef('');
+  const userId = useRef('');
+  const dispatch = useDispatch();
   const handleUser = async (email: string, password: string) => {
     const settings = {
       headers: {
@@ -54,6 +58,7 @@ function Login() {
       const data = await response.json();
       if (data.length > 0) {
         userName.current = data[0].lastName;
+        userId.current = data[0].id;
         return true;
       } else {
         return false;
@@ -68,6 +73,8 @@ function Login() {
     if (user) {
       navigate("/");
       localStorage.setItem("user", JSON.stringify(userName.current));
+      localStorage.setItem("userId", JSON.stringify(userId.current));
+      dispatch(signUpSuccess(userId.current));
     } else {
       alert("Sai tài khoản hoặc mật khẩu");
     }

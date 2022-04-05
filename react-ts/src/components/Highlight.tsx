@@ -87,23 +87,20 @@ export default function Highlight() {
   };
   return (
     <div>
-          <Slider {...settings}>
-            {location.map((local: any) => (
-              <div key={local.id}>
-              <Link to={`/home/location/${local.nameAddress}`}>
-                <div className="img-highlights">
-                  <img
-                    src={local.img}
-                    alt=""
-                  />
-                </div>
-                <div className="content">
-                  <div className="title">{local.nameAddress}</div>
-                </div>
-              </Link>
-            </div>
-            ))}  
-          </Slider>
+      <Slider {...settings}>
+        {location.map((local: any) => (
+          <div key={local.id}>
+            <Link to={`/home/location/${local.nameAddress}`}>
+              <div className="img-highlights">
+                <img src={local.img} alt="" />
+              </div>
+              <div className="content">
+                <div className="title">{local.nameAddress}</div>
+              </div>
+            </Link>
+          </div>
+        ))}
+      </Slider>
     </div>
   );
 }

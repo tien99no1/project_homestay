@@ -1,16 +1,4 @@
-import {
-  Box,
-  Button,
-  Container,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Grid,
-  SelectChangeEvent,
-  styled,
-  TextField,
-} from "@mui/material";
+import { Box, Button, Container, Grid, TextField } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import BannerRoom from "../components/BannerRoom";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -21,9 +9,11 @@ import BlenderIcon from "@mui/icons-material/Blender";
 import MicrowaveIcon from "@mui/icons-material/Microwave";
 import GarageIcon from "@mui/icons-material/Garage";
 import SignalWifi0BarIcon from "@mui/icons-material/SignalWifi0Bar";
-import BasicDateRangePicker from "../components/DatePick";
+import DateRangePicker, { DateRange } from "@mui/lab/DateRangePicker";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { CONFIG } from "../config";
 import axios from "axios";
 
@@ -31,26 +21,21 @@ interface IFormInputs {
   name: string;
   phone: string;
 }
-// interface IPost {
-//   id: number;
-//   roomType: string;
-//   roomName: string;
-//   roomPrice: number;
-//   roomCate: string;
-//   address: string;
-//   addressDetail: string;
-//   roomAcreage: number;
-//   info: string;
-//   title: string;
-//   bed: number;
-//   bedRoom: number;
-//   bathRoom: number;
-// }
+
 function Room() {
-  const [roomInfo, setRoomInfo] = useState<any>({})
+  const [valueDate, setValueDate] = React.useState<DateRange<Date>>([
+    null,
+    null,
+  ]);
+  const minValue: Date = new Date(new Date());
+  const maxValue: Date = new Date(
+    new Date().getFullYear(),
+    new Date().getMonth() + 1,
+    90
+  );
+  const [roomInfo, setRoomInfo] = useState<any>({});
   const params = useParams();
   const { id } = params;
-  
   const getRoom = async () => {
     try {
       const data = await axios.get(`${CONFIG.ApiRoom}/${id}`);
@@ -60,42 +45,64 @@ function Room() {
   useEffect(() => {
     getRoom();
   }, []);
-  //dialog
-  const [open, setOpen] = React.useState(false);
-  const [children, setChildren] = React.useState<number | string>("");
-  const [aldut, setAdult] = React.useState<number | string>("");
+  const userId = localStorage.getItem("userId");
+  const hostId = roomInfo.hostId;
+  const [children, setChildren] = React.useState<number | string>('');
+  const [alduts, setAdults] = React.useState<number | string>('');
 
-  const handleAdultChange = (event: SelectChangeEvent<typeof aldut>) => {
-    setAdult(Number(event.target.value));
-  };
-
-  const handleChildrenChange = (event: SelectChangeEvent<typeof children>) => {
-    setChildren(Number(event.target.value));
-  };
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = (
-    event: React.SyntheticEvent<unknown>,
-    reason?: string
-  ) => {
-    if (reason !== "backdropClick") {
-      setOpen(false);
-    }
-  };
+  const roomId = roomInfo.id;
+  const roomName = roomInfo.roomName;
+  const roomImg = roomInfo.roomImg;
   //advise
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<IFormInputs>();
-
+  const totalCustomers: number = Number(children) + Number(alduts);
   const onSubmit = (data: IFormInputs) => {
     console.log(data);
     return data;
+  };
+  //post
+  const navigate = useNavigate();
+  const bookRoom = () => {
+    if (!userId) {
+      navigate("/login");
+    } else {
+      const dataBooking = {
+        roomId,
+        hostId,
+        userId,
+        totalCustomers,
+        roomName,
+        roomImg,
+        alduts,
+        children,
+        startDay: valueDate[0],
+        endDay: valueDate[1],
+        status: 0,
+      };
+      if (
+        dataBooking.startDay == null ||
+        dataBooking.endDay == null ||
+        dataBooking.totalCustomers === 0
+      ) {
+        alert("Vui lòng điền vào chỗ trống!");
+      } else {
+        axios
+          .post(`${CONFIG.ApiBookRoom}`, dataBooking)
+          .then((dataBooking) => {
+            console.log("success", dataBooking);
+            setValueDate([null, null]);
+            setChildren('');
+            setAdults('');
+          })
+          .catch((error) => {
+            console.error("There was an error!", error);
+          });
+      }
+    }
   };
   return (
     <>
@@ -104,7 +111,7 @@ function Room() {
       </Box>
       <Container maxWidth="lg">
         <Box display="flex" position={"relative"}>
-          <Box className="room-left" width={'65%'}>
+          <Box className="room-left" width={"65%"}>
             <Box display={"flex"}>
               <p className="mr">Rikstay</p>
               <p className="mr">Vietnam</p>
@@ -114,27 +121,28 @@ function Room() {
             <Box>
               <h2>{roomInfo.title}</h2>
               <p className="phone margin-icon">
-                <LocationOnIcon /> <b>{roomInfo.addressDetail}, {roomInfo.address}, Việt Nam</b>{" "}
+                <LocationOnIcon />{" "}
+                <b>
+                  {roomInfo.addressDetail}, {roomInfo.address}, Việt Nam
+                </b>{" "}
                 <a style={{ marginLeft: "1rem", color: "#b71c1c" }} href="#map">
                   Xem bản đồ
                 </a>
               </p>
               <p className="phone margin-icon">
                 <ApartmentOutlinedIcon />
-                <b>{roomInfo.roomType}· </b>{roomInfo.roomAcreage} m<sup>2</sup>
+                <b>{roomInfo.roomType}· </b>
+                {roomInfo.roomAcreage} m<sup>2</sup>
               </p>
               <p>
-                Phòng riêng · {roomInfo.bathRoom} Phòng tắm · {roomInfo.bed} giường · {roomInfo.bedRoom} phòng ngủ · {roomInfo.customer} khách
-                (tối đa {roomInfo.customer + 1} khách)
+                Phòng riêng · {roomInfo.bathRoom} Phòng tắm · {roomInfo.bed}{" "}
+                giường · {roomInfo.bedRoom} phòng ngủ · {roomInfo.customer}{" "}
+                khách (tối đa {roomInfo.customer + 1} khách)
               </p>
               <br />
               <p>
                 {roomInfo.info}
-                {/* Căn hộ nằm ở một vị trí lý tưởng, nơi này là một con phố đông
-                đúc của cộng đồng nước ngoài. Có rất nhiều nhà hàng, quán bar,
-                quán cà phê, phòng tập thể dục, tất cả đều được làm cho người
-                nước ngoài.
-
+                {/*
                 Khu vực xung quanh có nhiều cảnh quan đẹp như Hồ Kiếm, Hồ Trúc
                 Bạch, Chùa Quán Thành, Sông Hồng, Làng hoa Quang An, Làng hoa
                 Nhật Tân và đặc biệt là Hồ Tây rộng lớn, rộng lớn, nơi bạn có
@@ -199,7 +207,7 @@ function Room() {
                 phòng trong vòng 48h sau khi đặt phòng thành công và trước 14
                 ngày so với thời gian check-in. Sau đó, hủy phòng trước 14 ngày
                 so với thời gian check-in, được hoàn lại 50% tổng số tiền đã trả
-                (trừ phí dịch vụ).{" "}
+                (trừ phí dịch vụ).
               </p>
               <div id="map">
                 <iframe
@@ -216,53 +224,107 @@ function Room() {
               </p>
             </Box>
           </Box>
-          <Box className="room-right" paddingTop={"4rem"} width={"35%"}>
+          <Box className="room-right" pt={"4rem"} width={"35%"}>
             <Box>
               <Box className="order">
                 <Box>
-                  <p style={{ marginLeft: "1rem" }}>
-                    <span style={{ fontSize: "1.7rem", fontWeight: "600" }}>
-                      {roomInfo.roomPrice}đ
-                    </span>
+                  <p className="price-room">
+                    <span className="price">{roomInfo.roomPrice}đ</span>
                     /đêm
                   </p>
                 </Box>
 
                 <Box>
-                  <BasicDateRangePicker />
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <DateRangePicker
+                      startText="Check-in"
+                      endText="Check-out"
+                      minDate={minValue}
+                      maxDate={maxValue}
+                      value={valueDate}
+                      onChange={(newValue) => {
+                        setValueDate(newValue);
+                      }}
+                      renderInput={(startProps, endProps) => (
+                        <Box className="input-date">
+                          <TextField
+                            sx={{
+                              width: "37%",
+                              mb: "1rem",
+                              mt: "1rem",
+                            }}
+                            {...startProps}
+                          />
+                          <Box sx={{ margin: "2rem 1rem 0 1rem" }}> đến </Box>
+                          <TextField
+                            sx={{
+                              width: "37%",
+                              mb: "1rem",
+                              mt: "1rem",
+                            }}
+                            {...endProps}
+                          />
+                        </Box>
+                      )}
+                    />
+                  </LocalizationProvider>
                 </Box>
-                <Box
-                  display={"flex"}
-                  justifyContent={"center"}
-                  alignItems={"center"}
-                >
+                <Box>
                   <Button
                     className="person"
-                    onClick={handleClickOpen}
-                    sx={{ m: "1rem" }}
+                    disabled={true}
+                    sx={{ m: "0.5rem 1.5rem 1rem 1.5rem" }}
                   >
-                    Số lượng khách
+                    Số lượng khách: {totalCustomers}
                   </Button>
-                  <Dialog
-                    disableEscapeKeyDown
-                    open={open}
-                    onClose={handleClose}
+                  <Box
+                    className="number-person"
+                    component="form"
+                    sx={{
+                      "& .MuiTextField-root": {
+                        m: "0.5rem 1.5rem 0.3rem 1.5rem",
+                        width: "88%",
+                      },
+                    }}
+                    noValidate
+                    autoComplete="off"
                   >
-                    <DialogTitle>Vui lòng nhập số lượng</DialogTitle>
-                    <DialogContent>
-                      <Box
-                        component="form"
-                        sx={{
-                          "& .MuiTextField-root": { m: 1, width: "25ch" },
-                        }}
-                        noValidate
-                        autoComplete="off"
-                      >
+                    {totalCustomers === roomInfo.customer + 1 ? (
+                      <>
                         <TextField
                           id="outlined-disabled"
                           label="Người lớn"
                           type="number"
-                          onChange={() => handleAdultChange}
+                          disabled={true}
+                          onChange={(e) => setAdults(e.target.value)}
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                          InputProps={{
+                            inputProps: { min: 0, max: 100 },
+                          }}
+                        />
+                        <TextField
+                          id="outlined-number"
+                          label="Trẻ em"
+                          disabled={true}
+                          type="number"
+                          onChange={(e) => setChildren(e.target.value)}
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                          InputProps={{
+                            inputProps: { min: 0 },
+                          }}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <TextField
+                          id="outlined-disabled"
+                          label="Người lớn"
+                          type="number"
+                          onChange={(e) => setAdults(e.target.value)}
                           InputLabelProps={{
                             shrink: true,
                           }}
@@ -274,7 +336,7 @@ function Room() {
                           id="outlined-number"
                           label="Trẻ em"
                           type="number"
-                          onChange={() => handleChildrenChange}
+                          onChange={(e) => setChildren(e.target.value)}
                           InputLabelProps={{
                             shrink: true,
                           }}
@@ -282,24 +344,18 @@ function Room() {
                             inputProps: { min: 0 },
                           }}
                         />
-                      </Box>
-                    </DialogContent>
-                    <DialogActions>
-                      <Button sx={{ color: "#000" }} onClick={handleClose}>
-                        Cancel
-                      </Button>
-                      <Button sx={{ color: "#000" }} onClick={handleClose}>
-                        Ok
-                      </Button>
-                    </DialogActions>
-                  </Dialog>
+                      </>
+                    )}
+                  </Box>
                 </Box>
                 <Box
                   display={"flex"}
                   justifyContent={"center"}
                   alignItems={"center"}
                 >
-                  <Button className="order-now">Đặt ngay</Button>
+                  <Button className="order-now" onClick={bookRoom}>
+                    Đặt ngay
+                  </Button>
                 </Box>
               </Box>
             </Box>

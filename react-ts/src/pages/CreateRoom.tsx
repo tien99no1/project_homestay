@@ -14,25 +14,7 @@ import {
 import { Link } from "react-router-dom";
 import "../css/dashboard.css";
 import { CONFIG } from "../config";
-
-interface IFormInputs {
-  roomType: string;
-  roomName: string;
-  roomCate: string;
-  address: string;
-  addressDetail: string;
-  title: string;
-  roomAcreage: string;
-  roomPrice: number;
-  info: string;
-  bathRoom: number;
-  bed: number;
-  customer: string;
-  kitchen: number;
-  bedRoom: number;
-  roomImg: string;
-  status: number;
-}
+import { room } from "../type";
 
 const optionsType = [
   { value: "", label: "Chọn chỗ nghỉ" },
@@ -65,16 +47,16 @@ function CreateRoom() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormInputs>();
+  } = useForm<room>();
   const navigate = useNavigate();
 
-  const hostId = localStorage.getItem('hostId')
+  const hostId = localStorage.getItem("hostId");
 
-  const onSubmit = (data: IFormInputs) => {
+  const onSubmit = (data: room) => {
     fetch(`${CONFIG.ApiRoom}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({...data, status: 0, hostId}),
+      body: JSON.stringify({ ...data, status: 0, hostId }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -96,7 +78,7 @@ function CreateRoom() {
       <Box className="create">
         <Box className="form-create">
           <h3 className="text-create">Tạo chỗ nghỉ mới</h3>
-          <form  className="form-create-room" onSubmit={handleSubmit(onSubmit)}>
+          <form className="form-create-room" onSubmit={handleSubmit(onSubmit)}>
             <Grid
               container
               rowSpacing={0.1}
@@ -106,7 +88,7 @@ function CreateRoom() {
                 <Box>
                   <h3>Phân loại chỗ</h3>
                   <Box className="input-create-form">
-                    <FormControl variant="standard" sx={{ minWidth: 300}}>
+                    <FormControl variant="standard" sx={{ minWidth: 300 }}>
                       <InputLabel id="demo-simple-select-standard-label">
                         Chọn chỗ nghỉ
                       </InputLabel>
@@ -168,7 +150,7 @@ function CreateRoom() {
                   <Box className="input-create-form">
                     <FormControl variant="standard" sx={{ minWidth: 300 }}>
                       <InputLabel id="demo-simple-select-standard-label">
-                        Chọn thành phố 
+                        Chọn thành phố
                       </InputLabel>
                       <Select {...register("address", { required: true })}>
                         {optionsCity.map((optionCity, index) => {
@@ -226,7 +208,7 @@ function CreateRoom() {
               <Grid item md={3} sm={6}>
                 <Box>
                   <h3>Không gian</h3>
-                  <Box className="input-create-form" >
+                  <Box className="input-create-form">
                     <TextField
                       sx={{ minWidth: 300 }}
                       label="Diện tích chỗ nghỉ"

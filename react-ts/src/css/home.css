@@ -293,6 +293,9 @@ small {
     border: 1px solid rgba(0, 0, 0, 0.23) !important;
     color: #000 !important;
 }
+.number-person input{
+    height: 0.8rem !important;
+}
 .order-now{
     width: 88%;
     border: 1px solid rgba(0, 0, 0, 0.23) !important;
@@ -318,7 +321,13 @@ small {
 .form-advise {
     padding: 10px 0px 0px 20px;
 }
-
+.price-room {
+    margin-left: 1rem;
+}
+.price {
+    font-size: 1.7rem;
+    font-weight: 600;
+}
 .form-advise :first-child{
     margin-bottom: 10px;
 }

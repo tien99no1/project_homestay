@@ -58,6 +58,7 @@ function Navbar() {
 
   const handleLogout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("userId");
   };
   const [user, setUser] = useState([]);
 

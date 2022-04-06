@@ -16,6 +16,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { CONFIG } from "../config";
 import axios from "axios";
+import moment from "moment";
 
 interface IFormInputs {
   name: string;
@@ -33,6 +34,7 @@ function Room() {
     new Date().getMonth() + 1,
     90
   );
+
   const [roomInfo, setRoomInfo] = useState<any>({});
   const params = useParams();
   const { id } = params;
@@ -46,6 +48,7 @@ function Room() {
     getRoom();
   }, []);
   const userId = localStorage.getItem("userId");
+  const user = localStorage.getItem("user");
   const hostId = roomInfo.hostId;
   const [children, setChildren] = React.useState<number | string>('');
   const [alduts, setAdults] = React.useState<number | string>('');
@@ -72,6 +75,7 @@ function Room() {
     } else {
       const dataBooking = {
         roomId,
+        user,
         hostId,
         userId,
         totalCustomers,
@@ -79,9 +83,9 @@ function Room() {
         roomImg,
         alduts,
         children,
-        startDay: valueDate[0],
-        endDay: valueDate[1],
-        status: 0,
+        startDay: moment(valueDate[0]).format('DD/MM/YYYY'),
+        endDay: moment(valueDate[1]).format('DD/MM/YYYY'),
+        isCheck: 0,
       };
       if (
         dataBooking.startDay == null ||
@@ -121,10 +125,10 @@ function Room() {
             <Box>
               <h2>{roomInfo.title}</h2>
               <p className="phone margin-icon">
-                <LocationOnIcon />{" "}
+                <LocationOnIcon />
                 <b>
                   {roomInfo.addressDetail}, {roomInfo.address}, Việt Nam
-                </b>{" "}
+                </b>
                 <a style={{ marginLeft: "1rem", color: "#b71c1c" }} href="#map">
                   Xem bản đồ
                 </a>
@@ -135,8 +139,8 @@ function Room() {
                 {roomInfo.roomAcreage} m<sup>2</sup>
               </p>
               <p>
-                Phòng riêng · {roomInfo.bathRoom} Phòng tắm · {roomInfo.bed}{" "}
-                giường · {roomInfo.bedRoom} phòng ngủ · {roomInfo.customer}{" "}
+                Phòng riêng · {roomInfo.bathRoom} Phòng tắm · {roomInfo.bed}
+                giường · {roomInfo.bedRoom} phòng ngủ · {roomInfo.customer}
                 khách (tối đa {roomInfo.customer + 1} khách)
               </p>
               <br />
@@ -242,6 +246,7 @@ function Room() {
                       minDate={minValue}
                       maxDate={maxValue}
                       value={valueDate}
+                      disableMaskedInput
                       onChange={(newValue) => {
                         setValueDate(newValue);
                       }}
@@ -380,7 +385,7 @@ function Room() {
                         pattern:
                           /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]{2,}$/g,
                       })}
-                    />{" "}
+                    />
                     <br />
                     {errors?.name?.type === "required" && (
                       <small>Vui lòng nhập tên</small>
@@ -399,7 +404,7 @@ function Room() {
                         required: true,
                         pattern: /(((\+|)84)|0)(3|5|7|8|9)+([0-9]{8})\b/i,
                       })}
-                    />{" "}
+                    />
                     <br />
                     {errors?.phone?.type === "required" && (
                       <small>Vui lòng nhập số điện thoại</small>

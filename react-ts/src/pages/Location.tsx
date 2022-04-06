@@ -32,7 +32,7 @@ function Location() {
   };
   const getListRoom = async () => {
     try {
-      const data = await axios.get(`${CONFIG.ApiRoom}?status=1`);
+      const data = await axios.get(`${CONFIG.ApiRoom}?status=1&isCheck=false`);
       setRooms(data.data);
     } catch (e) {}
   };

@@ -54,20 +54,20 @@ function EditRoom() {
   const params = useParams();
   const { id } = params;
 
-  // const loadRooms = () => {
-  //   axios.get(`${CONFIG.ApiRoom}/${id}`).then((res) => {
-  //     setRoomInfo(res.data);
-  //   });
-  // };
+  const loadRooms = () => {
+    axios.get(`${CONFIG.ApiRoom}/${id}`).then((res) => {
+      setRoomInfo(res.data);
+    });
+  };
 
-  // useEffect(() => {
-  //   loadRooms();
-  // }, []);
+  useEffect(() => {
+    loadRooms();
+  }, []);
 
   const hostId = localStorage.getItem("hostId");
   const onSubmit = (data: room) => {
     axios
-      .put(`${CONFIG.ApiRoom}/${id}`, { ...data, status: 0, hostId })
+      .put(`${CONFIG.ApiRoom}/${id}`, { ...data, status: 0, isCheck: 0, hostId })
       .then((data) => {
         console.log("success", data);
         navigate("/dashboard");
@@ -97,7 +97,7 @@ function EditRoom() {
                 <Box>
                   <h3>Phân loại chỗ</h3>
                   <Box className="input-create-form">
-                    <FormControl variant="standard" sx={{ minWidth: 300 }}>
+                    <FormControl variant="outlined" sx={{ minWidth: 300 }}>
                       <InputLabel id="demo-simple-select-standard-label">
                         Chọn chỗ nghỉ
                       </InputLabel>
@@ -119,7 +119,7 @@ function EditRoom() {
                     <TextField
                       sx={{ minWidth: 300 }}
                       label="Tên chỗ nghỉ"
-                      variant="standard"
+                      variant="outlined"
                       {...register("roomName", {
                         required: true,
                         minLength: 2,
@@ -133,7 +133,7 @@ function EditRoom() {
                     )}
                   </Box>
                   <Box className="input-create-form">
-                    <FormControl variant="standard" sx={{ minWidth: 300 }}>
+                    <FormControl variant="outlined" sx={{ minWidth: 300 }}>
                       <InputLabel id="demo-simple-select-standard-label">
                         Loại đặt chỗ
                       </InputLabel>
@@ -157,7 +157,7 @@ function EditRoom() {
                 <Box>
                   <h3>Vị trí chỗ nghỉ, số khách</h3>
                   <Box className="input-create-form">
-                    <FormControl variant="standard" sx={{ minWidth: 300 }}>
+                    <FormControl variant="outlined" sx={{ minWidth: 300 }}>
                       <InputLabel id="demo-simple-select-standard-label">
                         Chọn thành phố
                       </InputLabel>
@@ -179,7 +179,7 @@ function EditRoom() {
                     <TextField
                       sx={{ minWidth: 300 }}
                       label="Địa điểm cụ thể"
-                      variant="standard"
+                      variant="outlined"
                       {...register("addressDetail", {
                         required: true,
                         pattern:
@@ -200,7 +200,7 @@ function EditRoom() {
                       sx={{ minWidth: 300 }}
                       label="Số khách"
                       type="number"
-                      variant="standard"
+                      variant="outlined"
                       {...register("customer", {
                         required: true,
                         min: 1,
@@ -223,7 +223,7 @@ function EditRoom() {
                       sx={{ minWidth: 300 }}
                       label="Diện tích chỗ nghỉ"
                       type="number"
-                      variant="standard"
+                      variant="outlined"
                       {...register("roomAcreage", {
                         required: true,
                         min: 30,
@@ -241,7 +241,7 @@ function EditRoom() {
                       sx={{ minWidth: 300 }}
                       label="Phòng ngủ"
                       type="number"
-                      variant="standard"
+                      variant="outlined"
                       {...register("bedRoom", {
                         required: true,
                         min: 1,
@@ -259,7 +259,7 @@ function EditRoom() {
                       sx={{ minWidth: 300 }}
                       label="Giường ngủ"
                       type="number"
-                      variant="standard"
+                      variant="outlined"
                       {...register("bed", {
                         required: true,
                         min: 1,
@@ -279,7 +279,7 @@ function EditRoom() {
                       sx={{ minWidth: 300 }}
                       label="Phòng tắm"
                       type="number"
-                      variant="standard"
+                      variant="outlined"
                       {...register("bathRoom", {
                         required: true,
                         min: 1,
@@ -299,7 +299,7 @@ function EditRoom() {
                       sx={{ minWidth: 300 }}
                       label="Phòng bếp"
                       type="number"
-                      variant="standard"
+                      variant="outlined"
                       {...register("kitchen", {
                         required: true,
                         min: 1,
@@ -322,7 +322,7 @@ function EditRoom() {
                     <TextField
                       sx={{ minWidth: 300 }}
                       label="Tiêu đề"
-                      variant="standard"
+                      variant="outlined"
                       {...register("title", {
                         required: true,
                         minLength: 2,
@@ -339,7 +339,7 @@ function EditRoom() {
                     <TextField
                       sx={{ minWidth: 300 }}
                       label="Thông tin chỗ nghỉ"
-                      variant="standard"
+                      variant="outlined"
                       {...register("info", {
                         required: true,
                         minLength: 2,
@@ -356,7 +356,7 @@ function EditRoom() {
                     <TextField
                       sx={{ minWidth: 300 }}
                       label="Link ảnh"
-                      variant="standard"
+                      variant="outlined"
                       {...register("roomImg", {
                         required: true,
                       })}
@@ -370,7 +370,7 @@ function EditRoom() {
                       sx={{ minWidth: 300 }}
                       type="number"
                       label="Giá phòng"
-                      variant="standard"
+                      variant="outlined"
                       {...register("roomPrice", {
                         required: true,
                         min: 0,

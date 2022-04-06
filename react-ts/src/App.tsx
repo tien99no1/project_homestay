@@ -17,10 +17,8 @@ import { getAnalytics } from "firebase/analytics";
 import NotFound from "./pages/NotFound";
 import CreateRoom from "./pages/CreateRoom";
 import EditRoom from "./pages/EditRoom";
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+import LoginAdmin from "./pages/adminLogin";
+import AdminPage from "./pages/AdminPage";
 const firebaseConfig = {
   apiKey: "AIzaSyCjAc67c3MTR6D-DCovmpVTvGShbcRBmkk",
   authDomain: "homestay-d9c86.firebaseapp.com",
@@ -49,6 +47,8 @@ const App = () => {
         <Route path="/dashboard" element={<DashBoard />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/adminLogin" element={<LoginAdmin />} />
+        <Route path="/adminPage" element={<AdminPage />} />
         <Route path="/create" element={<CreateRoom />} />
         <Route path="/editroom/:id" element={<EditRoom />} />
         <Route path="*" element={<NotFound />} />

@@ -17,4 +17,5 @@ export interface room {
   kitchen: number;
   roomImg: string;
   status: number;
+  isCheck: number;
 }

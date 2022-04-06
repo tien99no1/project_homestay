@@ -12,15 +12,13 @@ import { CONFIG } from "../config";
 import {
   Box,
   Button,
-  Menu,
-  MenuItem,
   TextField,
   Typography,
 } from "@mui/material";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import React from "react";
-import { Link, useRoutes } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { removeRoom } from "../services/roomService";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -42,9 +40,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function ListRoom() {
-  const hostId = localStorage.getItem("hostId");
   const [listAllRoom, setListAllRoom] = useState<any[]>([]);
   const [searchRoomName, setSearchRoomName] = useState("");
+  const hostId = localStorage.getItem("hostId");
 
   const getListroom = async () => {
     try {

@@ -5,6 +5,7 @@ export const CONFIG = {
     ApiUser: API_URL + 'users',
     ApiRoom: API_URL + 'rooms',
     ApiAddress: API_URL + 'address',
-    ApiBookRoom: API_URL +'booking'
+    ApiBookRoom: API_URL +'booking',
+    ApiAdmin: API_URL + 'admin'
 }
 

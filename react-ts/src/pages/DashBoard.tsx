@@ -26,9 +26,11 @@ import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 import "../css/dashboard.css";
 import ListRoom from "../components/ListRoom";
+import { CONFIG } from "../config";
+import News from "../components/News";
 
 const clientId =
-  "422653143846-21pcn0fknnquh0hs9881tbkhnn4f855d.apps.googleusercontent.com";
+  `${CONFIG.GOOLGE_CLIENT_ID}`;
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -86,6 +88,7 @@ export default function Host() {
   };
   const handleLogout = () => {
     localStorage.removeItem("hostId");
+    localStorage.removeItem("hostName");
     navigate("/host");
   };
   const [user, setUser] = React.useState([]);
@@ -242,36 +245,9 @@ export default function Host() {
             >
               Đặt chỗ gần đây
             </Typography>
-            <Box
-              maxWidth="lg"
-              sx={{
-                border: "1px solid #dae3dc",
-                padding: "10px",
-              }}
-            >
-              <Card sx={{ width: "100%", display: "flex" }}>
-                <CardMedia
-                  component="img"
-                  className="media-img"
-                  image="https://tapchidiaoc.com/wp-content/uploads/2022/01/homestay-la-gi-40-760x367-1.jpg"
-                  alt="green iguana"
-                />
-                <CardContent className="content-dashboard">
-                  <Typography gutterBottom variant="h5" component="div">
-                    Lizard
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Lizards are a widespread group of squamate reptiles, with
-                    over 6,000 species, ranging across all continents except
-                    Antarctica
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button size="small">Cho thuê</Button>
-                  <Button size="small">Từ chối</Button>
-                </CardActions>
-              </Card>
-            </Box>
+            <div>
+              <News/>
+            </div>
           </TabPanel>
           <TabPanel value={value} index={1}>
             <div style={{ height: 400, width: "100%", textAlign: "center" }}>

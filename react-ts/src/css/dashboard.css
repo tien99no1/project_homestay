@@ -86,3 +86,21 @@
 .div-card {
     margin: 0.5rem 0 1rem 0;
 }
+.img-table {
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.check-room {
+    text-transform: uppercase;
+    color: green;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+.refuse {
+    color: red;
+}
+.load {
+    color: orange;
+}

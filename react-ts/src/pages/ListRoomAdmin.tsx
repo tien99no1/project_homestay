@@ -10,11 +10,12 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { CONFIG } from "../config";
 import { Box, Button, TextField, Typography } from "@mui/material";
-import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import React from "react";
-import { Link } from "react-router-dom";
 import { removeRoom } from "../services/roomService";
+import { room } from "../type";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -34,14 +35,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function ListRoom() {
+function ListRoomAdmin() {
   const [listAllRoom, setListAllRoom] = useState<any[]>([]);
   const [searchRoomName, setSearchRoomName] = useState("");
-  const hostId = localStorage.getItem("hostId");
 
   const getListroom = async () => {
     try {
-      const data = await axios.get(`${CONFIG.ApiRoom}?hostId=${hostId}`);
+      const data = await axios.get(`${CONFIG.ApiRoom}`);
       setListAllRoom(data.data);
     } catch (e) {}
   };
@@ -49,7 +49,26 @@ function ListRoom() {
   useEffect(() => {
     getListroom();
   }, []);
-
+  const handleAccept = (item: room, index: number) => {
+    const { id } = item;
+    const data = { ...item, status: 1 };
+    axios.put(`${CONFIG.ApiRoom}/${id}`, data).then((result) => {
+      // console.log("result", result.data);
+      const newRoom = [...listAllRoom];
+      newRoom[index] = result.data;
+      setListAllRoom(newRoom);
+    });
+  };
+  const handleRefuse = (item: room, index: number) => {
+    const { id } = item;
+    const data = { ...item, status: 2 };
+    axios.put(`${CONFIG.ApiRoom}/${id}`, data).then((result) => {
+      // console.log("result", result);
+      const newRoom = [...listAllRoom];
+      newRoom[index] = result.data;
+      setListAllRoom(newRoom);
+    });
+  };
   const handleClickDelete = (id: number) => {
     if (window.confirm("Bạn chắc chắn muốn xóa?")) {
       removeRoom(id)
@@ -87,25 +106,25 @@ function ListRoom() {
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <StyledTableCell className="tbody" align="center">
+                  <StyledTableCell align="center">
                     ID
                   </StyledTableCell>
-                  <StyledTableCell className="tbody" align="center">
+                  <StyledTableCell align="center">
                     Tên chỗ nghỉ
                   </StyledTableCell>
-                  <StyledTableCell className="tbody" align="center">
+                  <StyledTableCell align="center">
                     Loại đặt phòng
                   </StyledTableCell>
-                  <StyledTableCell className="tbody" align="center">
+                  <StyledTableCell align="center">
                     Địa điểm
                   </StyledTableCell>
-                  <StyledTableCell className="tbody" align="center">
+                  <StyledTableCell align="center">
                     Đã thuê
                   </StyledTableCell>
-                  <StyledTableCell className="tbody" align="center">
+                  <StyledTableCell align="center">
                     Trạng thái
                   </StyledTableCell>
-                  <StyledTableCell className="tbody" align="center">
+                  <StyledTableCell align="center">
                     Hành động
                   </StyledTableCell>
                 </TableRow>
@@ -123,7 +142,7 @@ function ListRoom() {
                       return value;
                     }
                   })
-                  .map((item, index) => {
+                  .map((item: room, index: number) => {
                     return (
                       <StyledTableRow
                         key={index}
@@ -134,8 +153,8 @@ function ListRoom() {
                         <TableCell className="name tbody" align="center">
                           <p>{item.id}</p>
                         </TableCell>
-                        <TableCell className="tbody" align="center">
-                          <div style={{ width: "100px" }}>
+                        <TableCell className="img-table" align="center">
+                          <div >
                             <img
                               className="img-list-room"
                               src={item.roomImg}
@@ -144,10 +163,10 @@ function ListRoom() {
                             <span>{item.roomName}</span>
                           </div>
                         </TableCell>
-                        <TableCell className="tbody" align="center">
+                        <TableCell align="center">
                           <p>{item.roomCate}</p>
                         </TableCell>
-                        <TableCell className="tbody" align="center">
+                        <TableCell align="center">
                           <p>
                             {item.addressDetail} - {item.address}
                           </p>
@@ -156,12 +175,12 @@ function ListRoom() {
                           className="status tbody"
                           style={{
                             color: `${
-                              item.isCheckRoom === true ? "green" : "orange"
+                              item.isCheckRoom === false ? "orange" : "green"
                             }`,
                           }}
                           align="center"
                         >
-                          {item.isCheckRoom === true ? "Đã thuê" : "Chưa thuê"}
+                          {item.isCheckRoom === false ? "Chưa thuê" : "Đã thuê"}
                         </TableCell>
                         <TableCell
                           className="status tbody"
@@ -182,34 +201,53 @@ function ListRoom() {
                             ? "Hoạt động"
                             : "Từ chối"}
                         </TableCell>
-                        <TableCell className="tbody" align="center">
-                          {item.isCheckRoom === false ? (
-                            <Box>
-                              <Link
-                                className="link-edit"
-                                to={`/editroom/${item.id}`}
-                              >
-                                <Button title="Chỉnh sửa">
-                                  <ModeEditOutlineOutlinedIcon color="info" />
+                        <TableCell align="center">
+                          <Box>
+                            {item.isCheckRoom === false ? (
+                              <>
+                                <Button
+                                  title="Duyệt phòng"
+                                  onClick={() => handleAccept(item, index)}
+                                >
+                                  <CheckCircleOutlineIcon color="success" />
                                 </Button>
-                              </Link>
+                                <Button
+                                  title="Từ chối"
+                                  onClick={() => handleRefuse(item, index)}
+                                >
+                                  <HighlightOffIcon color="warning" />
+                                </Button>
+                              </>
+                            ) : (
+                              <>
+                                <Button
+                                  disabled
+                                  title="Duyệt phòng"
+                                  onClick={() => handleAccept(item, index)}
+                                >
+                                  <CheckCircleOutlineIcon  />
+                                </Button>
+                                <Button
+                                  disabled
+                                  title="Từ chối"
+                                  onClick={() => handleRefuse(item, index)}
+                                >
+                                  <HighlightOffIcon  />
+                                </Button>
+                              </>
+                            )}
+
+                            {item.status === 2 ? (
                               <Button
+                                title="Xóa phòng"
                                 onClick={() => handleClickDelete(item.id)}
-                                title="Xóa"
                               >
                                 <DeleteOutlineOutlinedIcon color="error" />
                               </Button>
-                            </Box>
-                          ) : (
-                            <Box>
-                              <Button disabled title="Chỉnh sửa">
-                                <ModeEditOutlineOutlinedIcon />
-                              </Button>
-                              <Button disabled title="Xóa">
-                                <DeleteOutlineOutlinedIcon  />
-                              </Button>
-                            </Box>
-                          )}
+                            ) : (
+                              <></>
+                            )}
+                          </Box>
                         </TableCell>
                       </StyledTableRow>
                     );
@@ -225,4 +263,4 @@ function ListRoom() {
   );
 }
 
-export default ListRoom;
+export default ListRoomAdmin;

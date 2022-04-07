@@ -1,3 +1,4 @@
+
 export interface room {
   id: number;
   roomType: string;
@@ -17,5 +18,5 @@ export interface room {
   kitchen: number;
   roomImg: string;
   status: number;
-  isCheck: number;
+  isCheckRoom: boolean;
 }

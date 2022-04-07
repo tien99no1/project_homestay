@@ -69,7 +69,7 @@ function EditRoom() {
     axios
       .put(`${CONFIG.ApiRoom}/${id}`, { ...data, status: 0, isCheck: 0, hostId })
       .then((data) => {
-        console.log("success", data);
+        // console.log("success", data);
         navigate("/dashboard");
       })
       .catch((error) => {

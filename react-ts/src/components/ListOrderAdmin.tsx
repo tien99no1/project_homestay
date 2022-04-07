@@ -12,11 +12,10 @@ import { bookRoom } from "../type";
 
 function News() {
   const [booking, setBooking] = useState<any[]>([]);
-  const hostId = localStorage.getItem("hostId");
 
   const getListBooking = async () => {
     try {
-      const data = await axios.get(`${CONFIG.ApiBookRoom}?hostId=${hostId}`);
+      const data = await axios.get(`${CONFIG.ApiBookRoom}`);
       setBooking(data.data);
     } catch (e) {}
   };
@@ -25,39 +24,13 @@ function News() {
     getListBooking();
   }, []);
 
-  const handleAccept = (book: bookRoom, index: number) => {
-    const { id } = book;
-    const data = { ...book, isCheck: 1 };
-    axios
-      .put(`${CONFIG.ApiBookRoom}/${id}`, data)
-      .then((result) => {
-        // console.log("result", result.data);
-        const newBooking = [...booking];
-        newBooking[index] = result.data;
-        setBooking(newBooking);
-      })
-      .then((result) =>
-        axios.patch(`${CONFIG.ApiRoom}/${book.roomId}`, { isCheckRoom: true })
-      );
-  };
-  const handleRefuse = (book: bookRoom, index: number) => {
-    const { id } = book;
-    const data = { ...book, isCheck: 2 };
-    axios.put(`${CONFIG.ApiBookRoom}/${id}`, data).then((result) => {
-      const newBooking = [...booking];
-      newBooking[index] = result.data;
-      setBooking(newBooking);
-    });
-  };
-
   return (
     <>
       <Box
-        maxWidth="xl"
+        maxWidth="lg"
         sx={{
           border: "1px solid #dae3dc",
           padding: "10px",
-          borderRadius: "7px",
         }}
       >
         {booking.length > 0 ? (
@@ -88,20 +61,7 @@ function News() {
                     </CardContent>
                     <CardActions>
                       {book.isCheck == 0 ? (
-                        <>
-                          <Button
-                            size="small"
-                            onClick={() => handleAccept(book, index)}
-                          >
-                            Cho thuê
-                          </Button>
-                          <Button
-                            size="small"
-                            onClick={() => handleRefuse(book, index)}
-                          >
-                            Từ chối
-                          </Button>
-                        </>
+                        <p className="check-room load">Đang chờ duyệt</p>
                       ) : book.isCheck == 1 ? (
                         <p className="check-room">
                           Đã cho thuê
@@ -118,7 +78,7 @@ function News() {
             })}
           </div>
         ) : (
-          <h4 className="center">Bạn chưa có đơn đặt chỗ nào</h4>
+          <h4 className="center">Chỗ nghỉ của bạn đang trống</h4>
         )}
       </Box>
     </>

@@ -91,12 +91,12 @@ export default function Host() {
     localStorage.removeItem("hostName");
     navigate("/host");
   };
-  const [user, setUser] = React.useState([]);
+  const [host, setHost] = React.useState([]);
 
   React.useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("hostId") || "{}");
-    if (user) {
-      setUser(user);
+    const host = JSON.parse(localStorage.getItem("hostName") || "{}");
+    if (host) {
+      setHost(host);
     }
   }, []);
 
@@ -130,7 +130,7 @@ export default function Host() {
               onClick={handleClick}
             >
               <Avatar alt="" src="">
-                {user[0]}
+                {host[0]}
               </Avatar>
             </Button>
             <Menu
@@ -142,7 +142,7 @@ export default function Host() {
                 "aria-labelledby": "basic-button",
               }}
             >
-              <MenuItem onClick={handleClose}>Tài khoản của tôi</MenuItem>
+              <MenuItem onClick={handleClose}>Tài khoản</MenuItem>
               <MenuItem onClick={handleClose}>
                 <button className="btn-logout" onClick={handleLogout}>
                   <GoogleLogout
@@ -158,7 +158,7 @@ export default function Host() {
           </Box>
         </Box>
       </Box>
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         <Box sx={{ width: "100%", mt: "4rem" }}>
           <Box sx={{ borderColor: "divider" }}>
             <Tabs
@@ -171,73 +171,6 @@ export default function Host() {
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
-            <Typography
-              variant="h6"
-              component="h2"
-              sx={{ display: "flex", fontWeight: "500" }}
-            >
-              Thống kê tình hình kinh doanh
-            </Typography>
-            <List
-              sx={{
-                width: "auto",
-                bgcolor: "background.paper",
-                display: "flex",
-                flexDirection: "row",
-                margin: "1rem 0 1rem 0",
-              }}
-            >
-              <ListItem
-                sx={{
-                  borderTop: "1px solid #dae3dc",
-                  borderBottom: "1px solid #dae3dc",
-                  borderLeft: "1px solid #dae3dc",
-                }}
-              >
-                <ListItemAvatar>
-                  <Avatar>
-                    <AttachMoneyIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary="0đ" secondary="Tổng doanh thu" />
-              </ListItem>
-              <ListItem
-                sx={{
-                  borderTop: "1px solid #dae3dc",
-                  borderBottom: "1px solid #dae3dc",
-                  borderLeft: "1px solid #dae3dc",
-                }}
-              >
-                <ListItemAvatar>
-                  <Avatar>
-                    <WorkIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary="0" secondary="Tổng số booking" />
-              </ListItem>
-              <ListItem
-                sx={{
-                  borderTop: "1px solid #dae3dc",
-                  borderBottom: "1px solid #dae3dc",
-                  borderLeft: "1px solid #dae3dc",
-                }}
-              >
-                <ListItemAvatar>
-                  <Avatar>
-                    <BeachAccessIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary="0" secondary="Lượt đánh giá" />
-              </ListItem>
-              <ListItem sx={{ border: "1px solid #dae3dc" }}>
-                <ListItemAvatar>
-                  <Avatar>
-                    <BeachAccessIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary="0" secondary="Điểm đánh giá" />
-              </ListItem>
-            </List>
             <Typography
               variant="h6"
               component="h2"

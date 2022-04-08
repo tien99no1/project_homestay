@@ -31,7 +31,6 @@ function News() {
     axios
       .put(`${CONFIG.ApiBookRoom}/${id}`, data)
       .then((result) => {
-        // console.log("result", result.data);
         const newBooking = [...booking];
         newBooking[index] = result.data;
         setBooking(newBooking);

@@ -5,15 +5,7 @@ import { Box, Button, styled, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 import LoginSocialUser from "../components/LoginSocialUser";
 import { CONFIG } from "../config";
-
-interface IFormInputs {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  password: string;
-  id: number;
-}
+import { user } from "../type";
 
 function SignUp() {
   const CustomTextField = styled(TextField)({
@@ -40,11 +32,10 @@ function SignUp() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormInputs>();
+  } = useForm<user>();
   const navigate = useNavigate();
 
-  const onSubmit = (data: IFormInputs) => {
-    console.log(data)
+  const onSubmit = (data: user) => {
     fetch(`${CONFIG.ApiUser}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -172,13 +163,13 @@ function SignUp() {
             </Box>
             <Button className="btn-submit-form" type="submit">
               Đăng ký
-            </Button>{" "}
+            </Button>
             <br />
           </form>
         </Box>
         <Box className="form-login">
           <p>
-            Bạn đã có tài khoản RikStay?{" "}
+            Bạn đã có tài khoản RikStay?
             <Link
               style={{
                 textDecoration: "none",

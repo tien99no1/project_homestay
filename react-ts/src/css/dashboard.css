@@ -104,3 +104,19 @@
 .load {
     color: orange;
 }
+.edit-user {
+    margin: 1rem 0 1rem 0 !important;
+    width: 100% !important;
+}
+.name-edit {
+    margin: 1rem 0 1rem 0;
+    display: flex;
+    justify-content: space-between;
+}
+.edit-name {
+    width: 48%;
+}
+.btn-edit-user {
+    color: #fff !important;
+    background: #01579b !important;
+}

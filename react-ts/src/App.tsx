@@ -15,6 +15,8 @@ import CreateRoom from "./pages/CreateRoom";
 import EditRoom from "./pages/EditRoom";
 import LoginAdmin from "./pages/adminLogin";
 import AdminPage from "./pages/AdminPage";
+import EditProfile from "./pages/EditProfile";
+import Profile from "./pages/Profile";
 
 const App = () => {
   return (
@@ -23,6 +25,7 @@ const App = () => {
         <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="/home/*" element={<Layout />}>
           <Route path="" element={<Home />} />
+          <Route path="profile" element= {<Profile/>}/>
           <Route path="location/:address" element={<Location />} />
           <Route path="room/:id" element={<Room />} />
         </Route>
@@ -33,6 +36,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/adminLogin" element={<LoginAdmin />} />
         <Route path="/adminPage" element={<AdminPage />} />
+        <Route path="/editprofile/:id" element={<EditProfile />} />
         <Route path="/create" element={<CreateRoom />} />
         <Route path="/editroom/:id" element={<EditRoom />} />
         <Route path="*" element={<NotFound />} />

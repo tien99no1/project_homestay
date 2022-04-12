@@ -15,6 +15,7 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import React from "react";
 import { Link } from "react-router-dom";
 import { removeRoom } from "../services/roomService";
+import Footer from "./layout/Footer";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -37,10 +38,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 function ListRoom() {
   const [listAllRoom, setListAllRoom] = useState<any[]>([]);
   const [searchRoomName, setSearchRoomName] = useState("");
-  const hostId = localStorage.getItem("hostId");
-
+  
   const getListroom = async () => {
     try {
+      const hostId = localStorage.getItem("hostId");
       const data = await axios.get(`${CONFIG.ApiRoom}?hostId=${hostId}`);
       setListAllRoom(data.data);
     } catch (e) {}
@@ -48,6 +49,7 @@ function ListRoom() {
 
   useEffect(() => {
     getListroom();
+    
   }, []);
 
   const handleClickDelete = (id: number) => {
@@ -221,6 +223,7 @@ function ListRoom() {
       ) : (
         <h4 className="center">Chỗ nghỉ của bạn đang trống</h4>
       )}
+      <Footer/>
     </div>
   );
 }

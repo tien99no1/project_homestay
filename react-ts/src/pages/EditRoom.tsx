@@ -355,7 +355,7 @@ function EditRoom() {
                   <Box className="input-create-form">
                     <TextField
                       sx={{ minWidth: 300 }}
-                      label="Link ảnh"
+                      label="Hình ảnh"
                       variant="outlined"
                       {...register("roomImg", {
                         required: true,

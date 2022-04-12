@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import "../css/dashboard.css";
 import { CONFIG } from "../config";
 import { room } from "../type";
+import axios from "axios";
 
 const optionsType = [
   { value: "", label: "Chọn chỗ nghỉ" },
@@ -49,16 +50,11 @@ function CreateRoom() {
     formState: { errors },
   } = useForm<room>();
   const navigate = useNavigate();
-
   const hostId = localStorage.getItem("hostId");
 
   const onSubmit = (data: room) => {
-    fetch(`${CONFIG.ApiRoom}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...data, status: 0, hostId }),
-    })
-      .then((response) => response.json())
+    axios
+      .post(`${CONFIG.ApiRoom}`, { ...data, status: 0, hostId })
       .then((data) => {
         console.log("success", data);
         navigate("/dashboard");
@@ -345,7 +341,7 @@ function CreateRoom() {
                   <Box className="input-create-form">
                     <TextField
                       sx={{ minWidth: 300 }}
-                      label="Link ảnh"
+                      label="Hình ảnh"
                       variant="outlined"
                       {...register("roomImg", {
                         required: true,

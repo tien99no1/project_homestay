@@ -35,6 +35,10 @@
     align-items: center;
     margin: 2rem 0;
 }
+.link {
+    text-decoration: none;
+    color: inherit;
+}
 .btn-create-form {
     width: 10%;
     color: #fff !important;
@@ -104,19 +108,28 @@
 .load {
     color: orange;
 }
+.form-edit-profile {
+    margin-top: 3rem;
+}
 .edit-user {
-    margin: 1rem 0 1rem 0 !important;
-    width: 100% !important;
+    margin: 1.2rem 0 1.2rem 0 !important;
 }
 .name-edit {
     margin: 1rem 0 1rem 0;
     display: flex;
     justify-content: space-between;
 }
+.text-name {
+    width: 49%;
+}
+.text-user-edit {
+    width: 100% !important;
+}
 .edit-name {
-    width: 48%;
+    width: 100%;
 }
 .btn-edit-user {
     color: #fff !important;
     background: #01579b !important;
+    width: 15%;
 }

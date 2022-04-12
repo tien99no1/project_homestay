@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { signUpSuccess } from "../store/userSlice";
 import { useDispatch } from "react-redux";
 import { CONFIG } from "../config";
+import axios from "axios";
 
 interface IFormInputs {
   email: string;
@@ -44,18 +45,11 @@ function Login() {
   const userId = useRef('');
   const dispatch = useDispatch();
   const handleUser = async (email: string, password: string) => {
-    const settings = {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    };
     try {
-      const response = await fetch(
+      const response = await axios.get(
         `${CONFIG.ApiUser}?email=${email}&password=${password}`,
-        settings
       );
-      const data = await response.json();
+      const data = await response.data;
       if (data.length > 0) {
         userName.current = data[0].lastName;
         userId.current = data[0].id;

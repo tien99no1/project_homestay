@@ -6,19 +6,14 @@ import {
   MenuItem,
   TextField,
   Toolbar,
-  Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import SearchIcon from "@mui/icons-material/Search";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { GoogleLogout } from "react-google-login";
 import "../../css/Navbar.css";
 import styled from "@emotion/styled";
-import { userInfo } from "os";
-
-const clientId =
-  "422653143846-21pcn0fknnquh0hs9881tbkhnn4f855d.apps.googleusercontent.com";
 
 function Navbar() {
   const CustomTextField = styled(TextField)({
@@ -49,16 +44,16 @@ function Navbar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  const navigate = useNavigate();
   //google logout
   const onSignoutSuccess = () => {
     console.clear();
     localStorage.removeItem("user");
   };
-
   const handleLogout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("userId");
+    navigate('/')
   };
   const [user, setUser] = useState([]);
 
@@ -132,7 +127,7 @@ function Navbar() {
                       "aria-labelledby": "basic-button",
                     }}
                   >
-                    <MenuItem onClick={handleClose}>Tài khoản</MenuItem>
+                    <MenuItem onClick={handleClose}><Link className="link" to='/home/profile'>Tài khoản</Link></MenuItem>
                     <MenuItem onClick={handleClose}>
                       <button className="btn-logout" onClick={handleLogout}>
                         Đăng xuất

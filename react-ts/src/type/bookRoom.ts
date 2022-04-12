@@ -1,3 +1,4 @@
+
 export interface bookRoom {
   id: number;
   userId: string;
@@ -11,5 +12,8 @@ export interface bookRoom {
   startDay: string;
   endDay: string;
   isCheck: number;
-  user: string
+  user: string;
+  roomAddressDetail: string;
+  roomAddress: string;
+  status: number;
 }

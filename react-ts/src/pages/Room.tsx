@@ -48,14 +48,16 @@ function Room() {
     getRoom();
   }, []);
   const userId = localStorage.getItem("userId");
-  const user = localStorage.getItem("user");
+  const user = JSON.parse(localStorage.getItem("user") || "{}")
   const hostId = roomInfo.hostId;
-  const [children, setChildren] = React.useState<number | string>('');
-  const [alduts, setAdults] = React.useState<number | string>('');
+  const [children, setChildren] = React.useState<number | string>("");
+  const [alduts, setAdults] = React.useState<number | string>("");
 
   const roomId = roomInfo.id;
   const roomName = roomInfo.roomName;
   const roomImg = roomInfo.roomImg;
+  const roomAddress = roomInfo.address;
+  const roomAddressDetail = roomInfo.addressDetail;
   //advise
   const {
     register,
@@ -80,12 +82,15 @@ function Room() {
         userId,
         totalCustomers,
         roomName,
+        roomAddress,
+        roomAddressDetail,
         roomImg,
         alduts,
         children,
-        startDay: moment(valueDate[0]).format('DD/MM/YYYY'),
-        endDay: moment(valueDate[1]).format('DD/MM/YYYY'),
+        startDay: moment(valueDate[0]).format("DD/MM/YYYY"),
+        endDay: moment(valueDate[1]).format("DD/MM/YYYY"),
         isCheck: 0,
+        status: 0
       };
       if (
         dataBooking.startDay == null ||
@@ -99,8 +104,8 @@ function Room() {
           .then((dataBooking) => {
             console.log("success", dataBooking);
             setValueDate([null, null]);
-            setChildren('');
-            setAdults('');
+            setChildren(0);
+            setAdults(0);
           })
           .catch((error) => {
             console.error("There was an error!", error);

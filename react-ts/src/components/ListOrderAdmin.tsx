@@ -15,7 +15,7 @@ function News() {
 
   const getListBooking = async () => {
     try {
-      const data = await axios.get(`${CONFIG.ApiBookRoom}`);
+      const data = await axios.get(`${CONFIG.ApiBookRoom}?status=0`);
       setBooking(data.data);
     } catch (e) {}
   };

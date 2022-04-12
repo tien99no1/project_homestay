@@ -52,10 +52,8 @@ function Login() {
       if (dataHost.length > 0) {
         hostName.current = dataHost[0].lastName;
         hostId.current = dataHost[0].id;
-        console.log("true");
         return true;
       } else {
-        console.log("false");
         return false;
       }
     } catch (error) {

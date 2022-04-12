@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import LoginSocialUser from "../components/LoginSocialUser";
 import { CONFIG } from "../config";
 import { user } from "../type";
+import axios from "axios";
 
 function SignUp() {
   const CustomTextField = styled(TextField)({
@@ -34,14 +35,27 @@ function SignUp() {
     formState: { errors },
   } = useForm<user>();
   const navigate = useNavigate();
-
-  const onSubmit = (data: user) => {
-    fetch(`${CONFIG.ApiUser}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
+  const handleUser = async (email: string) => {
+    try {
+      const response = await axios.get(
+        `${CONFIG.ApiUser}?email=${email}`,
+      );
+      const checkEmail = await response.data;
+      if (checkEmail.length > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      return error;
+    }
+  };
+  const onSubmit = async (data: user) => {
+    const checkEmail = await handleUser(data.email)
+    if(checkEmail) {
+      alert('Tài khoản đã tồn tại')
+    } else {
+      axios.post(`${CONFIG.ApiUser}`, data)
       .then((data) => {
         console.log("success", data);
         navigate("/Login");
@@ -49,6 +63,8 @@ function SignUp() {
       .catch((error) => {
         console.error("There was an error!", error);
       });
+    }
+    
   };
 
   return (

@@ -9,22 +9,22 @@ import { Button } from "@mui/material";
 import axios from "axios";
 import { CONFIG } from "../config";
 import { bookRoom } from "../type";
+import Footer from "./layout/Footer";
 
 function News() {
   const [booking, setBooking] = useState<any[]>([]);
-  const hostId = localStorage.getItem("hostId");
-
   const getListBooking = async () => {
     try {
-      const data = await axios.get(`${CONFIG.ApiBookRoom}?hostId=${hostId}`);
+      const hostId = localStorage.getItem("hostId");
+      const data = await axios.get(`${CONFIG.ApiBookRoom}?hostId=${hostId}&status=0`);
       setBooking(data.data);
-    } catch (e) {}
+    } catch (e) {
+      console.log(e)
+    }
   };
-
   useEffect(() => {
     getListBooking();
   }, []);
-
   const handleAccept = (book: bookRoom, index: number) => {
     const { id } = book;
     const data = { ...book, isCheck: 1 };
@@ -120,6 +120,7 @@ function News() {
           <h4 className="center">Bạn chưa có đơn đặt chỗ nào</h4>
         )}
       </Box>
+      <Footer/>
     </>
   );
 }

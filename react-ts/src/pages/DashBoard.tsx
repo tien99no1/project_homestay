@@ -16,8 +16,7 @@ import ListRoom from "../components/ListRoom";
 import { CONFIG } from "../config";
 import News from "../components/News";
 
-const clientId =
-  `${CONFIG.GOOLGE_CLIENT_ID}`;
+const clientId = `${CONFIG.GOOLGE_CLIENT_ID}`;
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -105,7 +104,7 @@ export default function Host() {
           alignItems={"center"}
           marginRight={"2rem"}
         >
-          <Link style={{ textDecoration: "none" }} to="/create">
+          <Link className="link" to="/create">
             <Button className="btn-create-room">Tạo chỗ nghỉ mới</Button>
           </Link>
           <Box>
@@ -129,7 +128,6 @@ export default function Host() {
                 "aria-labelledby": "basic-button",
               }}
             >
-              <MenuItem onClick={handleClose}>Tài khoản</MenuItem>
               <MenuItem onClick={handleClose}>
                 <button className="btn-logout" onClick={handleLogout}>
                   <GoogleLogout
@@ -166,7 +164,7 @@ export default function Host() {
               Đặt chỗ gần đây
             </Typography>
             <div>
-              <News/>
+              <News />
             </div>
           </TabPanel>
           <TabPanel value={value} index={1}>

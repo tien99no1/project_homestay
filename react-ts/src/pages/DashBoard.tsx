@@ -92,7 +92,7 @@ export default function Host() {
         <Box style={{ position: "absolute" }} width={"100%"}>
           <Link
             to="/"
-            style={{ paddingLeft: "50px", fontSize: "2rem" }}
+            style={{ marginLeft: "6rem", fontSize: "2rem" }}
             className="brand "
           >
             RikStay

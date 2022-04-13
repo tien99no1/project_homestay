@@ -9,7 +9,7 @@ import { styled } from "@mui/material/styles";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { CONFIG } from "../config";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import React from "react";
 import { bookRoom } from "../type";
 
@@ -95,7 +95,7 @@ function ListRoomUserOrder() {
                     if (searchBookingRoom == "") {
                       return value;
                     } else if (
-                      value.BookingRoom.toLowerCase().includes(
+                      value.roomName.toLowerCase().includes(
                         searchBookingRoom.toLowerCase()
                       )
                     ) {
@@ -158,17 +158,16 @@ function ListRoomUserOrder() {
                         </TableCell>
                         <TableCell align="center">
                           {item.isCheck == 0 ? (
-                           (item.status == 1)? (
-                            <Button disabled> Đã hủy </Button>
-                          ) : (
-                            <Button onClick={() => handleCancel(item, index)}>
-                            Hủy đặt chỗ
-                          </Button>
-                          )
+                            item.status == 1 ? (
+                              <Button disabled> Đã hủy </Button>
+                            ) : (
+                              <Button onClick={() => handleCancel(item, index)}>
+                                Hủy đặt chỗ
+                              </Button>
+                            )
                           ) : (
                             <Button disabled> Hủy đặt chỗ </Button>
                           )}
-                          
                         </TableCell>
                       </StyledTableRow>
                     );

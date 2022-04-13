@@ -17,6 +17,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { CONFIG } from "../config";
 import axios from "axios";
 import moment from "moment";
+import Noti from "../components/Noti";
 
 interface IFormInputs {
   name: string;
@@ -24,6 +25,11 @@ interface IFormInputs {
 }
 
 function Room() {
+  const [showNoti, setShowNoti] = useState(false)
+  const [payloadNoti, setPayloadNoti] = useState({
+    status: 'success',
+    text: '',
+  })
   const [valueDate, setValueDate] = React.useState<DateRange<Date>>([
     null,
     null,
@@ -97,15 +103,18 @@ function Room() {
         dataBooking.endDay == null ||
         dataBooking.totalCustomers === 0
       ) {
-        alert("Vui lòng điền vào chỗ trống!");
+        setPayloadNoti({
+          status: 'error',
+          text: 'Vui lòng điền vào chỗ trống',
+        })
+        setShowNoti(true)
       } else {
         axios
           .post(`${CONFIG.ApiBookRoom}`, dataBooking)
           .then((dataBooking) => {
             console.log("success", dataBooking);
             setValueDate([null, null]);
-            setChildren(0);
-            setAdults(0);
+            navigate('/home/profile')
           })
           .catch((error) => {
             console.error("There was an error!", error);
@@ -432,6 +441,7 @@ function Room() {
           </Box>
         </Box>
       </Container>
+      <Noti payload={payloadNoti} showNoti={showNoti} setShowNoti={setShowNoti} />
     </>
   );
 }

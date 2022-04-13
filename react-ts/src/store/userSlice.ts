@@ -5,6 +5,7 @@ export const userSlice = createSlice({
   initialState: {
     user: {
       id: "",
+      firstName: "",
       lastName: "",
       password: "",
       email: "",
@@ -26,14 +27,21 @@ export const userSlice = createSlice({
       state.user.error = false;
       state.user.id = action.payload.id;
       state.user.lastName = action.payload.lastName;
+      state.user.firstName = action.payload.firstName;
       state.user.email = action.payload.email;
       state.user.password = action.payload.password;
     },
+    logoutRequest: (state, action) =>{
+      state.user.id = '';
+      state.user.firstName = '';
+      state.user.lastName = '';
+      state.user.password = '';
+  },
     getRoomsById: (state, action) => {
       state.roomById = action.payload;
     },
   },
 });
-export const { signUpStart, signUpError, signUpSuccess, getRoomsById } =
+export const { signUpStart, signUpError, signUpSuccess, logoutRequest, getRoomsById } =
   userSlice.actions;
 export default userSlice.reducer;

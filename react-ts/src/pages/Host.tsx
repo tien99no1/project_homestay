@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Box, Button, Container, styled, TextField } from "@mui/material";
+import { Box, Button, styled, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 import LoginSocial from "../components/LoginSocialMedia";
 import { useNavigate } from "react-router-dom";
-import { Email } from "@mui/icons-material";
 import { CONFIG } from "../config";
 
 interface IFormInputs {

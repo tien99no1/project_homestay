@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { signUpSuccess } from "../store/userSlice";
 import { useDispatch } from "react-redux";
 import { CONFIG } from "../config";
+import Noti from "../components/Noti";
 import axios from "axios";
 
 interface IFormInputs {
@@ -15,7 +16,11 @@ interface IFormInputs {
 }
 
 function Login() {
-  
+  const [showNoti, setShowNoti] = useState(false);
+  const [payloadNoti, setPayloadNoti] = useState({
+    status: "success",
+    text: "",
+  });
   const CustomTextField = styled(TextField)({
     "& label.Mui-focused": {
       color: "#959392",
@@ -41,13 +46,13 @@ function Login() {
   } = useForm<IFormInputs>();
 
   const navigate = useNavigate();
-  const userName = useRef('');
-  const userId = useRef('');
+  const userName = useRef("");
+  const userId = useRef("");
   const dispatch = useDispatch();
   const handleUser = async (email: string, password: string) => {
     try {
       const response = await axios.get(
-        `${CONFIG.ApiUser}?email=${email}&password=${password}`,
+        `${CONFIG.ApiUser}?email=${email}&password=${password}`
       );
       const data = await response.data;
       if (data.length > 0) {
@@ -68,9 +73,13 @@ function Login() {
       navigate("/");
       localStorage.setItem("user", JSON.stringify(userName.current));
       localStorage.setItem("userId", JSON.stringify(userId.current));
-      dispatch(signUpSuccess(userId.current));
+      dispatch(signUpSuccess(userName.current));
     } else {
-      alert("Sai tài khoản hoặc mật khẩu");
+      setPayloadNoti({
+        status: "error",
+        text: "Sai tài khoản hoặc mật khẩu",
+      });
+      setShowNoti(true);
     }
   };
 
@@ -155,6 +164,11 @@ function Login() {
           </Box>
         </Box>
       </Box>
+      <Noti
+        payload={payloadNoti}
+        showNoti={showNoti}
+        setShowNoti={setShowNoti}
+      />
     </Box>
   );
 }

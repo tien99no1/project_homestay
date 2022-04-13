@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, styled, TextField } from "@mui/material";
@@ -6,9 +6,15 @@ import { Link } from "react-router-dom";
 import LoginSocialUser from "../components/LoginSocialUser";
 import { CONFIG } from "../config";
 import { user } from "../type";
+import Noti from '../components/Noti'
 import axios from "axios";
 
 function SignUp() {
+  const [showNoti, setShowNoti] = useState(false)
+  const [payloadNoti, setPayloadNoti] = useState({
+    status: 'success',
+    text: '',
+  })
   const CustomTextField = styled(TextField)({
     "& label.Mui-focused": {
       color: "#959392",
@@ -53,12 +59,20 @@ function SignUp() {
   const onSubmit = async (data: user) => {
     const checkEmail = await handleUser(data.email)
     if(checkEmail) {
-      alert('Tài khoản đã tồn tại')
+      setPayloadNoti({
+        status: 'error',
+        text: 'Tài khoản đã tồn tại',
+      })
+      setShowNoti(true)
     } else {
       axios.post(`${CONFIG.ApiUser}`, data)
       .then((data) => {
-        console.log("success", data);
-        navigate("/Login");
+        setPayloadNoti({
+          status: 'success',
+          text: 'Đăng ký thành công',
+        })
+        setShowNoti(true)
+        navigate('/login')
       })
       .catch((error) => {
         console.error("There was an error!", error);
@@ -204,6 +218,7 @@ function SignUp() {
           </Box>
         </Box>
       </Box>
+      <Noti payload={payloadNoti} showNoti={showNoti} setShowNoti={setShowNoti} />
     </Box>
   );
 }

@@ -11,9 +11,10 @@ import { Box } from "@mui/system";
 import SearchIcon from "@mui/icons-material/Search";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { GoogleLogout } from "react-google-login";
 import "../../css/Navbar.css";
 import styled from "@emotion/styled";
+import { useSelector, useDispatch } from "react-redux";
+import { logoutRequest } from "../../store/userSlice";
 
 function Navbar() {
   const CustomTextField = styled(TextField)({
@@ -44,15 +45,15 @@ function Navbar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const userAuth = useSelector((state: any) => state.user);
+  const dispatch = useDispatch()
   const navigate = useNavigate();
-  //google logout
-  const onSignoutSuccess = () => {
-    console.clear();
-    localStorage.removeItem("user");
-  };
+  
   const handleLogout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("userId");
+    dispatch(logoutRequest(userAuth))
     navigate('/')
   };
   const [user, setUser] = useState([]);
@@ -115,7 +116,7 @@ function Navbar() {
                       </Avatar>
                     </li>
                     <li className="nav-items">
-                      <span style={{ color: "#000" }}>{user}</span>
+                      <span style={{ color: "#000" }}>{userAuth.lastName}</span>
                     </li>
                   </Button>
                   <Menu

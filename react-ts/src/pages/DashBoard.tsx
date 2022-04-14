@@ -15,6 +15,7 @@ import "../css/dashboard.css";
 import ListRoom from "../components/ListRoom";
 import { CONFIG } from "../config";
 import News from "../components/News";
+import { ConfirmProvider } from "material-ui-confirm";
 
 const clientId = `${CONFIG.GOOLGE_CLIENT_ID}`;
 
@@ -88,7 +89,7 @@ export default function Host() {
 
   return (
     <>
-      <Box display={"flex"} justifyContent={"end"} padding={"1rem"}>
+      <Box className="header-host">
         <Box style={{ position: "absolute" }} width={"100%"}>
           <Link
             to="/"
@@ -169,7 +170,9 @@ export default function Host() {
           </TabPanel>
           <TabPanel value={value} index={1}>
             <div style={{ height: 400, width: "100%", textAlign: "center" }}>
-              <ListRoom />
+              <ConfirmProvider>
+                <ListRoom />
+              </ConfirmProvider>
             </div>
           </TabPanel>
         </Box>

@@ -14,6 +14,7 @@ import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutl
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import React from "react";
 import { Link } from "react-router-dom";
+import { useConfirm } from 'material-ui-confirm';
 import { removeRoom } from "../services/roomService";
 import Footer from "./layout/Footer";
 
@@ -51,17 +52,14 @@ function ListRoom() {
     getListroom();
     
   }, []);
-
+  const confirm = useConfirm();
   const handleClickDelete = (id: number) => {
-    if (window.confirm("Bạn chắc chắn muốn xóa?")) {
-      removeRoom(id)
-        .then((res) => {
-          getListroom();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
+    confirm({ description: `Bạn chắc chắn muốn xóa?` })
+    .then(() => removeRoom(id)
+      .then((res) => {
+        getListroom();
+      }))
+      .catch(() => console.log("Deletion cancelled."));
   };
   return (
     <div>

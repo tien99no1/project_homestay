@@ -11,17 +11,18 @@ import {
 } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import NumberFormat from "react-number-format";
 import { CONFIG } from "../config";
 
 interface IPost {
-  id: number,
-  roomImg: string,
-  roomCate: string,
-  title: string,
-  roomPrice: number,
-  address: string
+  id: number;
+  roomImg: string;
+  roomCate: string;
+  title: string;
+  roomPrice: number;
+  address: string;
 }
-const defaultProps:IPost[] = [];
+const defaultProps: IPost[] = [];
 function Location() {
   const [select, setSelect] = React.useState("");
   const [rooms, setRooms] = useState(defaultProps);
@@ -87,31 +88,34 @@ function Location() {
           container
           rowSpacing={3}
           columnSpacing={{ xs: 1, sm: 1, md: 1.5 }}
-        >{rooms
-          .filter((room:any) => room.address === address)
-          .map((room: any) => {
-          return (
-            <Grid item xl={3} sm={6} md={4} xs={12}>
-            <Box className="Location">
-              <Link to={`/home/room/${room.id}`}>
-                <Box className="img-location">
-                  <img
-                    src={room.roomImg}
-                    alt=""
-                  />
-                </Box>
-              </Link>
-              <Box className="content-location">
-                <span>{room.title}</span>
-                <p>{room.roomName}</p>
-                <b>{room.roomPrice}đ/đêm</b>
-              </Box>
-            </Box>
-          </Grid>
-          )
-        })}
-          
-          
+        >
+          {rooms
+            .filter((room: any) => room.address === address)
+            .map((room: any) => {
+              return (
+                <Grid item xl={3} sm={6} md={4} xs={12}>
+                  <Box className="Location">
+                    <Link to={`/home/room/${room.id}`}>
+                      <Box className="img-location">
+                        <img src={room.roomImg} alt="" />
+                      </Box>
+                    </Link>
+                    <Box className="content-location">
+                      <span>{room.title}</span>
+                      <p>{room.roomName}</p>
+                      <b>
+                        <NumberFormat
+                          value={room.roomPrice}
+                          displayType={"text"}
+                          thousandSeparator={true}
+                          suffix={"₫/đêm"}
+                        />
+                      </b>
+                    </Box>
+                  </Box>
+                </Grid>
+              );
+            })}
         </Grid>
       </Box>
     </Container>

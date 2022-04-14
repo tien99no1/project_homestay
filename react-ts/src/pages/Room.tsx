@@ -17,7 +17,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { CONFIG } from "../config";
 import axios from "axios";
 import moment from "moment";
+import NumberFormat from "react-number-format";
 import Noti from "../components/Noti";
+import { useSelector } from "react-redux";
 
 interface IFormInputs {
   name: string;
@@ -25,11 +27,11 @@ interface IFormInputs {
 }
 
 function Room() {
-  const [showNoti, setShowNoti] = useState(false)
+  const [showNoti, setShowNoti] = useState(false);
   const [payloadNoti, setPayloadNoti] = useState({
-    status: 'success',
-    text: '',
-  })
+    status: "success",
+    text: "",
+  });
   const [valueDate, setValueDate] = React.useState<DateRange<Date>>([
     null,
     null,
@@ -52,9 +54,9 @@ function Room() {
   };
   useEffect(() => {
     getRoom();
-  }, []);
+  }, [id]);
   const userId = localStorage.getItem("userId");
-  const user = JSON.parse(localStorage.getItem("user") || "{}")
+  const userName = useSelector((state: any) => state.user.lastName);
   const hostId = roomInfo.hostId;
   const [children, setChildren] = React.useState<number | string>("");
   const [alduts, setAdults] = React.useState<number | string>("");
@@ -64,6 +66,11 @@ function Room() {
   const roomImg = roomInfo.roomImg;
   const roomAddress = roomInfo.address;
   const roomAddressDetail = roomInfo.addressDetail;
+  const customer = roomInfo.customer;
+  const sDay = moment(valueDate[0]);
+  const eDay = moment(valueDate[1]);
+  const totalDays = eDay.diff(sDay, "days");
+  const totalPrice = totalDays * roomInfo.roomPrice;
   //advise
   const {
     register,
@@ -72,7 +79,12 @@ function Room() {
   } = useForm<IFormInputs>();
   const totalCustomers: number = Number(children) + Number(alduts);
   const onSubmit = (data: IFormInputs) => {
-    console.log(data);
+    sessionStorage.setItem("advide", JSON.stringify(data));
+    setPayloadNoti({
+      status: "success",
+      text: "Thành công",
+    });
+    setShowNoti(true);
     return data;
   };
   //post
@@ -83,7 +95,7 @@ function Room() {
     } else {
       const dataBooking = {
         roomId,
-        user,
+        userName,
         hostId,
         userId,
         totalCustomers,
@@ -92,11 +104,12 @@ function Room() {
         roomAddressDetail,
         roomImg,
         alduts,
+        totalPrice,
         children,
         startDay: moment(valueDate[0]).format("DD/MM/YYYY"),
         endDay: moment(valueDate[1]).format("DD/MM/YYYY"),
         isCheck: 0,
-        status: 0
+        status: 0,
       };
       if (
         dataBooking.startDay == null ||
@@ -104,17 +117,22 @@ function Room() {
         dataBooking.totalCustomers === 0
       ) {
         setPayloadNoti({
-          status: 'error',
-          text: 'Vui lòng điền vào chỗ trống',
-        })
-        setShowNoti(true)
+          status: "error",
+          text: "Vui lòng điền vào chỗ trống",
+        });
+        setShowNoti(true);
+      } else if (dataBooking.totalCustomers > customer + 1) {
+        setPayloadNoti({
+          status: "error",
+          text: "Bạn đã chọn quá số khách cho phép",
+        });
+        setShowNoti(true);
       } else {
         axios
           .post(`${CONFIG.ApiBookRoom}`, dataBooking)
           .then((dataBooking) => {
-            console.log("success", dataBooking);
             setValueDate([null, null]);
-            navigate('/home/profile')
+            navigate("/home/profile");
           })
           .catch((error) => {
             console.error("There was an error!", error);
@@ -149,12 +167,12 @@ function Room() {
               </p>
               <p className="phone margin-icon">
                 <ApartmentOutlinedIcon />
-                <b>{roomInfo.roomType}· </b>
-                {roomInfo.roomAcreage} m<sup>2</sup>
+                <b>{roomInfo.roomType} -</b>
+                <b></b> {roomInfo.roomAcreage} m<sup>2</sup>
               </p>
               <p>
                 Phòng riêng · {roomInfo.bathRoom} Phòng tắm · {roomInfo.bed}
-                giường · {roomInfo.bedRoom} phòng ngủ · {roomInfo.customer}
+                giường · {roomInfo.bedRoom} phòng ngủ · {roomInfo.customer} {""}
                 khách (tối đa {roomInfo.customer + 1} khách)
               </p>
               <br />
@@ -247,7 +265,14 @@ function Room() {
               <Box className="order">
                 <Box>
                   <p className="price-room">
-                    <span className="price">{roomInfo.roomPrice}đ</span>
+                    <span className="price">
+                      <NumberFormat
+                        value={roomInfo.roomPrice}
+                        displayType={"text"}
+                        thousandSeparator={true}
+                        suffix={"₫"}
+                      />
+                    </span>
                     /đêm
                   </p>
                 </Box>
@@ -308,63 +333,30 @@ function Room() {
                     noValidate
                     autoComplete="off"
                   >
-                    {totalCustomers === roomInfo.customer + 1 ? (
-                      <>
-                        <TextField
-                          id="outlined-disabled"
-                          label="Người lớn"
-                          type="number"
-                          disabled={true}
-                          onChange={(e) => setAdults(e.target.value)}
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                          InputProps={{
-                            inputProps: { min: 0, max: 100 },
-                          }}
-                        />
-                        <TextField
-                          id="outlined-number"
-                          label="Trẻ em"
-                          disabled={true}
-                          type="number"
-                          onChange={(e) => setChildren(e.target.value)}
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                          InputProps={{
-                            inputProps: { min: 0 },
-                          }}
-                        />
-                      </>
-                    ) : (
-                      <>
-                        <TextField
-                          id="outlined-disabled"
-                          label="Người lớn"
-                          type="number"
-                          onChange={(e) => setAdults(e.target.value)}
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                          InputProps={{
-                            inputProps: { min: 0, max: 100 },
-                          }}
-                        />
-                        <TextField
-                          id="outlined-number"
-                          label="Trẻ em"
-                          type="number"
-                          onChange={(e) => setChildren(e.target.value)}
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                          InputProps={{
-                            inputProps: { min: 0 },
-                          }}
-                        />
-                      </>
-                    )}
+                    <TextField
+                      id="outlined-disabled"
+                      label="Người lớn"
+                      type="number"
+                      onChange={(e) => setAdults(e.target.value)}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      InputProps={{
+                        inputProps: { min: 0, max: 100 },
+                      }}
+                    />
+                    <TextField
+                      id="outlined-number"
+                      label="Trẻ em"
+                      type="number"
+                      onChange={(e) => setChildren(e.target.value)}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      InputProps={{
+                        inputProps: { min: 0 },
+                      }}
+                    />
                   </Box>
                 </Box>
                 <Box
@@ -379,69 +371,87 @@ function Room() {
               </Box>
             </Box>
             <Box className="advise">
-              <Box padding={"0 20px 0 20px"}>
-                <h3>Tư vấn từ Rikstay</h3>
-                <p style={{ fontSize: "0.8rem", marginTop: "-10px" }}>
-                  Vui lòng cung cấp tên và số điện thoại để nhận được tư vấn từ
-                  Luxstay cho chuyến đi của bạn.
-                </p>
-              </Box>
-              <Box className="form-advise">
-                <form onSubmit={handleSubmit(onSubmit)}>
-                  <Box className="text-advise">
-                    <TextField
-                      className="input-advise"
-                      label="Nhập tên"
-                      variant="outlined"
-                      {...register("name", {
-                        required: true,
-                        maxLength: 80,
-                        pattern:
-                          /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]{2,}$/g,
-                      })}
-                    />
-                    <br />
-                    {errors?.name?.type === "required" && (
-                      <small>Vui lòng nhập tên</small>
-                    )}
-                    {errors?.name?.type === "pattern" && (
-                      <small>Tên không hợp lệ</small>
-                    )}
+              {sessionStorage.getItem("advide") ? (
+                <>
+                  <Box padding={"0 20px 0 20px"}>
+                    <h3>Tư vấn từ Rikstay</h3>
+                    <p style={{ fontSize: "0.8rem", marginTop: "-10px" }}>
+                      Cảm ơn bạn đã quan tâm! Rikstay sẽ liên hệ tư vấn dịch vụ
+                      trong thời gian sớm nhất.
+                    </p>
                   </Box>
-                  <Box className="text-advise">
-                    <TextField
-                      className="input-advise"
-                      label="Số điện thoại"
-                      variant="outlined"
-                      type={"phone"}
-                      {...register("phone", {
-                        required: true,
-                        pattern: /(((\+|)84)|0)(3|5|7|8|9)+([0-9]{8})\b/i,
-                      })}
-                    />
-                    <br />
-                    {errors?.phone?.type === "required" && (
-                      <small>Vui lòng nhập số điện thoại</small>
-                    )}
-                    {errors?.phone?.type === "pattern" && (
-                      <small>Số điện thoại không hợp lệ</small>
-                    )}
+                </>
+              ) : (
+                <>
+                  <Box padding={"0 20px 0 20px"}>
+                    <h3>Tư vấn từ Rikstay</h3>
+                    <p style={{ fontSize: "0.8rem", marginTop: "-10px" }}>
+                      Vui lòng cung cấp tên và số điện thoại để nhận được tư vấn
+                      từ Luxstay cho chuyến đi của bạn.
+                    </p>
                   </Box>
-                  <Button className="btn-advise" type="submit">
-                    Nhận tư vấn miễn phí
-                  </Button>
-                  <Button className="phone-advise">
-                    <span style={{ fontSize: "0.7rem" }}>
-                      Gọi 18006586 (miễn phí) để được hỗ trợ.
-                    </span>
-                  </Button>
-                </form>
-              </Box>
+                  <Box className="form-advise">
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                      <Box className="text-advise">
+                        <TextField
+                          className="input-advise"
+                          label="Nhập tên"
+                          variant="outlined"
+                          {...register("name", {
+                            required: true,
+                            maxLength: 80,
+                            pattern:
+                              /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]{2,}$/g,
+                          })}
+                        />
+                        <br />
+                        {errors?.name?.type === "required" && (
+                          <small>Vui lòng nhập tên</small>
+                        )}
+                        {errors?.name?.type === "pattern" && (
+                          <small>Tên không hợp lệ</small>
+                        )}
+                      </Box>
+                      <Box className="text-advise">
+                        <TextField
+                          className="input-advise"
+                          label="Số điện thoại"
+                          variant="outlined"
+                          type={"phone"}
+                          {...register("phone", {
+                            required: true,
+                            pattern: /(((\+|)84)|0)(3|5|7|8|9)+([0-9]{8})\b/i,
+                          })}
+                        />
+                        <br />
+                        {errors?.phone?.type === "required" && (
+                          <small>Vui lòng nhập số điện thoại</small>
+                        )}
+                        {errors?.phone?.type === "pattern" && (
+                          <small>Số điện thoại không hợp lệ</small>
+                        )}
+                      </Box>
+                      <Button className="btn-advise" type="submit">
+                        Nhận tư vấn miễn phí
+                      </Button>
+                      <Button className="phone-advise">
+                        <span style={{ fontSize: "0.7rem" }}>
+                          Gọi 18006586 (miễn phí) để được hỗ trợ.
+                        </span>
+                      </Button>
+                    </form>
+                  </Box>
+                </>
+              )}
             </Box>
           </Box>
         </Box>
       </Container>
-      <Noti payload={payloadNoti} showNoti={showNoti} setShowNoti={setShowNoti} />
+      <Noti
+        payload={payloadNoti}
+        showNoti={showNoti}
+        setShowNoti={setShowNoti}
+      />
     </>
   );
 }

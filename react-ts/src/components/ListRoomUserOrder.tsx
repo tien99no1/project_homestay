@@ -11,6 +11,7 @@ import { useState, useEffect } from "react";
 import { CONFIG } from "../config";
 import { Box, Button, TextField } from "@mui/material";
 import React from "react";
+import NumberFormat from "react-number-format";
 import { bookRoom } from "../type";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -80,11 +81,10 @@ function ListRoomUserOrder() {
                   <StyledTableCell align="center">ID</StyledTableCell>
                   <StyledTableCell align="center">Tên chỗ nghỉ</StyledTableCell>
                   <StyledTableCell align="center">Địa điểm</StyledTableCell>
-                  <StyledTableCell align="center">Ngày bắt đầu</StyledTableCell>
-                  <StyledTableCell align="center">
-                    Ngày trả phòng
-                  </StyledTableCell>
+                  <StyledTableCell align="center">Ngày nhận phòng</StyledTableCell>
+                  <StyledTableCell align="center">Ngày trả phòng</StyledTableCell>
                   <StyledTableCell align="center">Số người</StyledTableCell>
+                  <StyledTableCell align="center">Tổng tiền</StyledTableCell>
                   <StyledTableCell align="center">Trạng thái</StyledTableCell>
                   <StyledTableCell align="center">Hành động</StyledTableCell>
                 </TableRow>
@@ -136,6 +136,14 @@ function ListRoomUserOrder() {
                         </TableCell>
                         <TableCell align="center">
                           <p>{item.totalCustomers}</p>
+                        </TableCell>
+                        <TableCell align="center">
+                          <p><NumberFormat
+                        value={item.totalPrice}
+                        displayType={"text"}
+                        thousandSeparator={true}
+                        suffix={"đ"}
+                      /></p>
                         </TableCell>
                         <TableCell
                           className="status tbody"

@@ -12,8 +12,9 @@ export interface bookRoom {
   startDay: string;
   endDay: string;
   isCheck: number;
-  user: string;
+  userName: string;
   roomAddressDetail: string;
   roomAddress: string;
   status: number;
+  totalPrice: number;
 }

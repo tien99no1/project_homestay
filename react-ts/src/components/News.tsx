@@ -12,7 +12,7 @@ import { bookRoom } from "../type";
 import Footer from "./layout/Footer";
 
 function News() {
-  const [booking, setBooking] = useState<any[]>([]);
+  const [booking, setBooking] = useState<bookRoom[]>([]);
   const getListBooking = async () => {
     try {
       const hostId = localStorage.getItem("hostId");
@@ -22,6 +22,7 @@ function News() {
       console.log(e)
     }
   };
+  console.log("first", booking)
   useEffect(() => {
     getListBooking();
   }, []);
@@ -63,7 +64,7 @@ function News() {
           <div>
             {booking.map((book: bookRoom, index: number) => {
               return (
-                <div key={book.id} className="div-card">
+                <div key={index} className="div-card">
                   <Card sx={{ width: "100%", display: "flex" }}>
                     <CardMedia
                       component="img"
@@ -76,7 +77,7 @@ function News() {
                         {book.roomName}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
-                        Tên khách hàng: {book.user}
+                        Tên khách hàng: {book.userName}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
                         Ngày thuê: từ ngày {book.startDay} đến {book.endDay}

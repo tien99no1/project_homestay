@@ -56,7 +56,7 @@ function Login() {
       );
       const data = await response.data;
       if (data.length > 0) {
-        userName.current = data[0].lastName;
+        userName.current = data[0];
         userId.current = data[0].id;
         return true;
       } else {
@@ -71,8 +71,9 @@ function Login() {
     const user = await handleUser(data.email, data.password);
     if (user) {
       navigate("/");
-      localStorage.setItem("user", JSON.stringify(userName.current));
+      // localStorage.setItem("user", JSON.stringify(userName.current));
       localStorage.setItem("userId", JSON.stringify(userId.current));
+      sessionStorage.removeItem('advide');
       dispatch(signUpSuccess(userName.current));
     } else {
       setPayloadNoti({
@@ -84,7 +85,7 @@ function Login() {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("user")) {
+    if (localStorage.getItem("userId")) {
       navigate("/");
     }
   }, []);

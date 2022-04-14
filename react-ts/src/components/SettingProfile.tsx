@@ -19,8 +19,11 @@ import { user } from "../type";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { CONFIG } from "../config";
+import { useDispatch } from "react-redux";
+import { signUpSuccess } from "../store/userSlice";
 
 function SettingProfile() {
+  const dispatch = useDispatch()
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -51,7 +54,7 @@ function SettingProfile() {
   const onSubmit = (data: user) => {
     const id = JSON.parse(localStorage.getItem("userId") || "{}");
     axios.put(`${CONFIG.ApiUser}/${id}`, data).then((result) => {
-      localStorage.setItem("user", JSON.stringify(data.lastName));
+      dispatch(signUpSuccess(data));
       getUser();
       setOpen(false);
     });

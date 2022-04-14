@@ -50,7 +50,7 @@ function News() {
                         {book.roomName}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
-                        Tên khách hàng: {book.user}
+                        Tên khách hàng: {book.userName}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
                         Ngày thuê: từ ngày {book.startDay} đến {book.endDay}

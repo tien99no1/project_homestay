@@ -28,6 +28,12 @@
 .input-create-form {
     margin: 1rem 0
 }
+.header-host {
+    display: flex;
+    justify-content: end;
+    padding: 1rem;
+    background: #f0f0f0;
+}
 .Box-btn-create {
     width: 100%;
     display: flex;

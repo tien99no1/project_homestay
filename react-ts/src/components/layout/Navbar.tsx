@@ -13,13 +13,14 @@ import SearchIcon from "@mui/icons-material/Search";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../../css/Navbar.css";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import LogoutIcon from '@mui/icons-material/Logout';
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import LogoutIcon from "@mui/icons-material/Logout";
 import styled from "@emotion/styled";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutRequest } from "../../store/userSlice";
 import axios from "axios";
 import { CONFIG } from "../../config";
+import { room } from "../../type";
 
 function Navbar() {
   const CustomTextField = styled(TextField)({
@@ -52,15 +53,15 @@ function Navbar() {
   };
 
   const userAuth = useSelector((state: any) => state.user);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   const handleLogout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("userId");
-    sessionStorage.removeItem('advide');
-    dispatch(logoutRequest(userAuth))
-    navigate('/')
+    sessionStorage.removeItem("advide");
+    dispatch(logoutRequest(userAuth));
+    navigate("/");
   };
 
   const [roomSearching, setRoomSearching] = useState([]);
@@ -74,23 +75,23 @@ function Navbar() {
   useEffect(() => {
     getListRoom();
   }, []);
-  
-  const handleSearch = (event: any) => {
-    const searchWord = event.target.value;
-    const newFilter = rooms.filter((room: any) => {
-      return room.roomName.toLowerCase().includes(searchWord);
+
+  const handleSearch = (e: any) => {
+    const search = e.target.value;
+    const roomFilter = rooms.filter((room: room) => {
+      return room.roomName.toLowerCase().includes(search.toLowerCase());
     });
-    if (searchWord === "") {
-      setRoomSearching([]);
+    if (search == "") {
+      return setRoomSearching([]);
     } else {
-      setRoomSearching(newFilter);
+      return setRoomSearching(roomFilter);
     }
   };
 
-  const onGoToRoomPage = (room: any) => {
-    setRoomSearching([])
-  }
-  
+  const onGoToRoomPage = (room: room) => {
+    setRoomSearching([]);
+  };
+
   return (
     <AppBar position="sticky" color="inherit">
       <Toolbar>
@@ -99,23 +100,20 @@ function Navbar() {
             <Link to="/" className="brand">
               RikStay
             </Link>
-            <Box className="box-search">
-              <CustomTextField
-                label="Tìm kiếm"
-                id="outlined-size-small"
-                size="small"
+            <div className="box-search">
+              <input
+                className="input-search"
+                placeholder="Tìm kiếm"
                 onChange={handleSearch}
               />
-              <Button className="btn-search" variant="outlined">
-                <SearchIcon style={{ margin: 0, color: "#fff" }} />
-              </Button>
-            </Box>
+              <button className="btn-search btn--primary btn--inside">
+                <SearchIcon sx={{ fontSize: "1.9rem" }} />
+              </button>
+            </div>
           </Box>
           <Box>
             <ul className="nav-right">
-              <li style={{ marginRight: "1.2rem" }} className="nav-items">
-                  
-              </li>
+              <li style={{ marginRight: "1.2rem" }} className="nav-items"></li>
               <li style={{ marginRight: "1.2rem" }} className="nav-items">
                 <Link to="/host">Host</Link>
               </li>
@@ -155,10 +153,17 @@ function Navbar() {
                       "aria-labelledby": "basic-button",
                     }}
                   >
-                    <MenuItem onClick={handleClose}><Link className="link menu-item " to='/home/profile'><AccountCircleIcon/> Tài khoản</Link></MenuItem>
                     <MenuItem onClick={handleClose}>
-                      <button className="btn-logout menu-item" onClick={handleLogout}>
-                        <LogoutIcon/> Đăng xuất
+                      <Link className="link menu-item " to="/home/profile">
+                        <AccountCircleIcon /> Tài khoản
+                      </Link>
+                    </MenuItem>
+                    <MenuItem onClick={handleClose}>
+                      <button
+                        className="btn-logout menu-item"
+                        onClick={handleLogout}
+                      >
+                        <LogoutIcon /> Đăng xuất
                       </button>
                     </MenuItem>
                   </Menu>
@@ -178,50 +183,33 @@ function Navbar() {
         </Box>
       </Toolbar>
       {roomSearching.length !== 0 && (
-        <Box
-          sx={{
-            width: "25rem",
-            height: "auto",
-            mt: "4.5rem",
-            position: "fixed",
-            left: "8.2rem",
-            zIndex: "100",
-            bgcolor: "white",
-            padding: "1rem",
-            borderRadius: "5px",
-            boxShadow: "-1px 3px 16px -4px #000000",
-          }}
+        <div
+          className="search-result"
         >
           {roomSearching.map((room: any, key: any) => {
             return (
-              <Link to={`/home/room/${room.id}`} onClick={() => onGoToRoomPage(room)}>
-                <Box
-                  sx={{
-                    color: "black",
-                    mb: "1rem",
-                    cursor: "pointer",
-                    "&:hover": {
-                      backgroundColor: "#e6e6e6",
-                      opacity: [0.8, 0.7, 0.9],
-                    },
-                  }}
-                >
+              <Link
+                className="link"
+                to={`/home/room/${room.id}`}
+                onClick={() => onGoToRoomPage(room)}
+              >
+                <div className="list-search">
                   <Box sx={{ display: "flex", alignItems: "center" }}>
                     <img src={room.roomImg} alt="" width="100px" />
                     <Box sx={{ ml: "1rem" }}>
-                      <Typography sx={{ fontSize: "15px", fontWeight: "700" }}>
+                      <Typography sx={{ fontSize: "1rem", fontWeight: "700" }}>
                         {room.roomName}
                       </Typography>
-                      <Typography sx={{ fontSize: "13px" }}>
+                      <Typography sx={{ fontSize: "0.8rem" }}>
                         {room.address}, {room.addressDetail}
                       </Typography>
                     </Box>
                   </Box>
-                </Box>
+                </div>
               </Link>
             );
           })}
-        </Box>
+        </div>
       )}
     </AppBar>
   );

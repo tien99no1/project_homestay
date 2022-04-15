@@ -15,7 +15,10 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import React from "react";
 import { removeRoom } from "../services/roomService";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 import { room } from "../type";
+import { useConfirm } from "material-ui-confirm";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -39,6 +42,19 @@ function ListRoomAdmin() {
   const [listAllRoom, setListAllRoom] = useState<any[]>([]);
   const [searchRoomName, setSearchRoomName] = useState("");
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postPerPage, setPostPerPage] = useState(3);
+  const indexOfLastRoom = currentPage * postPerPage;
+  const indexOfFirstRoom = indexOfLastRoom - postPerPage;
+  const listAllRoomCurrent = listAllRoom.slice(
+    indexOfFirstRoom,
+    indexOfLastRoom
+  );
+  const pageNumbers = Math.ceil(listAllRoom.length / postPerPage);
+
+  const paginate = (pageNumbers: any) => {
+    setCurrentPage(pageNumbers);
+  };
   const getListroom = async () => {
     try {
       const data = await axios.get(`${CONFIG.ApiRoom}`);
@@ -57,28 +73,28 @@ function ListRoomAdmin() {
       const newRoom = [...listAllRoom];
       newRoom[index] = result.data;
       setListAllRoom(newRoom);
+      getListroom();
     });
   };
   const handleRefuse = (item: room, index: number) => {
     const { id } = item;
     const data = { ...item, status: 2 };
     axios.put(`${CONFIG.ApiRoom}/${id}`, data).then((result) => {
-      // console.log("result", result);
       const newRoom = [...listAllRoom];
       newRoom[index] = result.data;
       setListAllRoom(newRoom);
+      getListroom();
     });
   };
+  const confirm = useConfirm();
   const handleClickDelete = (id: number) => {
-    if (window.confirm("Bạn chắc chắn muốn xóa?")) {
-      removeRoom(id)
-        .then((res) => {
+    confirm({ description: `Bạn chắc chắn muốn xóa?` })
+      .then(() =>
+        removeRoom(id).then((res) => {
           getListroom();
         })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
+      )
+      .catch(() => console.log("Deletion cancelled."));
   };
   return (
     <div>
@@ -106,31 +122,19 @@ function ListRoomAdmin() {
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <StyledTableCell align="center">
-                    ID
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    Tên chỗ nghỉ
-                  </StyledTableCell>
+                  <StyledTableCell align="center">Mã phòng</StyledTableCell>
+                  <StyledTableCell align="center">Tên chỗ nghỉ</StyledTableCell>
                   <StyledTableCell align="center">
                     Loại đặt phòng
                   </StyledTableCell>
-                  <StyledTableCell align="center">
-                    Địa điểm
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    Đã thuê
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    Trạng thái
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    Hành động
-                  </StyledTableCell>
+                  <StyledTableCell align="center">Địa điểm</StyledTableCell>
+                  <StyledTableCell align="center">Đã thuê</StyledTableCell>
+                  <StyledTableCell align="center">Trạng thái</StyledTableCell>
+                  <StyledTableCell align="center">Hành động</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {listAllRoom
+                {listAllRoomCurrent
                   .filter((value) => {
                     if (searchRoomName == "") {
                       return value;
@@ -154,7 +158,7 @@ function ListRoomAdmin() {
                           <p>{item.id}</p>
                         </TableCell>
                         <TableCell className="img-table" align="center">
-                          <div >
+                          <div>
                             <img
                               className="img-list-room"
                               src={item.roomImg}
@@ -225,14 +229,14 @@ function ListRoomAdmin() {
                                   title="Duyệt phòng"
                                   onClick={() => handleAccept(item, index)}
                                 >
-                                  <CheckCircleOutlineIcon  />
+                                  <CheckCircleOutlineIcon />
                                 </Button>
                                 <Button
                                   disabled
                                   title="Từ chối"
                                   onClick={() => handleRefuse(item, index)}
                                 >
-                                  <HighlightOffIcon  />
+                                  <HighlightOffIcon />
                                 </Button>
                               </>
                             )}
@@ -254,6 +258,13 @@ function ListRoomAdmin() {
                   })}
               </TableBody>
             </Table>
+            <Stack spacing={2} className="page">
+              <Pagination
+                count={pageNumbers}
+                color="secondary"
+                onChange={(e: any, page: number) => setCurrentPage(page)}
+              />
+            </Stack>
           </TableContainer>
         </div>
       ) : (

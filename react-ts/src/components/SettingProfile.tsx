@@ -32,7 +32,6 @@ function SettingProfile() {
     setOpen(false);
   };
   const [user, setUser] = useState<user>();
-  const userName = JSON.parse(localStorage.getItem("user") || "{}");
   const getUser = async () => {
     try {
       const id = JSON.parse(localStorage.getItem("userId") || "{}");
@@ -49,6 +48,7 @@ function SettingProfile() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<user>();
   const onSubmit = (data: user) => {
@@ -59,6 +59,10 @@ function SettingProfile() {
       setOpen(false);
     });
   };
+
+  useEffect(()=>{
+    
+  })
   return (
     <>
       <Container maxWidth="xl">
@@ -66,7 +70,7 @@ function SettingProfile() {
         <div className="body-profile">
           <div className="profile">
             <div className="avatar">
-              <Avatar className="avatar-img">{userName[0]}</Avatar>
+              <Avatar className="avatar-img">{user?.lastName[0]}</Avatar>
               <p className="name">
                 {user?.firstName} {user?.lastName}
               </p>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import NavbarAdmin from "../components/layout/NavbarAdmin";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
@@ -10,10 +10,21 @@ import ListRoomAdmin from "../components/ListRoomAdmin";
 import ListOrderAdmin from "../components/ListOrderAdmin";
 import ListUser from "../components/ListUsers";
 import Footer from "../components/layout/Footer";
+import { useNavigate } from "react-router-dom";
+import { ConfirmProvider } from "material-ui-confirm";
 
 function AdminPage() {
-  const [value, setValue] = React.useState("1");
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem("adminId");
+    if (!token) {
+      navigate("/adminLogin");
+    } else {
+      navigate("/adminPage");
+    }
+  }, []);
 
+  const [value, setValue] = React.useState("1");
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
@@ -34,7 +45,9 @@ function AdminPage() {
               </TabList>
             </Box>
             <TabPanel value="1">
-              <ListRoomAdmin />
+              <ConfirmProvider>
+                <ListRoomAdmin />
+              </ConfirmProvider>
             </TabPanel>
             <TabPanel value="2">
               <ListOrderAdmin />
@@ -45,7 +58,7 @@ function AdminPage() {
           </TabContext>
         </Box>
       </Container>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

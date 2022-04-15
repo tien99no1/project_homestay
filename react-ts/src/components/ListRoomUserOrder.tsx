@@ -78,7 +78,7 @@ function ListRoomUserOrder() {
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <StyledTableCell align="center">ID</StyledTableCell>
+                  <StyledTableCell align="center">Mã phòng</StyledTableCell>
                   <StyledTableCell align="center">Tên chỗ nghỉ</StyledTableCell>
                   <StyledTableCell align="center">Địa điểm</StyledTableCell>
                   <StyledTableCell align="center">Ngày nhận phòng</StyledTableCell>
@@ -110,7 +110,7 @@ function ListRoomUserOrder() {
                           "&:last-child td, &:last-child th": { border: 0 },
                         }}
                       >
-                        <TableCell className="name tbody" align="center">
+                        <TableCell className="tbody" align="center">
                           <p>{item.id}</p>
                         </TableCell>
                         <TableCell className="img-table" align="center">

@@ -16,9 +16,9 @@ import ListRoom from "../components/ListRoom";
 import { CONFIG } from "../config";
 import News from "../components/News";
 import { ConfirmProvider } from "material-ui-confirm";
+import { useEffect } from "react";
 
 const clientId = `${CONFIG.GOOLGE_CLIENT_ID}`;
-
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -53,6 +53,17 @@ function a11yProps(index: number) {
 }
 
 export default function Host() {
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem('hostId');
+    if (!token) {
+      navigate('/host');
+    } else {
+      navigate('/dashboard')
+    }
+  }, [])
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -68,7 +79,6 @@ export default function Host() {
     setValue(newValue);
   };
   //google logout
-  const navigate = useNavigate();
   const onSignoutSuccess = () => {
     console.clear();
     navigate("/host");
@@ -152,11 +162,11 @@ export default function Host() {
               onChange={handleChange}
               aria-label="basic tabs example"
             >
-              <Tab label="Bảng tin" {...a11yProps(0)} />
-              <Tab label="Chỗ nghỉ" {...a11yProps(1)} />
+              <Tab label="Chỗ nghỉ" {...a11yProps(0)} />
+              <Tab label="Bảng tin" {...a11yProps(1)} />
             </Tabs>
           </Box>
-          <TabPanel value={value} index={0}>
+          <TabPanel value={value} index={1}>
             <Typography
               variant="h6"
               component="h2"
@@ -168,7 +178,7 @@ export default function Host() {
               <News />
             </div>
           </TabPanel>
-          <TabPanel value={value} index={1}>
+          <TabPanel value={value} index={0}>
             <div style={{ height: 400, width: "100%", textAlign: "center" }}>
               <ConfirmProvider>
                 <ListRoom />

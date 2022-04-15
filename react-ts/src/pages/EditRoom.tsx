@@ -44,12 +44,20 @@ const optionsCity = [
   { value: "Nha Trang", label: "Hạ Long" },
 ];
 function EditRoom() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem("hostId");
+    if (!token) {
+      navigate("/host");
+    } else {
+      navigate("/dashboard");
+    }
+  }, []);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<room>();
-  const navigate = useNavigate();
   const [roomInfo, setRoomInfo] = React.useState<any>({});
   const params = useParams();
   const { id } = params;
@@ -67,7 +75,12 @@ function EditRoom() {
   const hostId = localStorage.getItem("hostId");
   const onSubmit = (data: room) => {
     axios
-      .put(`${CONFIG.ApiRoom}/${id}`, { ...data, status: 0, isCheck: 0, hostId })
+      .put(`${CONFIG.ApiRoom}/${id}`, {
+        ...data,
+        status: 0,
+        isCheck: 0,
+        hostId,
+      })
       .then((data) => {
         // console.log("success", data);
         navigate("/dashboard");

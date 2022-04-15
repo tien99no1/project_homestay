@@ -9,6 +9,7 @@ import { Button } from "@mui/material";
 import axios from "axios";
 import { CONFIG } from "../config";
 import { bookRoom } from "../type";
+import NumberFormat from "react-number-format";
 
 function News() {
   const [booking, setBooking] = useState<any[]>([]);
@@ -58,18 +59,24 @@ function News() {
                       <Typography variant="body2" color="text.secondary">
                         Số khách: {book.totalCustomers}
                       </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Tổng tiền:
+                        <NumberFormat
+                          value={book.totalPrice}
+                          displayType={"text"}
+                          thousandSeparator={true}
+                          
+                          suffix={"đ"}
+                        />
+                      </Typography>
                     </CardContent>
                     <CardActions>
                       {book.isCheck == 0 ? (
                         <p className="check-room load">Đang chờ duyệt</p>
                       ) : book.isCheck == 1 ? (
-                        <p className="check-room">
-                          Đã cho thuê
-                        </p>
+                        <p className="check-room">Đã cho thuê</p>
                       ) : (
-                        <p className="check-room refuse">
-                          Đã từ chối
-                        </p>
+                        <p className="check-room refuse">Đã từ chối</p>
                       )}
                     </CardActions>
                   </Card>

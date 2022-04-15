@@ -66,11 +66,11 @@ function Room() {
   const roomImg = roomInfo.roomImg;
   const roomAddress = roomInfo.address;
   const roomAddressDetail = roomInfo.addressDetail;
-  const customer = roomInfo.customer;
+  const customer = Number(roomInfo.customer);
   const sDay = moment(valueDate[0]);
   const eDay = moment(valueDate[1]);
   const totalDays = eDay.diff(sDay, "days");
-  const totalPrice = totalDays * roomInfo.roomPrice;
+  const totalPrice = totalDays * Number(roomInfo.roomPrice);
   //advise
   const {
     register,
@@ -173,7 +173,7 @@ function Room() {
               <p>
                 Phòng riêng · {roomInfo.bathRoom} Phòng tắm · {roomInfo.bed}
                 giường · {roomInfo.bedRoom} phòng ngủ · {roomInfo.customer} {""}
-                khách (tối đa {roomInfo.customer + 1} khách)
+                khách (tối đa {Number(roomInfo.customer) + 1} khách)
               </p>
               <br />
               <p>

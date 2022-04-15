@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import {
@@ -44,17 +44,24 @@ const optionsCity = [
 ];
 
 function CreateRoom() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem('hostId');
+    if (!token) {
+      navigate('/host');
+    } else {
+      navigate('/create')
+    }
+  }, [])
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<room>();
-  const navigate = useNavigate();
   const hostId = localStorage.getItem("hostId");
-
   const onSubmit = (data: room) => {
     axios
-      .post(`${CONFIG.ApiRoom}`, { ...data, status: 0, hostId })
+      .post(`${CONFIG.ApiRoom}`, { ...data, status: 0, hostId, isCheckRoom: false })
       .then((data) => {
         console.log("success", data);
         navigate("/dashboard");

@@ -14,9 +14,12 @@ import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutl
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import React from "react";
 import { Link } from "react-router-dom";
-import { useConfirm } from 'material-ui-confirm';
+import { useConfirm } from "material-ui-confirm";
 import { removeRoom } from "../services/roomService";
 import Footer from "./layout/Footer";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
+import { room } from "../type";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -37,9 +40,20 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function ListRoom() {
-  const [listAllRoom, setListAllRoom] = useState<any[]>([]);
+  const [listAllRoom, setListAllRoom] = useState<room[]>([]);
   const [searchRoomName, setSearchRoomName] = useState("");
-  
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postPerPage, setPostPerPage] = useState(3);
+  const indexOfLastRoom = currentPage * postPerPage;
+  const indexOfFirstRoom = indexOfLastRoom - postPerPage;
+  const currentRoom = listAllRoom.slice(indexOfFirstRoom, indexOfLastRoom);
+  const pageNumbers = Math.ceil(listAllRoom.length / postPerPage);
+
+  const paginate = (pageNumbers: any) => {
+    setCurrentPage(pageNumbers);
+  };
+
   const getListroom = async () => {
     try {
       const hostId = localStorage.getItem("hostId");
@@ -50,15 +64,15 @@ function ListRoom() {
 
   useEffect(() => {
     getListroom();
-    
   }, []);
   const confirm = useConfirm();
   const handleClickDelete = (id: number) => {
     confirm({ description: `Bạn chắc chắn muốn xóa?` })
-    .then(() => removeRoom(id)
-      .then((res) => {
-        getListroom();
-      }))
+      .then(() =>
+        removeRoom(id).then((res) => {
+          getListroom();
+        })
+      )
       .catch(() => console.log("Deletion cancelled."));
   };
   return (
@@ -87,31 +101,19 @@ function ListRoom() {
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <StyledTableCell className="tbody" align="center">
-                    ID
-                  </StyledTableCell>
-                  <StyledTableCell className="tbody" align="center">
-                    Tên chỗ nghỉ
-                  </StyledTableCell>
-                  <StyledTableCell className="tbody" align="center">
+                  <StyledTableCell align="center">Mã phòng</StyledTableCell>
+                  <StyledTableCell align="center">Tên chỗ nghỉ</StyledTableCell>
+                  <StyledTableCell align="center">
                     Loại đặt phòng
                   </StyledTableCell>
-                  <StyledTableCell className="tbody" align="center">
-                    Địa điểm
-                  </StyledTableCell>
-                  <StyledTableCell className="tbody" align="center">
-                    Đã thuê
-                  </StyledTableCell>
-                  <StyledTableCell className="tbody" align="center">
-                    Trạng thái
-                  </StyledTableCell>
-                  <StyledTableCell className="tbody" align="center">
-                    Hành động
-                  </StyledTableCell>
+                  <StyledTableCell align="center">Địa điểm</StyledTableCell>
+                  <StyledTableCell align="center">Đã thuê</StyledTableCell>
+                  <StyledTableCell align="center">Trạng thái</StyledTableCell>
+                  <StyledTableCell align="center">Hành động</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {listAllRoom
+                {currentRoom
                   .filter((value) => {
                     if (searchRoomName == "") {
                       return value;
@@ -131,11 +133,11 @@ function ListRoom() {
                           "&:last-child td, &:last-child th": { border: 0 },
                         }}
                       >
-                        <TableCell className="name tbody" align="center">
+                        <TableCell align="center">
                           <p>{item.id}</p>
                         </TableCell>
-                        <TableCell className="tbody" align="center">
-                          <div style={{ width: "100px" }}>
+                        <TableCell className="img-table" align="center">
+                          <div>
                             <img
                               className="img-list-room"
                               src={item.roomImg}
@@ -144,10 +146,10 @@ function ListRoom() {
                             <span>{item.roomName}</span>
                           </div>
                         </TableCell>
-                        <TableCell className="tbody" align="center">
+                        <TableCell align="center">
                           <p>{item.roomCate}</p>
                         </TableCell>
-                        <TableCell className="tbody" align="center">
+                        <TableCell align="center">
                           <p>
                             {item.addressDetail} - {item.address}
                           </p>
@@ -182,7 +184,7 @@ function ListRoom() {
                             ? "Hoạt động"
                             : "Từ chối"}
                         </TableCell>
-                        <TableCell className="tbody" align="center">
+                        <TableCell align="center">
                           {item.isCheckRoom === false ? (
                             <Box>
                               <Link
@@ -206,7 +208,7 @@ function ListRoom() {
                                 <ModeEditOutlineOutlinedIcon />
                               </Button>
                               <Button disabled title="Xóa">
-                                <DeleteOutlineOutlinedIcon  />
+                                <DeleteOutlineOutlinedIcon />
                               </Button>
                             </Box>
                           )}
@@ -216,12 +218,19 @@ function ListRoom() {
                   })}
               </TableBody>
             </Table>
+            <Stack spacing={2} className="page">
+              <Pagination
+                count={pageNumbers}
+                color="secondary"
+                onChange={(e: any, page: number) => setCurrentPage(page)}
+              />
+            </Stack>
           </TableContainer>
         </div>
       ) : (
         <h4 className="center">Chỗ nghỉ của bạn đang trống</h4>
       )}
-      <Footer/>
+      <Footer />
     </div>
   );
 }

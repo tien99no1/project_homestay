@@ -8,6 +8,14 @@ import { CONFIG } from "../config";
 import { user } from "../type";
 
 function EditProfile() {
+  useEffect(() => {
+    const token = localStorage.getItem("adminId");
+    if (!token) {
+      navigate("/adminLogin");
+    } else {
+      navigate("/editprofile");
+    }
+  }, []);
   const params = useParams();
   const navigate = useNavigate();
   const { id } = params;
@@ -29,15 +37,15 @@ function EditProfile() {
   } = useForm<user>();
   const onSubmit = (data: user) => {
     axios.put(`${CONFIG.ApiUser}/${id}`, data).then((result) => {
-        navigate('/adminPage')
-      });
+      navigate("/adminPage");
+    });
   };
 
   return (
     <>
       <NavbarAdmin />
       <Container>
-        <Box textAlign={"center"} mt= {'3rem'}>
+        <Box textAlign={"center"} mt={"3rem"}>
           <h3>Chỉnh sửa thông tin người dùng</h3>
         </Box>
         <div>

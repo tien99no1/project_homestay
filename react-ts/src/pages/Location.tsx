@@ -13,24 +13,13 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import NumberFormat from "react-number-format";
 import { CONFIG } from "../config";
+import { room } from "../type";
 
-interface IPost {
-  id: number;
-  roomImg: string;
-  roomCate: string;
-  title: string;
-  roomPrice: number;
-  address: string;
-}
-const defaultProps: IPost[] = [];
 function Location() {
   const [select, setSelect] = React.useState("");
-  const [rooms, setRooms] = useState(defaultProps);
+  const [rooms, setRooms] = useState<any[]>([]);
   const params = useParams();
   const { address } = params;
-  const handleChange = (event: SelectChangeEvent) => {
-    setSelect(event.target.value as string);
-  };
   const getListRoom = async () => {
     try {
       const data = await axios.get(`${CONFIG.ApiRoom}?status=1&isCheck=false`);
@@ -40,6 +29,10 @@ function Location() {
   useEffect(() => {
     getListRoom();
   }, []);
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setSelect(event.target.value as string);
+  };
   return (
     <Container maxWidth="xl">
       <Box className="location-top">
@@ -90,8 +83,19 @@ function Location() {
           columnSpacing={{ xs: 1, sm: 1, md: 1.5 }}
         >
           {rooms
-            .filter((room: any) => room.address === address)
-            .map((room: any) => {
+            .filter((room: room) => room.address === address)
+            .sort((a: any, b: any) => {
+              if (select == "10") {
+                return a.roomPrice > b.roomPrice ? 1 : -1;
+              }
+              if (select == "20") {
+                return a.roomPrice < b.roomPrice ? 1 : -1;
+              } else {
+                return 1
+              }
+              
+            })
+            .map((room: room) => {
               return (
                 <Grid item xl={3} sm={6} md={4} xs={12}>
                   <Box className="Location">

@@ -9,6 +9,7 @@ import { Button } from "@mui/material";
 import axios from "axios";
 import { CONFIG } from "../config";
 import { bookRoom } from "../type";
+import NumberFormat from "react-number-format";
 import Footer from "./layout/Footer";
 
 function News() {
@@ -16,13 +17,14 @@ function News() {
   const getListBooking = async () => {
     try {
       const hostId = localStorage.getItem("hostId");
-      const data = await axios.get(`${CONFIG.ApiBookRoom}?hostId=${hostId}&status=0`);
+      const data = await axios.get(
+        `${CONFIG.ApiBookRoom}?hostId=${hostId}&status=0`
+      );
       setBooking(data.data);
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
   };
-  console.log("first", booking)
   useEffect(() => {
     getListBooking();
   }, []);
@@ -85,6 +87,15 @@ function News() {
                       <Typography variant="body2" color="text.secondary">
                         Số khách: {book.totalCustomers}
                       </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Tổng tiền:
+                        <NumberFormat
+                          value={book.totalPrice}
+                          displayType={"text"}
+                          thousandSeparator={true}
+                          suffix={"đ"}
+                        />
+                      </Typography>
                     </CardContent>
                     <CardActions>
                       {book.isCheck == 0 ? (
@@ -103,13 +114,9 @@ function News() {
                           </Button>
                         </>
                       ) : book.isCheck == 1 ? (
-                        <p className="check-room">
-                          Đã cho thuê
-                        </p>
+                        <p className="check-room">Đã cho thuê</p>
                       ) : (
-                        <p className="check-room refuse">
-                          Đã từ chối
-                        </p>
+                        <p className="check-room refuse">Đã từ chối</p>
                       )}
                     </CardActions>
                   </Card>
@@ -121,7 +128,7 @@ function News() {
           <h4 className="center">Bạn chưa có đơn đặt chỗ nào</h4>
         )}
       </Box>
-      <Footer/>
+      <Footer />
     </>
   );
 }

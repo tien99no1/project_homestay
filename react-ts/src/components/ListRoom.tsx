@@ -218,7 +218,7 @@ function ListRoom() {
                   })}
               </TableBody>
             </Table>
-            <Stack spacing={2} className="page">
+            <Stack spacing={2} className='page'>
               <Pagination
                 count={pageNumbers}
                 color="secondary"

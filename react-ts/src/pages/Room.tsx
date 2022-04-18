@@ -112,8 +112,8 @@ function Room() {
         status: 0,
       };
       if (
-        dataBooking.startDay == null ||
-        dataBooking.endDay == null ||
+        !dataBooking.startDay ||
+        !dataBooking.endDay ||
         dataBooking.totalCustomers === 0
       ) {
         setPayloadNoti({

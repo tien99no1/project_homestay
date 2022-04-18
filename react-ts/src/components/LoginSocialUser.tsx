@@ -9,11 +9,10 @@ function LoginSocialUser() {
   const onLoginSuccess = (res: any) => {
     localStorage.setItem('user', JSON.stringify(res.profileObj.familyName))
     navigate('/')
-    
   };
 
   const onLoginFailure = (res: any) => {
-    console.log("Đăng nhập thất bại:", res);
+    // console.log("Đăng nhập thất bại:", res);
   };
 
   return (

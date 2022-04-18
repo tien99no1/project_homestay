@@ -46,6 +46,7 @@ function ListRoomUserOrder() {
   useEffect(() => {
     getListBooking();
   }, []);
+
   const handleCancel = (item: bookRoom, index: number) => {
     const { id } = item;
     const data = { ...item, status: 1 };
@@ -55,6 +56,7 @@ function ListRoomUserOrder() {
       setListAllBooking(newBooking);
     });
   };
+
   return (
     <div>
       {listAllBooking.length > 0 ? (

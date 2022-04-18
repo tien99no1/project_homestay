@@ -32,7 +32,7 @@
   box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
   border: 0;
   outline: 0;
-  padding: 22px 18px;
+  padding: 15px 18px;
 }
 .btn-search {
   display: inline-block;
@@ -50,10 +50,10 @@
   color: #fff;
   box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
   border-radius: 2px;
-  padding: 5px 22px;
+  padding: 5px 20px;
 }
 .btn--inside {
-  margin-left: -85px;
+  margin-left: -75px;
 }
 .nav-right {
   display: flex;
@@ -103,5 +103,5 @@
     cursor: pointer;
 }
 .list-search :hover {
-    background: #cdcdcd !important
+    color: #b71c1c;
 }

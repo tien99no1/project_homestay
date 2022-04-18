@@ -15,7 +15,7 @@ function LoginSocial() {
   };
 
   const onLoginFailure = (res: any) => {
-    console.log("Login Failed:", res);
+    // console.log("Login Failed:", res);
   };
 
   return (

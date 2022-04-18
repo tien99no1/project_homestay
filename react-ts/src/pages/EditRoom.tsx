@@ -50,7 +50,7 @@ function EditRoom() {
     if (!token) {
       navigate("/host");
     } else {
-      navigate("/dashboard");
+      navigate(`/editroom/${id}`);
     }
   }, []);
   const {

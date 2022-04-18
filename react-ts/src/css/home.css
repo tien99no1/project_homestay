@@ -7,28 +7,29 @@
     font-size: 1.6rem;
     margin-block-end: 0.5rem;
 }
-.slick-prev:before, .slick-next:before {
-    font-size: 3rem !important;
+.banner button {
+    display: none;
+}
+.cover-highlights {
     position: relative;
-    bottom: 0.5rem;
-}
-.slick-prev:before :hover, .slick-next:before :hover{
-    color: white;
-}
-.img-highlights {
     width: 100%;
-    height: 330px;
-    position: relative;
-    
-}
-.img-highlights img:first-child{
-    width: 93%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 7px;
-    padding-right: 5px;
+    outline: none;
     cursor: pointer;
-
+}
+.cover-highlights img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 97%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    border-radius: 10px;
+}
+.cover-highlights:before {
+    content: "";
+    display: block;
+    padding-top: 125%;
 }
 .content{
     position: absolute;
@@ -55,40 +56,55 @@
     border-radius: 7px;
     padding-right: 5px;
 }
+.img-recommend {
+    position: relative;
+    width: 100%;
+    outline: none;
+    cursor: pointer;
+}
+.img-recommend img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 97%;
+    height: 60%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    border-radius: 10px;
+}
+.img-recommend::before {
+    content: "";
+    display: block;
+    padding-top: 120%;
+}
 .recommend {
     cursor: pointer;
 }
-.recommend:hover > .content-recommend{
-    color: #b71c1c;
-    transition: 0.6s ease;
-}
-.img-recommend {
-    width: 100%;
-    height: 170px;
-    position: relative;
-    
-}
-.img-recommend img{
-    width: 93%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 7px;
-    padding-right: 5px;
-}
 .content-recommend{
-    padding-right: 15px;
+    padding-right: 1rem;
+    position: relative;
+    bottom: 8rem;
 }
 .content-recommend .title-recommend {
     text-transform: uppercase;
     font-size: 0.8rem;
     font-weight: 500;
 }
+.recommend:hover > .content-recommend{
+    color: #b71c1c;
+    transition: 0.6s ease;
+}
+.recomment-div {
+    height: 350px;
+}
+.recomment-div button {
+    top: 27%;
+}
 .About{
     margin-top: 2rem;
 }
 .About > h2, .About >h5{
     text-transform: uppercase;
-
 }
 .About p{
     cursor: pointer;
@@ -388,4 +404,10 @@ small {
 .login-host-right {
     width: 50%;
     font-size: 0.95rem;
+}
+
+@media screen and (max-width: 1024px) {
+    .slick-prev, .slick-next{
+        display: none !important;
+    }
 }

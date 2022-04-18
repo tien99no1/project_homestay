@@ -13,7 +13,7 @@ function EditProfile() {
     if (!token) {
       navigate("/adminLogin");
     } else {
-      navigate("/editprofile");
+      navigate(`/editprofile/${id}`);
     }
   }, []);
   const params = useParams();

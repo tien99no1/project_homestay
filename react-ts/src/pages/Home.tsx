@@ -12,7 +12,7 @@ function Home() {
   return (
     <Container maxWidth="xl">
       <Box mt={"30px"} className="box">
-        <Banner />
+        <Banner interval={0} />
       </Box>
       <Box className="box">
         <h2>Chào mừng đến với RikStay!</h2>

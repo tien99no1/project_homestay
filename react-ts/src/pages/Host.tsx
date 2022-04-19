@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Box, Button, styled, TextField } from "@mui/material";
-import { Link } from "react-router-dom";
-import LoginSocial from "../components/LoginSocialMedia";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Box, Button, styled, TextField } from "@mui/material";
+import LoginSocial from "../components/LoginSocialMedia";
 import { CONFIG } from "../config";
+import '../css/login.css'
 
 interface IFormInputs {
   email: string;
@@ -142,13 +143,13 @@ function Login() {
             </Box>
             <Button className="btn-submit-form" type="submit">
               Đăng Nhập
-            </Button>{" "}
+            </Button>
             <br />
           </form>
         </Box>
         <Box className="login-host-right">
           <p>
-            Bạn chưa đăng ký?{" "}
+            Bạn chưa đăng ký?
             <Link
               style={{
                 textDecoration: "none",
@@ -167,19 +168,17 @@ function Login() {
             thu phí khi có booking
           </p>
           <p>
-            Hotline:{" "}
+            Hotline:
             <a className="hotline" href="tel: 18001989">
               18001989 (Nhánh 1 phím 2)
-            </a>{" "}
+            </a>
           </p>
           <Box>
-            {" "}
             <span>Tải ứng dụng Rikstay giúp bạn quản lý chỗ nghỉ dễ dàng</span>
           </Box>
           <Box display={"flex"}>
             <Box>
               <p>
-                {" "}
                 <img
                   width={"180"}
                   height={"40"}
@@ -188,7 +187,6 @@ function Login() {
                 />
               </p>
               <p>
-                {" "}
                 <img
                   width={"180"}
                   height={"40"}
@@ -198,7 +196,6 @@ function Login() {
               </p>
             </Box>
             <p>
-              {" "}
               <img
                 width={"100"}
                 height={"100"}

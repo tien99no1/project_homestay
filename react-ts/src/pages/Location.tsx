@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
+import NumberFormat from "react-number-format";
 import {
   Container,
   Box,
@@ -9,9 +12,6 @@ import {
   SelectChangeEvent,
   Grid,
 } from "@mui/material";
-import { Link, useParams } from "react-router-dom";
-import axios from "axios";
-import NumberFormat from "react-number-format";
 import { CONFIG } from "../config";
 import { room } from "../type";
 
@@ -40,8 +40,6 @@ function Location() {
           <button>Hủy phòng linh hoạt</button>
           <button>Đặt phòng nhanh</button>
           <button>Khu vực</button>
-          <button>Giá ưu đãi</button>
-          <button>Loại phòng</button>
         </Box>
         <Box className="caption-local">
           <p>
@@ -56,13 +54,13 @@ function Location() {
         </Box>
         <Box className="place">
           <Box>
-            <h2>Chỗ ở tại {address}</h2>
+            <h4>Chỗ ở tại {address}</h4>
           </Box>
           <Box sx={{ minWidth: 120 }}>
             <FormControl>
               <InputLabel id="demo-simple-select-label">Sắp xếp:</InputLabel>
               <Select
-                sx={{ width: "200px" }}
+                sx={{ width: "180px" }}
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={select}

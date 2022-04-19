@@ -53,16 +53,15 @@ function a11yProps(index: number) {
 }
 
 export default function Host() {
-
   const navigate = useNavigate();
   useEffect(() => {
-    const token = localStorage.getItem('hostId');
+    const token = localStorage.getItem("hostId");
     if (!token) {
-      navigate('/host');
+      navigate("/host");
     } else {
-      navigate('/dashboard')
+      navigate("/dashboard");
     }
-  }, [])
+  }, []);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -101,20 +100,11 @@ export default function Host() {
     <>
       <Box className="header-host">
         <Box style={{ position: "absolute" }} width={"100%"}>
-          <Link
-            to="/"
-            style={{ marginLeft: "6rem", fontSize: "2rem" }}
-            className="brand "
-          >
+          <Link to="/" className="brand br-host ">
             RikStay
           </Link>
         </Box>
-        <Box
-          display={"flex"}
-          justifyContent={" center"}
-          alignItems={"center"}
-          marginRight={"2rem"}
-        >
+        <Box className="box-create-btn">
           <Link className="link" to="/create">
             <Button className="btn-create-room">Tạo chỗ nghỉ mới</Button>
           </Link>

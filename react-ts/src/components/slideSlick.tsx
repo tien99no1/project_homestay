@@ -30,7 +30,7 @@ const SliderCarousel: React.FC<PropsSlider> = ({ dots, slidesToShow, children, s
       {
         breakpoint: 770,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 3,
           infinite: true,
           slidesToScroll: 1,
           initialSlide: 2,
@@ -39,7 +39,7 @@ const SliderCarousel: React.FC<PropsSlider> = ({ dots, slidesToShow, children, s
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
           slidesToScroll: 1,
         },
       },

@@ -42,7 +42,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 function ListRoom() {
   const [listAllRoom, setListAllRoom] = useState<room[]>([]);
   const [searchRoomName, setSearchRoomName] = useState("");
-
   const [currentPage, setCurrentPage] = useState(1);
   const [postPerPage, setPostPerPage] = useState(3);
   const indexOfLastRoom = currentPage * postPerPage;

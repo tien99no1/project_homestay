@@ -22,6 +22,12 @@
 .form-create-room {
     margin: 2rem ;
 }
+.box-create-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 2rem;
+}
 .br-m {
     margin: 4rem;
 }
@@ -41,12 +47,16 @@
     align-items: center;
     margin: 2rem 0;
 }
+.br-host {
+    margin-left: 6rem;
+    font-size: 2rem;
+}
 .link {
     text-decoration: none;
     color: inherit;
 }
 .btn-create-form {
-    width: 10%;
+    width: 130px;
     color: #fff !important;
     background: #b71c1c !important;
     position: absolute;
@@ -67,16 +77,16 @@
     padding: 0;
 }
 .container-create {
-    /* background: url("https://images.unsplash.com/photo-1474540412665-1cdae210ae6b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1483&q=80") 50% fixed;
+    background: url("https://images.unsplash.com/photo-1474540412665-1cdae210ae6b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1483&q=80") 50% fixed;
     background-size: cover;
-    height: 100vh; */
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     color: #fff;
 }
 .form-create {
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
     border-radius: 5px;
     align-items: center;
     font-size: 1rem;
@@ -143,4 +153,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+@media screen and (max-width: 676px) {
+    .br-host {
+        font-size: 1.8rem;
+        margin-left: 2rem;
+    }
+    .btn-create-room {
+        font-size: 0.8rem !important;
+        margin-right: 0.3rem !important;
+    }
+    .box-create-btn {
+        margin-right: 0.3rem;
+    }
+    .row h5 {
+        font-size: 1.3rem;
+    }
 }

@@ -99,33 +99,6 @@ function Navbar() {
     setRoomSearching([]);
   };
 
-  const menuId = "primary-search-account-menu";
-  // const renderMenu = (
-  //   <Menu
-  //   id="basic-menu"
-  //   anchorEl={anchorEl}
-  //   open={open}
-  //   onClose={handleClose}
-  //   MenuListProps={{
-  //     "aria-labelledby": "basic-button",
-  //   }}
-  // >
-  //   <MenuItem onClick={handleClose}>
-  //     <Link className="link menu-item " to="/home/profile">
-  //       <AccountCircleIcon /> Tài khoản
-  //     </Link>
-  //   </MenuItem>
-  //   <MenuItem onClick={handleClose}>
-  //     <button
-  //       className="btn-logout menu-item"
-  //       onClick={handleLogout}
-  //     >
-  //       <LogoutIcon /> Đăng xuất
-  //     </button>
-  //   </MenuItem>
-  // </Menu>
-  // );
-
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
     <Menu
@@ -190,7 +163,7 @@ function Navbar() {
         <div className="box-search">
           <input
             className="input-search"
-            placeholder="Tìm kiếm"
+            placeholder="Tìm kiếm..."
             onChange={handleSearch}
           />
           <button className="btn-search btn--primary btn--inside">

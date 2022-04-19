@@ -12,7 +12,7 @@ function About() {
         rowSpacing={1}
         columnSpacing={{ xs: 1, sm: 2, md: 3 }}
       >
-        <Grid item sm={6} md={2} xs={12}>
+        <Grid mt={'2rem'} item sm={6} md={2} xs={12}>
           <Box className="ABout">
             <h2>RIKSTAY</h2>
             <p className="phone">
@@ -55,24 +55,22 @@ function About() {
         <Grid item sm={6} md={2} xs={12}>
           <Box className="About">
             <h5>Tải ứng dụng RikStay</h5>
-            <div>
-              {" "}
+            <Box>
               <img
-                width={"180"}
-                height={"56"}
+                width={"150"}
+                height={"50"}
                 src="https://www.luxstay.com/icons/apple-store.svg"
                 alt=""
               />
-            </div>
-            <div>
-              {" "}
+            </Box>
+            <Box mt={'0.5rem'}>
               <img
-                width={"180"}
-                height={"56"}
+                width={"150"}
+                height={"50"}
                 src="https://www.luxstay.com/icons/google-play.svg"
                 alt=""
               />
-            </div>
+            </Box>
           </Box>
         </Grid>
       </Grid>

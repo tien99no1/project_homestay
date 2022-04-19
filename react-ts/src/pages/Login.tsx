@@ -3,12 +3,13 @@ import { useForm } from "react-hook-form";
 import { Box, Button, Container, styled, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 import LoginSocialUser from "../components/LoginSocialUser";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { signUpSuccess } from "../store/userSlice";
 import { useDispatch } from "react-redux";
 import { CONFIG } from "../config";
 import Noti from "../components/Noti";
-import axios from "axios";
+import '../css/login.css'
 
 interface IFormInputs {
   email: string;
@@ -71,7 +72,6 @@ function Login() {
     const user = await handleUser(data.email, data.password);
     if (user) {
       navigate("/");
-      // localStorage.setItem("user", JSON.stringify(userName.current));
       localStorage.setItem("userId", JSON.stringify(userId.current));
       sessionStorage.removeItem('advide');
       dispatch(signUpSuccess(userName.current));
@@ -160,7 +160,7 @@ function Login() {
             </Link>
           </p>
           <p>Hoặc đăng nhập với</p>
-          <Box>
+          <Box className="gg-login">
             <LoginSocialUser />
           </Box>
         </Box>

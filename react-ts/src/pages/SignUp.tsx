@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, styled, TextField } from "@mui/material";
@@ -7,7 +8,7 @@ import LoginSocialUser from "../components/LoginSocialUser";
 import { CONFIG } from "../config";
 import { user } from "../type";
 import Noti from '../components/Noti'
-import axios from "axios";
+import '../css/login.css'
 
 function SignUp() {
   const [showNoti, setShowNoti] = useState(false)
@@ -213,7 +214,7 @@ function SignUp() {
             </Link>
           </p>
           <p>Hoặc đăng nhập với</p>
-          <Box>
+          <Box className="gg-login">
             <LoginSocialUser />
           </Box>
         </Box>

@@ -1,8 +1,14 @@
-import { Box, Button, Container, Grid, TextField } from "@mui/material";
 import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import moment from "moment";
+import NumberFormat from "react-number-format";
 import BannerRoom from "../components/BannerRoom";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ApartmentOutlinedIcon from "@mui/icons-material/ApartmentOutlined";
+import { Box, Button, Container, Grid, TextField } from "@mui/material";
 import TvIcon from "@mui/icons-material/Tv";
 import KitchenIcon from "@mui/icons-material/Kitchen";
 import BlenderIcon from "@mui/icons-material/Blender";
@@ -12,14 +18,9 @@ import SignalWifi0BarIcon from "@mui/icons-material/SignalWifi0Bar";
 import DateRangePicker, { DateRange } from "@mui/lab/DateRangePicker";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import { useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
 import { CONFIG } from "../config";
-import axios from "axios";
-import moment from "moment";
-import NumberFormat from "react-number-format";
 import Noti from "../components/Noti";
-import { useSelector } from "react-redux";
+import Mapbox from "../components/map";
 
 interface IFormInputs {
   name: string;
@@ -146,8 +147,8 @@ function Room() {
         <BannerRoom />
       </Box>
       <Container maxWidth="lg">
-        <Box display="flex" position={"relative"}>
-          <Box className="room-left" width={"65%"}>
+        <div className="container-room">
+          <Box className="room-left">
             <Box display={"flex"}>
               <p className="mr">Rikstay</p>
               <p className="mr">Vietnam</p>
@@ -155,7 +156,7 @@ function Room() {
               <p className="mr">{roomInfo.addressDetail}</p>
             </Box>
             <Box>
-              <h2>{roomInfo.title}</h2>
+              <h3>{roomInfo.title}</h3>
               <p className="phone margin-icon">
                 <LocationOnIcon />
                 <b>
@@ -167,26 +168,18 @@ function Room() {
               </p>
               <p className="phone margin-icon">
                 <ApartmentOutlinedIcon />
-                <b>{roomInfo.roomType} -</b>
-                <b></b> {roomInfo.roomAcreage} m<sup>2</sup>
+                <b>{roomInfo.roomType} -</b> <span>{roomInfo.roomAcreage} m<sup>2</sup></span>
               </p>
               <p>
                 Phòng riêng · {roomInfo.bathRoom} Phòng tắm · {roomInfo.bed}
                 giường · {roomInfo.bedRoom} phòng ngủ · {roomInfo.customer} {""}
                 khách (tối đa {Number(roomInfo.customer) + 1} khách)
               </p>
-              <br />
-              <p>
-                {roomInfo.info}
-                {/*
-                Khu vực xung quanh có nhiều cảnh quan đẹp như Hồ Kiếm, Hồ Trúc
-                Bạch, Chùa Quán Thành, Sông Hồng, Làng hoa Quang An, Làng hoa
-                Nhật Tân và đặc biệt là Hồ Tây rộng lớn, rộng lớn, nơi bạn có
-                thể đi xe đạp (miễn phí) quanh Hồ và uống cà phê dọc đường. */}
-              </p>
-            </Box>
+              <p>{roomInfo.info}</p>
+            </Box>{" "}
+            <br />
             <Box>
-              <h3>Tiện nghi chỗ ở</h3>
+              <h4>Tiện nghi chỗ ở</h4>
               <p>Giới thiệu về các tiện nghi và dịch vụ tại nơi cư trú</p>
             </Box>
             <Box>
@@ -235,9 +228,10 @@ function Room() {
               </Grid>
               <p>Và còn nhiều tiện ích khác, đặt phòng ngay để trải nghiệm</p>
             </Box>
+            <br />
             <Box>
-              <h3>Nội quy và chính sách về chỗ ở</h3>
-              <h4>Chính sách hủy phòng</h4>
+              <h4>Nội quy và chính sách về chỗ ở</h4>
+              <h5>Chính sách hủy phòng</h5>
               <p>
                 Nghiêm ngặt: Hoàn lại 50% giá trị đặt phòng khi khách hàng huỷ
                 phòng trong vòng 48h sau khi đặt phòng thành công và trước 14
@@ -246,6 +240,7 @@ function Room() {
                 (trừ phí dịch vụ).
               </p>
               <div id="map">
+                <Mapbox />
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29784.686790216147!2d105.80322495877292!3d21.069233149094593!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135aae54053e2d5%3A0x2d72b1d7c422234b!2zVMOieSBI4buTLCBIYW5vaSwgVmlldG5hbQ!5e0!3m2!1sen!2s!4v1648091396913!5m2!1sen!2s"
                   width="100%"
@@ -259,8 +254,11 @@ function Room() {
                 đơn đặt phòng.
               </p>
             </Box>
+            <div className="text-order">
+              <h4>Đặt phòng ngay!!</h4> <br />
+            </div>
           </Box>
-          <Box className="room-right" pt={"4rem"} width={"35%"}>
+          <Box className="room-right">
             <Box>
               <Box className="order">
                 <Box>
@@ -445,7 +443,7 @@ function Room() {
               )}
             </Box>
           </Box>
-        </Box>
+        </div>
       </Container>
       <Noti
         payload={payloadNoti}

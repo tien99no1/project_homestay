@@ -19,18 +19,19 @@ const SliderCarousel: React.FC<PropsSlider> = ({ dots, slidesToShow, children, s
     initialSlide: 0,
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1025,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 4,
           slidesToScroll: 1,
           infinite: true,
           dots: false,
         },
       },
       {
-        breakpoint: 600,
+        breakpoint: 770,
         settings: {
           slidesToShow: 2,
+          infinite: true,
           slidesToScroll: 1,
           initialSlide: 2,
         },

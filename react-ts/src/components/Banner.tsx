@@ -12,8 +12,8 @@ interface IntervalProps {
 }
 const Banner: React.FC<IntervalProps> = ({ interval }: IntervalProps) => {
   return (
-    <Container className="banner">
-      <Carousel interval={5000}>
+    <div className="banner">
+      <Carousel interval={3000}>
         {photos.map((photo, index) => {
           return (
             <Carousel.Item key={index}>
@@ -26,7 +26,7 @@ const Banner: React.FC<IntervalProps> = ({ interval }: IntervalProps) => {
           )
         })}
       </Carousel>
-    </Container>
+    </div>
   );
 };
 

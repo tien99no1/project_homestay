@@ -406,8 +406,11 @@ small {
     font-size: 0.95rem;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1025px) {
     .slick-prev, .slick-next{
         display: none !important;
+    }
+    .content-recommend{
+        bottom: 6rem;
     }
 }

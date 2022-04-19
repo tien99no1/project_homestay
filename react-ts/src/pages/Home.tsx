@@ -1,12 +1,12 @@
 import React from "react";
 import { Container, Box } from "@mui/material";
-import "../css/home.css";
 import Banner from "../components/Banner";
 import Highlight from "../components/Highlight";
 import Voucher from "../components/Voucher";
 import Recommend from "../components/Recommend";
 import Conduct from "../components/Conduct";
 import About from "../components/About";
+import "../css/home.css";
 
 function Home() {
   return (
@@ -14,7 +14,7 @@ function Home() {
       <Box mt={"30px"} className="box">
         <Banner interval={0} />
       </Box>
-      <Box className="box">
+      <Box mt={"30px"} className="box">
         <h2>Chào mừng đến với RikStay!</h2>
         <span>Đặt chỗ ở cho những chuyến đi thêm phần thú vị.</span>
         <br />

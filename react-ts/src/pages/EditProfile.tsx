@@ -34,7 +34,15 @@ function EditProfile() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<user>();
+  } = useForm<user>({
+    defaultValues: {
+      firstName: user?.firstName,
+      email: user?.email,
+      lastName: user?.lastName,
+      phone: user?.phone,
+      password: user?.password,
+    },
+  });
   const onSubmit = (data: user) => {
     axios.put(`${CONFIG.ApiUser}/${id}`, data).then((result) => {
       navigate("/adminPage");

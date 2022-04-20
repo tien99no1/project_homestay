@@ -6,6 +6,7 @@ export const CONFIG = {
     ApiRoom: API_URL + 'rooms',
     ApiAddress: API_URL + 'address',
     ApiBookRoom: API_URL +'booking',
-    ApiAdmin: API_URL + 'admin'
+    ApiAdmin: API_URL + 'admin',
+    googleMapsApiKey: 'AIzaSyDABYGwSZ1tcViiZnjDR8oR2G7E2Q4fivE',
 }
 

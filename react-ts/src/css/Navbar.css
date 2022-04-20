@@ -60,6 +60,8 @@
   text-align: center;
   justify-content: center;
   align-items: baseline;
+  margin-bottom: 0;
+
 }
 .nav-items a {
   color: #000;

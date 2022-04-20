@@ -20,7 +20,7 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import { CONFIG } from "../config";
 import Noti from "../components/Noti";
-import Mapbox from "../components/map";
+import Map from "../components/Map";
 
 interface IFormInputs {
   name: string;
@@ -240,14 +240,7 @@ function Room() {
                 (trừ phí dịch vụ).
               </p>
               <div id="map">
-                <Mapbox />
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29784.686790216147!2d105.80322495877292!3d21.069233149094593!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135aae54053e2d5%3A0x2d72b1d7c422234b!2zVMOieSBI4buTLCBIYW5vaSwgVmlldG5hbQ!5e0!3m2!1sen!2s!4v1648091396913!5m2!1sen!2s"
-                  width="100%"
-                  height="450"
-                  style={{ border: 0 }}
-                  loading="lazy"
-                ></iframe>
+                <Map />
               </div>
               <p>
                 Bạn sẽ nhận được địa chỉ chính xác của chỗ ở sau khi hoàn tất
@@ -315,7 +308,7 @@ function Room() {
                   <Button
                     className="person"
                     disabled={true}
-                    sx={{ m: "0.5rem 1.5rem 1rem 1.5rem" }}
+                    sx={{ m: "0.5rem 1.5rem 1rem 1.9rem" }}
                   >
                     Số lượng khách: {totalCustomers}
                   </Button>
@@ -324,8 +317,8 @@ function Room() {
                     component="form"
                     sx={{
                       "& .MuiTextField-root": {
-                        m: "0.5rem 1.5rem 0.3rem 1.5rem",
-                        width: "88%",
+                        m: "0.5rem 1.5rem 0.3rem 1.9rem",
+                        width: "87%",
                       },
                     }}
                     noValidate
@@ -357,10 +350,7 @@ function Room() {
                     />
                   </Box>
                 </Box>
-                <Box
-                  display={"flex"}
-                  justifyContent={"center"}
-                  alignItems={"center"}
+                <Box className="box-person"
                 >
                   <Button className="order-now" onClick={bookRoom}>
                     Đặt ngay
@@ -371,9 +361,9 @@ function Room() {
             <Box className="advise">
               {sessionStorage.getItem("advide") ? (
                 <>
-                  <Box padding={"0 20px 0 20px"}>
-                    <h3>Tư vấn từ Rikstay</h3>
-                    <p style={{ fontSize: "0.8rem", marginTop: "-10px" }}>
+                  <Box padding={"10px 20px 0 20px"}>
+                    <h4>Tư vấn từ Rikstay</h4>
+                    <p style={{ fontSize: "0.8rem", marginTop: "-5px" }}>
                       Cảm ơn bạn đã quan tâm! Rikstay sẽ liên hệ tư vấn dịch vụ
                       trong thời gian sớm nhất.
                     </p>
@@ -381,9 +371,9 @@ function Room() {
                 </>
               ) : (
                 <>
-                  <Box padding={"0 20px 0 20px"}>
-                    <h3>Tư vấn từ Rikstay</h3>
-                    <p style={{ fontSize: "0.8rem", marginTop: "-10px" }}>
+                  <Box padding={"10px 20px 0 20px"}>
+                    <h4>Tư vấn từ Rikstay</h4>
+                    <p style={{ fontSize: "0.8rem", marginTop: "-5px" }}>
                       Vui lòng cung cấp tên và số điện thoại để nhận được tư vấn
                       từ Luxstay cho chuyến đi của bạn.
                     </p>

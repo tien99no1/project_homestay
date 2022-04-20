@@ -46,9 +46,9 @@ function ListRoom() {
   const [postPerPage, setPostPerPage] = useState(3);
   const indexOfLastRoom = currentPage * postPerPage;
   const indexOfFirstRoom = indexOfLastRoom - postPerPage;
-  const currentRoom = listAllRoom.slice(indexOfFirstRoom, indexOfLastRoom);
+  const listRoomReverse = listAllRoom.slice().reverse();
+  const currentRoom = listRoomReverse.slice(indexOfFirstRoom, indexOfLastRoom);
   const pageNumbers = Math.ceil(listAllRoom.length / postPerPage);
-
   const paginate = (pageNumbers: any) => {
     setCurrentPage(pageNumbers);
   };
@@ -74,6 +74,7 @@ function ListRoom() {
       )
       .catch(() => console.log("Deletion cancelled."));
   };
+
   return (
     <div>
       {listAllRoom.length > 0 ? (
@@ -217,7 +218,7 @@ function ListRoom() {
                   })}
               </TableBody>
             </Table>
-            <Stack spacing={2} className='page'>
+            <Stack spacing={2} className="page">
               <Pagination
                 count={pageNumbers}
                 color="secondary"

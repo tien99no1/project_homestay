@@ -24,6 +24,7 @@ import { signUpSuccess } from "../store/userSlice";
 
 function SettingProfile() {
   const dispatch = useDispatch()
+  const [user, setUser] = useState<user>();
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -31,7 +32,6 @@ function SettingProfile() {
   const handleClose = () => {
     setOpen(false);
   };
-  const [user, setUser] = useState<user>();
   const getUser = async () => {
     try {
       const id = JSON.parse(localStorage.getItem("userId") || "{}");
@@ -44,13 +44,20 @@ function SettingProfile() {
   useEffect(() => {
     getUser();
   }, []);
-
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<user>();
+  } = useForm<user>({
+    defaultValues: {
+      firstName: `${user?.firstName}`,
+      email: user?.email,
+      lastName: user?.lastName,
+      phone: user?.phone,
+      password: user?.password,
+    },
+  });
   const onSubmit = (data: user) => {
     const id = JSON.parse(localStorage.getItem("userId") || "{}");
     axios.put(`${CONFIG.ApiUser}/${id}`, data).then((result) => {

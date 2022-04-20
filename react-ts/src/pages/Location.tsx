@@ -84,18 +84,18 @@ function Location() {
             .filter((room: room) => room.address === address)
             .sort((a: any, b: any) => {
               if (select == "10") {
-                return a.roomPrice > b.roomPrice ? 1 : -1;
+                return Number(a.roomPrice) > Number(b.roomPrice) ? 1 : -1;
               }
               if (select == "20") {
-                return a.roomPrice < b.roomPrice ? 1 : -1;
+                return Number(a.roomPrice) < Number(b.roomPrice) ? 1 : -1;
               } else {
                 return 1
               }
               
             })
-            .map((room: room) => {
+            .map((room: room, index: number) => {
               return (
-                <Grid item xl={3} sm={6} md={4} xs={12}>
+                <Grid key={index} item xl={3} sm={6} md={4} xs={12}>
                   <Box className="Location">
                     <Link to={`/home/room/${room.id}`}>
                       <Box className="img-location">

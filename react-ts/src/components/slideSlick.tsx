@@ -12,7 +12,7 @@ interface PropsSlider {
 const SliderCarousel: React.FC<PropsSlider> = ({ dots, slidesToShow, children, styles }: PropsSlider) => {
   const settings = {
     dots: dots,
-    infinite: false,
+    infinite: true,
     speed: 500,
     slidesToShow: slidesToShow,
     slidesToScroll: 1,
@@ -40,6 +40,7 @@ const SliderCarousel: React.FC<PropsSlider> = ({ dots, slidesToShow, children, s
         breakpoint: 480,
         settings: {
           slidesToShow: 2,
+          infinite: true,
           slidesToScroll: 1,
         },
       },

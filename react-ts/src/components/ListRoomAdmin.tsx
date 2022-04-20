@@ -46,7 +46,8 @@ function ListRoomAdmin() {
   const [postPerPage, setPostPerPage] = useState(3);
   const indexOfLastRoom = currentPage * postPerPage;
   const indexOfFirstRoom = indexOfLastRoom - postPerPage;
-  const listAllRoomCurrent = listAllRoom.slice(
+  const listRoomReverse = listAllRoom.slice().reverse()
+  const listAllRoomCurrent = listRoomReverse.slice(
     indexOfFirstRoom,
     indexOfLastRoom
   );

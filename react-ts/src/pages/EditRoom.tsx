@@ -99,18 +99,17 @@ function EditRoom() {
       </Box>
       <Box className="create">
         <Box className="form-create">
-          <h3 className="text-create">Chỉnh sửa chỗ nghỉ của bạn</h3>
+          <h3 className="text-create">Chỉnh sửa chỗ nghỉ</h3>
           <form className="form-create-room" onSubmit={handleSubmit(onSubmit)}>
             <Grid
               container
               rowSpacing={0.1}
               columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             >
-              <Grid item md={3} sm={6}>
-                <Box>
-                  <h3>Phân loại chỗ</h3>
+              <Grid item lg={3} md={6} sm={6}>
+                <Box  textAlign={'center'}>
                   <Box className="input-create-form">
-                    <FormControl variant="outlined" sx={{ minWidth: 300 }}>
+                    <FormControl variant="outlined" sx={{ minWidth: 250 }}>
                       <InputLabel id="demo-simple-select-standard-label">
                         Chọn chỗ nghỉ
                       </InputLabel>
@@ -130,7 +129,7 @@ function EditRoom() {
                   </Box>
                   <Box className="input-create-form">
                     <TextField
-                      sx={{ minWidth: 300 }}
+                      sx={{ minWidth: 250 }}
                       label="Tên chỗ nghỉ"
                       variant="outlined"
                       {...register("roomName", {
@@ -146,7 +145,7 @@ function EditRoom() {
                     )}
                   </Box>
                   <Box className="input-create-form">
-                    <FormControl variant="outlined" sx={{ minWidth: 300 }}>
+                    <FormControl variant="outlined" sx={{ minWidth: 250 }}>
                       <InputLabel id="demo-simple-select-standard-label">
                         Loại đặt chỗ
                       </InputLabel>
@@ -166,11 +165,10 @@ function EditRoom() {
                   </Box>
                 </Box>
               </Grid>
-              <Grid item md={3} sm={6}>
-                <Box>
-                  <h3>Vị trí chỗ nghỉ, số khách</h3>
+              <Grid item lg={3} md={6} sm={6}>
+                <Box  textAlign={'center'}>
                   <Box className="input-create-form">
-                    <FormControl variant="outlined" sx={{ minWidth: 300 }}>
+                    <FormControl variant="outlined" sx={{ minWidth: 250 }}>
                       <InputLabel id="demo-simple-select-standard-label">
                         Chọn thành phố
                       </InputLabel>
@@ -190,19 +188,18 @@ function EditRoom() {
                   </Box>
                   <Box className="input-create-form">
                     <TextField
-                      sx={{ minWidth: 300 }}
+                      sx={{ minWidth: 250 }}
                       label="Địa điểm cụ thể"
                       variant="outlined"
                       {...register("addressDetail", {
                         required: true,
-                        pattern:
-                          /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]{2,}$/g,
+                        minLength: 2,
                       })}
                     />
                     {errors?.addressDetail?.type === "required" && (
                       <small>Vui lòng nhập trường này</small>
                     )}
-                    {errors?.addressDetail?.type === "pattern" && (
+                    {errors?.addressDetail?.type === "minLength" && (
                       <small>
                         Địa điểm cụ thể phải là chữ cái và dài hơn 2 ký tự
                       </small>
@@ -210,7 +207,7 @@ function EditRoom() {
                   </Box>
                   <Box className="input-create-form">
                     <TextField
-                      sx={{ minWidth: 300 }}
+                      sx={{ minWidth: 250 }}
                       label="Số khách"
                       type="number"
                       variant="outlined"
@@ -226,14 +223,9 @@ function EditRoom() {
                       <small>Số khách hàng phải hơn hoặc bằng 1</small>
                     )}
                   </Box>
-                </Box>
-              </Grid>
-              <Grid item md={3} sm={6}>
-                <Box>
-                  <h3>Không gian</h3>
                   <Box className="input-create-form">
                     <TextField
-                      sx={{ minWidth: 300 }}
+                      sx={{ minWidth: 250 }}
                       label="Diện tích chỗ nghỉ"
                       type="number"
                       variant="outlined"
@@ -249,9 +241,14 @@ function EditRoom() {
                       <small>Diện tích phải lớn hơn 30 m2</small>
                     )}
                   </Box>
+                </Box>
+              </Grid>
+              <Grid item lg={3} md={6} sm={6}>
+                <Box  textAlign={'center'}>
+                  
                   <Box className="input-create-form">
                     <TextField
-                      sx={{ minWidth: 300 }}
+                      sx={{ minWidth: 250 }}
                       label="Phòng ngủ"
                       type="number"
                       variant="outlined"
@@ -269,7 +266,7 @@ function EditRoom() {
                   </Box>
                   <Box className="input-create-form">
                     <TextField
-                      sx={{ minWidth: 300 }}
+                      sx={{ minWidth: 250 }}
                       label="Giường ngủ"
                       type="number"
                       variant="outlined"
@@ -289,7 +286,7 @@ function EditRoom() {
                   </Box>
                   <Box className="input-create-form">
                     <TextField
-                      sx={{ minWidth: 300 }}
+                      sx={{ minWidth: 250 }}
                       label="Phòng tắm"
                       type="number"
                       variant="outlined"
@@ -309,7 +306,7 @@ function EditRoom() {
                   </Box>
                   <Box className="input-create-form">
                     <TextField
-                      sx={{ minWidth: 300 }}
+                      sx={{ minWidth: 250 }}
                       label="Phòng bếp"
                       type="number"
                       variant="outlined"
@@ -328,12 +325,11 @@ function EditRoom() {
                   </Box>
                 </Box>
               </Grid>
-              <Grid item md={3} sm={6}>
-                <Box>
-                  <h3>Giới thiệu, giá phòng</h3>
+              <Grid item lg={3} md={6} sm={6}>
+                <Box  textAlign={'center'}>
                   <Box className="input-create-form">
                     <TextField
-                      sx={{ minWidth: 300 }}
+                      sx={{ minWidth: 250 }}
                       label="Tiêu đề"
                       variant="outlined"
                       {...register("title", {
@@ -350,7 +346,7 @@ function EditRoom() {
                   </Box>
                   <Box className="input-create-form">
                     <TextField
-                      sx={{ minWidth: 300 }}
+                      sx={{ minWidth: 250 }}
                       label="Thông tin chỗ nghỉ"
                       variant="outlined"
                       {...register("info", {
@@ -367,7 +363,7 @@ function EditRoom() {
                   </Box>
                   <Box className="input-create-form">
                     <TextField
-                      sx={{ minWidth: 300 }}
+                      sx={{ minWidth: 250 }}
                       label="Hình ảnh"
                       variant="outlined"
                       {...register("roomImg", {
@@ -380,7 +376,7 @@ function EditRoom() {
                   </Box>
                   <Box className="input-create-form">
                     <TextField
-                      sx={{ minWidth: 300 }}
+                      sx={{ minWidth: 250 }}
                       type="number"
                       label="Giá phòng"
                       variant="outlined"

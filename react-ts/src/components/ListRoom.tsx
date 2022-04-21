@@ -133,7 +133,7 @@ function ListRoom() {
                           "&:last-child td, &:last-child th": { border: 0 },
                         }}
                       >
-                        <TableCell align="center">
+                        <TableCell className="tableCell" align="center">
                           <p>{item.id}</p>
                         </TableCell>
                         <TableCell className="img-table" align="center">
@@ -146,16 +146,16 @@ function ListRoom() {
                             <span>{item.roomName}</span>
                           </div>
                         </TableCell>
-                        <TableCell align="center">
+                        <TableCell className="tableCell" align="center">
                           <p>{item.roomCate}</p>
                         </TableCell>
-                        <TableCell align="center">
+                        <TableCell className="tableCell" align="center">
                           <p>
                             {item.addressDetail} - {item.address}
                           </p>
                         </TableCell>
                         <TableCell
-                          className="status tbody"
+                          className="tableCell"
                           style={{
                             color: `${
                               item.isCheckRoom === true ? "green" : "orange"

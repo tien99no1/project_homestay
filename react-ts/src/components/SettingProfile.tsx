@@ -23,7 +23,7 @@ import { useDispatch } from "react-redux";
 import { signUpSuccess } from "../store/userSlice";
 
 function SettingProfile() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [user, setUser] = useState<user>();
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
@@ -49,15 +49,7 @@ function SettingProfile() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<user>({
-    defaultValues: {
-      firstName: `${user?.firstName}`,
-      email: user?.email,
-      lastName: user?.lastName,
-      phone: user?.phone,
-      password: user?.password,
-    },
-  });
+  } = useForm<user>();
   const onSubmit = (data: user) => {
     const id = JSON.parse(localStorage.getItem("userId") || "{}");
     axios.put(`${CONFIG.ApiUser}/${id}`, data).then((result) => {
@@ -66,10 +58,9 @@ function SettingProfile() {
       setOpen(false);
     });
   };
-
-  useEffect(()=>{
-    
-  })
+  useEffect(() => {
+    reset(user);
+  }, [user]);
   return (
     <>
       <Container maxWidth="xl">

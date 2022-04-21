@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import {
@@ -17,6 +17,7 @@ import "../css/dashboard.css";
 import { CONFIG } from "../config";
 import axios from "axios";
 import { room } from "../type";
+import MapHost from "../components/MapsHost";
 
 const optionsType = [
   { value: "", label: "Chọn chỗ nghỉ" },
@@ -45,22 +46,30 @@ const optionsCity = [
 ];
 function EditRoom() {
   const navigate = useNavigate();
+  const [position, setPosition] = useState<any>({});
+  const handeChangePosition = (data: any) => {
+    setPosition(data);
+  };
+  const lat = position.lat;
+  const lng = position.lng;
+  const [roomInfo, setRoomInfo] = React.useState<any>({});
+  const params = useParams();
+  const { id } = params;
   useEffect(() => {
     const token = localStorage.getItem("hostId");
     if (!token) {
       navigate("/host");
-    } else {
-      navigate(`/editroom/${id}`);
     }
   }, []);
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<room>();
-  const [roomInfo, setRoomInfo] = React.useState<any>({});
-  const params = useParams();
-  const { id } = params;
+  useEffect(() => {
+    reset(roomInfo);
+  }, [roomInfo]);
 
   const loadRooms = () => {
     axios.get(`${CONFIG.ApiRoom}/${id}`).then((res) => {
@@ -107,7 +116,7 @@ function EditRoom() {
               columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             >
               <Grid item lg={3} md={6} sm={6}>
-                <Box  textAlign={'center'}>
+                <Box textAlign={"center"}>
                   <Box className="input-create-form">
                     <FormControl variant="outlined" sx={{ minWidth: 250 }}>
                       <InputLabel id="demo-simple-select-standard-label">
@@ -136,6 +145,9 @@ function EditRoom() {
                         required: true,
                         minLength: 2,
                       })}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
                     />
                     {errors?.roomName?.type === "required" && (
                       <small>Vui lòng nhập trường này</small>
@@ -163,10 +175,45 @@ function EditRoom() {
                       )}
                     </FormControl>
                   </Box>
+                  <p>Tọa độ trên bản đồ</p>
+                  <Box className="input-create-form">
+                    <TextField
+                      sx={{ minWidth: 250 }}
+                      variant="outlined"
+                      label="Kinh độ"
+                      value={lat}
+                      {...register("lat", {
+                        required: true,
+                      })}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  </Box>
+                  <Box className="input-create-form">
+                    <TextField
+                      sx={{ minWidth: 250 }}
+                      variant="outlined"
+                      label="Vĩ độ"
+                      value={lng}
+                      {...register("lng", {
+                        required: true,
+                      })}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                    {errors?.roomName?.type === "required" && (
+                      <small>
+                        Vui lòng chọn bằng cách click vào vị trí trong bản đồ
+                        bên dưới
+                      </small>
+                    )}
+                  </Box>
                 </Box>
               </Grid>
               <Grid item lg={3} md={6} sm={6}>
-                <Box  textAlign={'center'}>
+                <Box textAlign={"center"}>
                   <Box className="input-create-form">
                     <FormControl variant="outlined" sx={{ minWidth: 250 }}>
                       <InputLabel id="demo-simple-select-standard-label">
@@ -195,6 +242,9 @@ function EditRoom() {
                         required: true,
                         minLength: 2,
                       })}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
                     />
                     {errors?.addressDetail?.type === "required" && (
                       <small>Vui lòng nhập trường này</small>
@@ -215,6 +265,9 @@ function EditRoom() {
                         required: true,
                         min: 1,
                       })}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
                     />
                     {errors?.customer?.type === "required" && (
                       <small>Vui lòng nhập trường này</small>
@@ -233,6 +286,9 @@ function EditRoom() {
                         required: true,
                         min: 30,
                       })}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
                     />
                     {errors?.roomAcreage?.type === "required" && (
                       <small>Vui lòng nhập trường này</small>
@@ -244,8 +300,7 @@ function EditRoom() {
                 </Box>
               </Grid>
               <Grid item lg={3} md={6} sm={6}>
-                <Box  textAlign={'center'}>
-                  
+                <Box textAlign={"center"}>
                   <Box className="input-create-form">
                     <TextField
                       sx={{ minWidth: 250 }}
@@ -256,6 +311,9 @@ function EditRoom() {
                         required: true,
                         min: 1,
                       })}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
                     />
                     {errors?.bedRoom?.type === "required" && (
                       <small>Vui lòng nhập trường này</small>
@@ -274,6 +332,9 @@ function EditRoom() {
                         required: true,
                         min: 1,
                       })}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
                     />
                     {errors?.bed?.type === "required" && (
                       <small>Vui lòng nhập trường này</small>
@@ -294,6 +355,9 @@ function EditRoom() {
                         required: true,
                         min: 1,
                       })}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
                     />
                     {errors?.bathRoom?.type === "required" && (
                       <small>Vui lòng nhập trường này</small>
@@ -314,7 +378,10 @@ function EditRoom() {
                         required: true,
                         min: 1,
                       })}
-                    />{" "}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
                     <br />
                     {errors?.kitchen?.type === "required" && (
                       <small>Vui lòng nhập trường này</small>
@@ -326,7 +393,7 @@ function EditRoom() {
                 </Box>
               </Grid>
               <Grid item lg={3} md={6} sm={6}>
-                <Box  textAlign={'center'}>
+                <Box textAlign={"center"}>
                   <Box className="input-create-form">
                     <TextField
                       sx={{ minWidth: 250 }}
@@ -336,6 +403,9 @@ function EditRoom() {
                         required: true,
                         minLength: 2,
                       })}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
                     />
                     {errors?.title?.type === "required" && (
                       <small>Vui lòng nhập trường này</small>
@@ -353,6 +423,9 @@ function EditRoom() {
                         required: true,
                         minLength: 2,
                       })}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
                     />
                     {errors?.info?.type === "required" && (
                       <small>Vui lòng nhập trường này</small>
@@ -369,6 +442,9 @@ function EditRoom() {
                       {...register("roomImg", {
                         required: true,
                       })}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
                     />
                     {errors?.roomImg?.type === "required" && (
                       <small>Vui lòng nhập trường này</small>
@@ -384,6 +460,9 @@ function EditRoom() {
                         required: true,
                         min: 0,
                       })}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
                     />
                     {errors?.roomPrice?.type === "required" && (
                       <small>Vui lòng nhập trường này</small>
@@ -397,10 +476,13 @@ function EditRoom() {
             </Grid>
             <Box className="Box-btn-create">
               <Button className="btn-create-form" type="submit">
-                Chỉnh sửa
+                Tạo phòng
               </Button>
             </Box>
           </form>
+          <div>
+            <MapHost handeChangePosition={handeChangePosition} />
+          </div>
         </Box>
       </Box>
     </Box>

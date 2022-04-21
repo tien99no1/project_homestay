@@ -83,8 +83,12 @@ function ListRoomUserOrder() {
                   <StyledTableCell align="center">Mã phòng</StyledTableCell>
                   <StyledTableCell align="center">Tên chỗ nghỉ</StyledTableCell>
                   <StyledTableCell align="center">Địa điểm</StyledTableCell>
-                  <StyledTableCell align="center">Ngày nhận phòng</StyledTableCell>
-                  <StyledTableCell align="center">Ngày trả phòng</StyledTableCell>
+                  <StyledTableCell align="center">
+                    Ngày nhận phòng
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    Ngày trả phòng
+                  </StyledTableCell>
                   <StyledTableCell align="center">Số người</StyledTableCell>
                   <StyledTableCell align="center">Tổng tiền</StyledTableCell>
                   <StyledTableCell align="center">Trạng thái</StyledTableCell>
@@ -97,9 +101,9 @@ function ListRoomUserOrder() {
                     if (searchBookingRoom == "") {
                       return value;
                     } else if (
-                      value.roomName.toLowerCase().includes(
-                        searchBookingRoom.toLowerCase()
-                      )
+                      value.roomName
+                        .toLowerCase()
+                        .includes(searchBookingRoom.toLowerCase())
                     ) {
                       return value;
                     }
@@ -112,7 +116,7 @@ function ListRoomUserOrder() {
                           "&:last-child td, &:last-child th": { border: 0 },
                         }}
                       >
-                        <TableCell className="tbody" align="center">
+                        <TableCell className="tableCell" align="center">
                           <p>{item.id}</p>
                         </TableCell>
                         <TableCell className="img-table" align="center">
@@ -125,30 +129,32 @@ function ListRoomUserOrder() {
                             <span>{item.roomName}</span>
                           </div>
                         </TableCell>
-                        <TableCell align="center">
+                        <TableCell className="tableCell" align="center">
                           <p>
                             {item.roomAddressDetail} - {item.roomAddress}
                           </p>
                         </TableCell>
-                        <TableCell align="center">
+                        <TableCell className="tableCell" align="center">
                           <p>{item.startDay}</p>
                         </TableCell>
-                        <TableCell align="center">
+                        <TableCell className="tableCell" align="center">
                           <p>{item.endDay}</p>
                         </TableCell>
-                        <TableCell align="center">
+                        <TableCell className="tableCell" align="center">
                           <p>{item.totalCustomers}</p>
                         </TableCell>
-                        <TableCell align="center">
-                          <p><NumberFormat
-                        value={item.totalPrice}
-                        displayType={"text"}
-                        thousandSeparator={true}
-                        suffix={"đ"}
-                      /></p>
+                        <TableCell className="tableCell" align="center">
+                          <p>
+                            <NumberFormat
+                              value={item.totalPrice}
+                              displayType={"text"}
+                              thousandSeparator={true}
+                              suffix={"đ"}
+                            />
+                          </p>
                         </TableCell>
                         <TableCell
-                          className="status tbody"
+                          className="tableCell"
                           style={{
                             color: `${
                               item.isCheck === 0

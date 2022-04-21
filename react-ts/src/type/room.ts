@@ -19,4 +19,6 @@ export interface room {
   roomImg: string;
   status: number;
   isCheckRoom: boolean;
+  lat: any,
+  lng: any
 }

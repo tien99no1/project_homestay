@@ -155,10 +155,10 @@ function ListRoomAdmin() {
                           "&:last-child td, &:last-child th": { border: 0 },
                         }}
                       >
-                        <TableCell className="name tbody" align="center">
+                        <TableCell className="tableCell" align="center">
                           <p>{item.id}</p>
                         </TableCell>
-                        <TableCell className="img-table" align="center">
+                        <TableCell className="img-table tableCell" align="center">
                           <div>
                             <img
                               className="img-list-room"
@@ -168,16 +168,16 @@ function ListRoomAdmin() {
                             <span>{item.roomName}</span>
                           </div>
                         </TableCell>
-                        <TableCell align="center">
+                        <TableCell className="tableCell" align="center">
                           <p>{item.roomCate}</p>
                         </TableCell>
-                        <TableCell align="center">
+                        <TableCell className="tableCell" align="center">
                           <p>
                             {item.addressDetail} - {item.address}
                           </p>
                         </TableCell>
                         <TableCell
-                          className="status tbody"
+                          className="tableCell"
                           style={{
                             color: `${
                               item.isCheckRoom === false ? "orange" : "green"
@@ -188,7 +188,7 @@ function ListRoomAdmin() {
                           {item.isCheckRoom === false ? "Chưa thuê" : "Đã thuê"}
                         </TableCell>
                         <TableCell
-                          className="status tbody"
+                          className="tableCell"
                           style={{
                             color: `${
                               item.status === 0

@@ -3,21 +3,31 @@ import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import "../css/home.css";
 import { CONFIG } from "../config";
 
-function Map(props: { lat: any; lng: any }) {
-  const center = { lat: Number(props.lat), lng: Number(props.lng) };
+function MapHost(props: any) {
+  const [position, setPosition] = useState<any>({
+    lat: 21.077923,
+    lng: 105.80889,
+  });
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: CONFIG.googleMapsApiKey,
   });
+
+  const onCLickMap = (event: any) => {
+    const data = event.latLng.toJSON();
+    setPosition(data);
+    props.handeChangePosition(data);
+  };
   return (
     <div className="maps">
       {isLoaded ? (
         <GoogleMap
           mapContainerStyle={{ width: "100%", height: "100%" }}
-          center={center}
-          zoom={15}
+          center={position}
+          zoom={12}
+          onClick={onCLickMap}
         >
-          <Marker position={center} />
+          <Marker position={position} />
         </GoogleMap>
       ) : (
         <></>
@@ -26,4 +36,4 @@ function Map(props: { lat: any; lng: any }) {
   );
 }
 
-export default Map;
+export default MapHost;

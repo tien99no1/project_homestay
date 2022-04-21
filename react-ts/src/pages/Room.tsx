@@ -47,15 +47,13 @@ function Room() {
   const [roomInfo, setRoomInfo] = useState<any>({});
   const params = useParams();
   const { id } = params;
-  const getRoom = async () => {
-    try {
-      const data = await axios.get(`${CONFIG.ApiRoom}/${id}`);
-      setRoomInfo(data.data);
-    } catch (e) {}
-  };
   useEffect(() => {
-    getRoom();
-  }, [id]);
+    axios.get(`${CONFIG.ApiRoom}/${id}`).then((res) => {
+      setRoomInfo(res.data)
+    }).catch((error) => {
+      console.log("error", error)
+    })
+  },[id])
   const userId = localStorage.getItem("userId");
   const userName = useSelector((state: any) => state.user.lastName);
   const hostId = roomInfo.hostId;
@@ -176,7 +174,7 @@ function Room() {
                 khách (tối đa {Number(roomInfo.customer) + 1} khách)
               </p>
               <p>{roomInfo.info}</p>
-            </Box>{" "}
+            </Box>
             <br />
             <Box>
               <h4>Tiện nghi chỗ ở</h4>
@@ -240,7 +238,7 @@ function Room() {
                 (trừ phí dịch vụ).
               </p>
               <div id="map">
-                <Map />
+                <Map lat={roomInfo.lat} lng={roomInfo.lng}/>
               </div>
               <p>
                 Bạn sẽ nhận được địa chỉ chính xác của chỗ ở sau khi hoàn tất
@@ -267,7 +265,6 @@ function Room() {
                     /đêm
                   </p>
                 </Box>
-
                 <Box>
                   <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DateRangePicker

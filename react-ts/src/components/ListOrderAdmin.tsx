@@ -106,7 +106,7 @@ function News() {
             </Stack>
           </div>
         ) : (
-          <h4 className="center">Chỗ nghỉ của bạn đang trống</h4>
+          <h4 className="center">Chưa có đơn đặt phòng</h4>
         )}
       </Box>
     </>

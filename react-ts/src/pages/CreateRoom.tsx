@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import {
@@ -16,6 +16,7 @@ import "../css/dashboard.css";
 import { CONFIG } from "../config";
 import { room } from "../type";
 import axios from "axios";
+import MapHost from "../components/MapsHost";
 
 const optionsType = [
   { value: "", label: "Chọn chỗ nghỉ" },
@@ -44,15 +45,19 @@ const optionsCity = [
 ];
 
 function CreateRoom() {
+  const [position, setPosition] = useState<any>({});
+  const handeChangePosition = (data: any) => {
+    setPosition(data);
+  };
+  const lat = position.lat;
+  const lng = position.lng;
   const navigate = useNavigate();
   useEffect(() => {
-    const token = localStorage.getItem('hostId');
+    const token = localStorage.getItem("hostId");
     if (!token) {
-      navigate('/host');
-    } else {
-      navigate('/create')
+      navigate("/host");
     }
-  }, [])
+  }, []);
   const {
     register,
     handleSubmit,
@@ -61,7 +66,12 @@ function CreateRoom() {
   const hostId = localStorage.getItem("hostId");
   const onSubmit = (data: room) => {
     axios
-      .post(`${CONFIG.ApiRoom}`, { ...data, status: 0, hostId, isCheckRoom: false })
+      .post(`${CONFIG.ApiRoom}`, {
+        ...data,
+        status: 0,
+        hostId,
+        isCheckRoom: false,
+      })
       .then((data) => {
         console.log("success", data);
         navigate("/dashboard");
@@ -88,7 +98,7 @@ function CreateRoom() {
               columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             >
               <Grid item lg={3} md={6} sm={6}>
-                <Box  textAlign={'center'}>
+                <Box textAlign={"center"}>
                   <Box className="input-create-form">
                     <FormControl variant="outlined" sx={{ minWidth: 250 }}>
                       <InputLabel id="demo-simple-select-standard-label">
@@ -144,10 +154,45 @@ function CreateRoom() {
                       )}
                     </FormControl>
                   </Box>
+                  <p>Tọa độ trên bản đồ</p>
+                  <Box className="input-create-form">
+                    <TextField
+                      sx={{ minWidth: 250 }}
+                      variant="outlined"
+                      label="Kinh độ"
+                      value={lat}
+                      {...register("lat", {
+                        required: true,
+                      })}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  </Box>
+                  <Box className="input-create-form">
+                    <TextField
+                      sx={{ minWidth: 250 }}
+                      variant="outlined"
+                      label="Vĩ độ"
+                      value={lng}
+                      {...register("lng", {
+                        required: true,
+                      })}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                    {errors?.roomName?.type === "required" && (
+                      <small>
+                        Vui lòng chọn bằng cách click vào vị trí trong bản đồ
+                        bên dưới
+                      </small>
+                    )}
+                  </Box>
                 </Box>
               </Grid>
               <Grid item lg={3} md={6} sm={6}>
-                <Box  textAlign={'center'}>
+                <Box textAlign={"center"}>
                   <Box className="input-create-form">
                     <FormControl variant="outlined" sx={{ minWidth: 250 }}>
                       <InputLabel id="demo-simple-select-standard-label">
@@ -225,8 +270,7 @@ function CreateRoom() {
                 </Box>
               </Grid>
               <Grid item lg={3} md={6} sm={6}>
-                <Box  textAlign={'center'}>
-                  
+                <Box textAlign={"center"}>
                   <Box className="input-create-form">
                     <TextField
                       sx={{ minWidth: 250 }}
@@ -307,7 +351,7 @@ function CreateRoom() {
                 </Box>
               </Grid>
               <Grid item lg={3} md={6} sm={6}>
-                <Box  textAlign={'center'}>
+                <Box textAlign={"center"}>
                   <Box className="input-create-form">
                     <TextField
                       sx={{ minWidth: 250 }}
@@ -382,6 +426,9 @@ function CreateRoom() {
               </Button>
             </Box>
           </form>
+          <div>
+            <MapHost handeChangePosition={handeChangePosition} />
+          </div>
         </Box>
       </Box>
     </Box>

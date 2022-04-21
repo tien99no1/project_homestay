@@ -99,7 +99,7 @@ function News() {
                           Số khách: {book.totalCustomers}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                          Tổng tiền: 
+                          Tổng tiền:
                           <NumberFormat
                             value={book.totalPrice}
                             displayType={"text"}

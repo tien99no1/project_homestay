@@ -4,11 +4,7 @@ export const userSlice = createSlice({
   name: "user",
   initialState: {
     user: {
-      // id: "",
-      // firstName: "",
       lastName: "",
-      // password: "",
-      // email: "",
       pending: false,
       error: false,
     },
@@ -25,16 +21,12 @@ export const userSlice = createSlice({
       state.user.pending = false;
       state.user.error = false;
       state.user.lastName = action.payload.lastName;
-      
     },
-    logoutRequest: (state, action) =>{
-      // state.user.id = '';
-      // state.user.firstName = '';
-      // state.user.email = '';
-      // state.user.password = '';
-      state.user.lastName = '';
-  },
+    logoutRequest: (state, action) => {
+      state.user.lastName = "";
+    },
   },
 });
-export const { signUpStart, signUpError, signUpSuccess, logoutRequest } = userSlice.actions;
+export const { signUpStart, signUpError, signUpSuccess, logoutRequest } =
+  userSlice.actions;
 export default userSlice.reducer;

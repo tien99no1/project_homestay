@@ -33,16 +33,12 @@ function EditProfile() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
-  } = useForm<user>({
-    defaultValues: {
-      firstName: user?.firstName,
-      email: user?.email,
-      lastName: user?.lastName,
-      phone: user?.phone,
-      password: user?.password,
-    },
-  });
+  } = useForm<user>();
+  useEffect(() => {
+    reset(user);
+  }, [user]);
   const onSubmit = (data: user) => {
     axios.put(`${CONFIG.ApiUser}/${id}`, data).then((result) => {
       navigate("/adminPage");
@@ -70,6 +66,9 @@ function EditProfile() {
                     pattern:
                       /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]{2,}$/g,
                   })}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
                 {errors?.firstName?.type === "required" && (
                   <small>Vui lòng nhập trường này</small>
@@ -94,6 +93,9 @@ function EditProfile() {
                     pattern:
                       /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]{2,}$/g,
                   })}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
                 {errors?.lastName?.type === "required" && (
                   <small>Vui lòng nhập trường này</small>
@@ -115,6 +117,9 @@ function EditProfile() {
                   required: true,
                   pattern: /^\S+@\S+$/i,
                 })}
+                InputLabelProps={{
+                  shrink: true,
+                }}
               />
               {errors?.email?.type === "required" && (
                 <small>Vui lòng nhập trường này</small>
@@ -132,6 +137,9 @@ function EditProfile() {
                   required: true,
                   pattern: /(((\+|)84)|0)(3|5|7|8|9)+([0-9]{8})\b/i,
                 })}
+                InputLabelProps={{
+                  shrink: true,
+                }}
               />
               {errors?.phone?.type === "required" && (
                 <small>Vui lòng nhập trường này</small>
@@ -150,6 +158,9 @@ function EditProfile() {
                   required: true,
                   pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/i,
                 })}
+                InputLabelProps={{
+                  shrink: true,
+                }}
               />
               {errors?.password?.type === "required" && (
                 <small>Vui lòng nhập trường này</small>

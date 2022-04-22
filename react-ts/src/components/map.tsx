@@ -25,5 +25,4 @@ function Map(props: { lat: any; lng: any }) {
     </div>
   );
 }
-
 export default Map;

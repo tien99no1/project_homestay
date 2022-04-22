@@ -18,6 +18,7 @@ import { CONFIG } from "../config";
 import axios from "axios";
 import { room } from "../type";
 import MapHost from "../components/MapsHost";
+import _ from "lodash";
 
 const optionsType = [
   { value: "", label: "Chọn chỗ nghỉ" },
@@ -52,7 +53,7 @@ function EditRoom() {
   };
   const lat = position.lat;
   const lng = position.lng;
-  const [roomInfo, setRoomInfo] = React.useState<any>({});
+  const [roomInfo, setRoomInfo] = React.useState<any>();
   const params = useParams();
   const { id } = params;
   useEffect(() => {
@@ -68,7 +69,27 @@ function EditRoom() {
     formState: { errors },
   } = useForm<room>();
   useEffect(() => {
-    reset(roomInfo);
+    if (!_.isEmpty(roomInfo)) {
+      reset({
+        roomType: roomInfo?.roomType,
+        roomName: roomInfo?.roomName,
+        roomPrice: roomInfo?.roomPrice,
+        roomCate: roomInfo?.roomCate,
+        address: roomInfo?.address,
+        addressDetail: roomInfo?.addressDetail,
+        roomAcreage: roomInfo?.roomAcreage,
+        info: roomInfo?.info,
+        title: roomInfo?.title,
+        bed: roomInfo?.title,
+        bedRoom: roomInfo?.bedRoom,
+        bathRoom: roomInfo?.bathRoom,
+        customer: roomInfo?.customer,
+        kitchen: roomInfo?.kitchen,
+        roomImg: roomInfo?.roomImg,
+        // lat: roomInfo?.lat,
+        // lng: roomInfo?.lng
+      });
+    }
   }, [roomInfo]);
 
   const loadRooms = () => {
@@ -84,7 +105,7 @@ function EditRoom() {
   const hostId = localStorage.getItem("hostId");
   const onSubmit = (data: room) => {
     axios
-      .put(`${CONFIG.ApiRoom}/${id}`, {
+      .patch(`${CONFIG.ApiRoom}/${id}`, {
         ...data,
         status: 0,
         isCheck: 0,

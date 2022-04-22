@@ -5,8 +5,8 @@ import { CONFIG } from "../config";
 
 function MapHost(props: any ) {
   const [position, setPosition] = useState<any>({
-    lat: 21.077923,
-    lng: 105.80889,
+    lat: !Number(props.lat)? 21.077923: Number(props.lat),
+    lng: !Number(props.lng)? 105.80889: Number(props.lng),
   });
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",

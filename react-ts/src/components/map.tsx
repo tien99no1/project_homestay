@@ -15,7 +15,7 @@ function Map(props: { lat: any; lng: any }) {
         <GoogleMap
           mapContainerStyle={{ width: "100%", height: "100%" }}
           center={center}
-          zoom={15}
+          zoom={12}
         >
           <Marker position={center} />
         </GoogleMap>

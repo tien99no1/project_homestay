@@ -20,7 +20,8 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import BannerRoom from "../components/BannerRoom";
 import { CONFIG } from "../config";
 import Noti from "../components/Noti";
-import Map from "../components/Map"
+import Map from "../components/Map";
+import { room } from "../type";
 
 interface IFormInputs {
   name: string;
@@ -28,6 +29,7 @@ interface IFormInputs {
 }
 
 function Room() {
+  const [roomInfo, setRoomInfo] = useState<room>();
   const [showNoti, setShowNoti] = useState(false);
   const [payloadNoti, setPayloadNoti] = useState({
     status: "success",
@@ -44,7 +46,6 @@ function Room() {
     90
   );
 
-  const [roomInfo, setRoomInfo] = useState<any>({});
   const params = useParams();
   const { id } = params;
   useEffect(() => {
@@ -56,20 +57,20 @@ function Room() {
   },[id])
   const userId = localStorage.getItem("userId");
   const userName = useSelector((state: any) => state.user.lastName);
-  const hostId = roomInfo.hostId;
+  const hostId = roomInfo?.hostId;
   const [children, setChildren] = React.useState<number | string>("");
   const [alduts, setAdults] = React.useState<number | string>("");
 
-  const roomId = roomInfo.id;
-  const roomName = roomInfo.roomName;
-  const roomImg = roomInfo.roomImg;
-  const roomAddress = roomInfo.address;
-  const roomAddressDetail = roomInfo.addressDetail;
-  const customer = Number(roomInfo.customer);
+  const roomId = roomInfo?.id;
+  const roomName = roomInfo?.roomName;
+  const roomImg = roomInfo?.roomImg;
+  const roomAddress = roomInfo?.address;
+  const roomAddressDetail = roomInfo?.addressDetail;
+  const customer = Number(roomInfo?.customer);
   const sDay = moment(valueDate[0]);
   const eDay = moment(valueDate[1]);
   const totalDays = eDay.diff(sDay, "days");
-  const totalPrice = totalDays * Number(roomInfo.roomPrice);
+  const totalPrice = totalDays * Number(roomInfo?.roomPrice);
   //advise
   const {
     register,
@@ -150,15 +151,15 @@ function Room() {
             <Box display={"flex"}>
               <p className="mr">Rikstay</p>
               <p className="mr">Vietnam</p>
-              <p className="mr">{roomInfo.address}</p>
-              <p className="mr">{roomInfo.addressDetail}</p>
+              <p className="mr">{roomInfo?.address}</p>
+              <p className="mr">{roomInfo?.addressDetail}</p>
             </Box>
             <Box>
-              <h3>{roomInfo.title}</h3>
+              <h3>{roomInfo?.title}</h3>
               <p className="phone margin-icon">
                 <LocationOnIcon />
                 <b>
-                  {roomInfo.addressDetail}, {roomInfo.address}, Việt Nam
+                  {roomInfo?.addressDetail}, {roomInfo?.address}, Việt Nam
                 </b>
                 <a style={{ marginLeft: "1rem", color: "#b71c1c" }} href="#map">
                   Xem bản đồ
@@ -166,14 +167,14 @@ function Room() {
               </p>
               <p className="phone margin-icon">
                 <ApartmentOutlinedIcon />
-                <b>{roomInfo.roomType} -</b> <span>{roomInfo.roomAcreage} m<sup>2</sup></span>
+                <b>{roomInfo?.roomType} -</b> <span>{roomInfo?.roomAcreage} m<sup>2</sup></span>
               </p>
               <p>
-                Phòng riêng · {roomInfo.bathRoom} Phòng tắm · {roomInfo.bed}
-                giường · {roomInfo.bedRoom} phòng ngủ · {roomInfo.customer} {""}
-                khách (tối đa {Number(roomInfo.customer) + 1} khách)
+                Phòng riêng · {roomInfo?.bathRoom} Phòng tắm · {roomInfo?.bed}
+                giường · {roomInfo?.bedRoom} phòng ngủ · {roomInfo?.customer} {""}
+                khách (tối đa {Number(roomInfo?.customer) + 1} khách)
               </p>
-              <p>{roomInfo.info}</p>
+              <p>{roomInfo?.info}</p>
             </Box>
             <br />
             <Box>
@@ -238,7 +239,7 @@ function Room() {
                 (trừ phí dịch vụ).
               </p>
               <div id="map">
-                <Map lat={roomInfo.lat} lng={roomInfo.lng}/>
+                <Map lat={roomInfo?.lat} lng={roomInfo?.lng}/>
               </div>
               <p>
                 Bạn sẽ nhận được địa chỉ chính xác của chỗ ở sau khi hoàn tất
@@ -256,7 +257,7 @@ function Room() {
                   <p className="price-room">
                     <span className="price">
                       <NumberFormat
-                        value={roomInfo.roomPrice}
+                        value={roomInfo?.roomPrice}
                         displayType={"text"}
                         thousandSeparator={true}
                         suffix={"₫"}

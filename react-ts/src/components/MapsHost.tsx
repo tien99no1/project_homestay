@@ -24,7 +24,7 @@ function MapHost(props: any ) {
         <GoogleMap
           mapContainerStyle={{ width: "100%", height: "100%" }}
           center={position}
-          zoom={12}
+          zoom={11}
           onClick={onCLickMap}
         >
           <Marker position={position} />

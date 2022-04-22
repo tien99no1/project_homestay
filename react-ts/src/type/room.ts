@@ -1,4 +1,3 @@
-
 export interface room {
   id: number;
   roomType: string;
@@ -19,6 +18,7 @@ export interface room {
   roomImg: string;
   status: number;
   isCheckRoom: boolean;
-  lat: any,
-  lng: any
+  hostId: string;
+  lat: any;
+  lng: any;
 }

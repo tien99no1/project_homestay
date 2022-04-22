@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import moment from "moment";
 import NumberFormat from "react-number-format";
-import BannerRoom from "../components/BannerRoom";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ApartmentOutlinedIcon from "@mui/icons-material/ApartmentOutlined";
 import { Box, Button, Container, Grid, TextField } from "@mui/material";
@@ -18,9 +17,10 @@ import SignalWifi0BarIcon from "@mui/icons-material/SignalWifi0Bar";
 import DateRangePicker, { DateRange } from "@mui/lab/DateRangePicker";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import BannerRoom from "../components/BannerRoom";
 import { CONFIG } from "../config";
 import Noti from "../components/Noti";
-import Map from "../components/Map";
+import Map from "../components/Map"
 
 interface IFormInputs {
   name: string;

@@ -91,7 +91,6 @@ function EditRoom() {
         hostId,
       })
       .then((data) => {
-        // console.log("success", data);
         navigate("/dashboard");
       })
       .catch((error) => {
@@ -476,7 +475,7 @@ function EditRoom() {
             </Grid>
             <Box className="Box-btn-create">
               <Button className="btn-create-form" type="submit">
-                Tạo phòng
+                Chỉnh sửa
               </Button>
             </Box>
           </form>

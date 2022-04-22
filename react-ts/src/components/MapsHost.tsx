@@ -3,7 +3,7 @@ import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import "../css/home.css";
 import { CONFIG } from "../config";
 
-function MapHost(props: any) {
+function MapHost(props: any ) {
   const [position, setPosition] = useState<any>({
     lat: 21.077923,
     lng: 105.80889,
